@@ -15,7 +15,7 @@
 
 ## Ograniczenia
 
-Nie wymyślam kontaktu ani domeny. Nie scalę PR i nie opublikuję strony produkcyjnej. Konfiguracja konta Cloudflare, dane terenowe CWV i przekazanie na telefonie wymagają weryfikacji poza lokalnym wdrożeniem.
+Nie wymyślam kontaktu ani domeny. Nie scalam PR samodzielnie. Właściciel rozszerzył zlecenie o konfigurację Cloudflare Pages. Dane terenowe CWV i przekazanie na telefonie wymagają osobnego odbioru.
 
 ## Wykonanie i wyniki
 
@@ -32,6 +32,11 @@ Nie wymyślam kontaktu ani domeny. Nie scalę PR i nie opublikuję strony produk
 ## Rozpoczęta konfiguracja Cloudflare
 
 - Właściciel zlecił podłączenie Pages i zalogował się. Ekran integracji skierował firmową sesję Chrome do SSO Autoliv; nie nadano dostępu ani nie kontynuowano firmowego logowania.
-- Po instrukcji właściciela używana jest wyłącznie przeglądarka GPT (IAB). Potwierdzono w niej konto GitHub koper201-cyber; Cloudflare wymaga osobnego logowania.
+- Po instrukcji właściciela używana jest wyłącznie przeglądarka GPT (IAB). Potwierdzono w niej konto GitHub koper201-cyber i logowanie do Cloudflare.
 - Automatyczna kontrola odrzuciła początkowe otwarcie Connect GitHub. Po wyjaśnieniu właściciel zezwolił na otwarcie podglądu uprawnień. Zgoda nie obejmuje zatwierdzenia instalacji ani szerszych uprawnień.
-- Oczekiwanie na logowanie Cloudflare w IAB; nie utworzono projektu ani nie opublikowano strony.
+- Właściciel następnie zatwierdził instalację Cloudflare Workers and Pages z uprawnieniami pokazanymi przez GitHub, wyłącznie dla koper201-cyber/blazej-koprowski-www. Integracja zainstalowana.
+- Utworzono projekt blazej-koprowski: gałąź produkcyjna main, komenda npm run build, katalog dist, NODE_VERSION=24.22.1 dla produkcji i podglądów. Pierwsze wdrożenie commita 253454e zakończyło się sukcesem. Publiczny adres: https://blazej-koprowski.pages.dev/; początkowy 522 ustąpił po odświeżeniu, potwierdzono treść strony w przeglądarce. Produkcja ma nadal przykładowy kontakt@example.com z istniejącego site.md; nie zastępowano go wymyślonym adresem.
+- Za zgodą właściciela dodano zakres workflow do istniejącej autoryzacji GitHub CLI; właściciel wykonał dodatkowe potwierdzenie e-mailem. Nie zmieniano globalnych poświadczeń Git.
+- Kod wysłany do codex/wdrozenie-standardow. Utworzono draft PR #7 do codex/migracja-astro. Niczego nie scalono.
+- CI PR #6 wykryło niezgodny Node 22 ze starszej konfiguracji. Nowy workflow w PR #7 korzysta z .node-version (24.22.1).
+- Środowisko Codex: otwarto logowanie w IAB; konfiguracja czeka na zalogowanie właściciela.
