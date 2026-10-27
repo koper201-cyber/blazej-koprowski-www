@@ -14,6 +14,7 @@ const siteUrl = domain ? `https://${domain}` : project ? `https://${project}.pag
 export default defineConfig({
   site: siteUrl,
   output: "static",
+  compressHTML: true,
   trailingSlash: "ignore",
   build: { format: "directory" },
   integrations: [sitemap({ filter: (page) => !page.includes("/dziekuje") })],
