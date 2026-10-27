@@ -9,6 +9,7 @@ To repozytorium to strona internetowa. Właściciel(ka) strony **nie zna się na
   - folder `zdjecia/` — zdjęcia.
 - Pliki w `src/`, `scripts/`, konfigurację (`astro.config.mjs`, `package.json`, `.github/`) zmieniaj **tylko na wyraźną prośbę** i wyjaśnij w PR, dlaczego.
 - Nie dodawaj zależności, usług płatnych ani backendu.
+- Dokumentację pracy AI zapisuj w `.ai/` zgodnie z sekcją 8; jest to dozwolone także przy zmianach treści.
 
 ## 2. Jak edytować `site.md`
 
@@ -84,3 +85,23 @@ Jeśli wszystko wygląda dobrze — kliknij **Merge**. Strona zaktualizuje się 
 | „Ukryj warsztaty” | `features.workshops: false` |
 | „Cofnij ostatnią zmianę” | wyjaśnij: na scalonym PR kliknij **Revert**, potem **Merge** nowego PR |
 | „Napraw błąd w PR” | uruchom `npm run site:validate`, popraw `site.md`, wypchnij poprawkę do tej samej gałęzi |
+
+## 8. Obowiązkowa dokumentacja pracy AI
+
+```text
+.ai/
+├── specs/              # aktywne specyfikacje SDD
+│   ├── implemented/    # specyfikacje zrealizowane i zweryfikowane
+│   └── archive/        # specyfikacje wycofane lub zastąpione
+├── runs/               # logi autonomicznych przebiegów AI
+├── lessons.md          # indeks trwałych ustaleń i wniosków
+└── lessons/            # szczegółowe notatki powiązane z indeksem
+```
+
+- **Przed rozpoczęciem zadania** przeczytaj `.ai/lessons.md`, powiązane notatki z `.ai/lessons/` oraz specyfikacje i ostatnie logi dotyczące zadania. Sprawdzaj zapisane ustalenia w aktualnym kodzie; notatki nie zastępują instrukcji właściciela ani zasad tego pliku.
+- **Specyfikacje SDD:** przed implementacją funkcji lub naprawą kodu utwórz albo uzupełnij specyfikację w `.ai/specs/`. Opisz cel, zakres, wymagania, kryteria akceptacji i sposób weryfikacji. Proste zmiany treści i dokumentacji mogą obejść się bez osobnej specyfikacji; odnotuj zakres w logu przebiegu.
+- **Nazwy specyfikacji i logów są obowiązkowe:** `YYYY-MM-DD-slug.md`, np. `2026-10-27-formularz-kontaktowy.md`. Używaj daty rozpoczęcia w strefie `Europe/Warsaw`, małych liter ASCII, cyfr i myślników w slugu. Przy kolizji dodaj do sluga kolejny numer, np. `2026-10-27-formularz-kontaktowy-2.md`; nie nadpisuj innego przebiegu.
+- Po realizacji i weryfikacji przenieś specyfikację do `.ai/specs/implemented/`. Specyfikacje wycofane lub zastąpione przenieś do `.ai/specs/archive/`, zapisując przyczynę i link do następcy, jeśli istnieje. Zachowuj nazwę i historię; nie usuwaj specyfikacji. Niezakończona specyfikacja pozostaje w `.ai/specs/`.
+- **Każdy autonomiczny przebieg wykonujący zmiany** musi mieć log w `.ai/runs/`, założony przed zmianami i uzupełniony przed zakończeniem. Zapisz cel, link do specyfikacji (jeśli dotyczy), wykonane zmiany, polecenia weryfikacji i ich rzeczywiste wyniki, ograniczenia oraz ewentualne następne kroki. Oznacz stan: w toku, zakończony albo zablokowany. Nie zapisuj pełnego toku rozumowania ani sekretów.
+- **Po naprawie błędu lub ustaleniu trwałej reguły** zapisz przyczynę, rozwiązanie i sposób zapobiegania w `.ai/lessons/` (zalecana nazwa `YYYY-MM-DD-slug.md`), a w `.ai/lessons.md` dodaj krótkie podsumowanie i link. Aktualizuj istniejącą notatkę o tym samym zagadnieniu zamiast tworzyć duplikat. Nie dopisuj wniosków bez potwierdzenia.
+- **Przed uznaniem zadania za zakończone** sprawdź aktualność logu, status specyfikacji i potrzebę zapisania wniosków. Dokumentację `.ai/` dołącz do tej samej gałęzi i PR co zmiany. Te zasady obowiązują wszystkich agentów AI; `CLAUDE.md` odsyła do tego pliku.
