@@ -41,6 +41,7 @@ npm run build
 - Oba polecenia muszą zakończyć się bez błędów. **Nie twórz PR z błędami.**
 - Błędy walidatora są po polsku i mówią, co poprawić. Ostrzeżenia (⚠️) nie blokują.
 - Jeśli `npm` nie działa (brak zależności), uruchom najpierw `npm install`.
+- Przed PR przejrzyj różnice pod kątem zakresu zadania i przypadkowych zmian. Weryfikację dobierz też do efektu: przy zmianach kodu uruchom `npm run check`, a przy zmianach wyglądu lub interakcji sprawdź zmieniony fragment w przeglądarce na telefonie i komputerze (lub w odpowiadających im rozmiarach okna). Jeśli nie możesz wykonać kontroli, zapisz to w logu i podsumowaniu; nie przedstawiaj jej jako zaliczonej.
 
 ## 5. Gałąź i pull request
 
@@ -103,5 +104,10 @@ Jeśli wszystko wygląda dobrze — kliknij **Merge**. Strona zaktualizuje się 
 - **Nazwy specyfikacji i logów są obowiązkowe:** `YYYY-MM-DD-slug.md`, np. `2026-10-27-formularz-kontaktowy.md`. Używaj daty rozpoczęcia w strefie `Europe/Warsaw`, małych liter ASCII, cyfr i myślników w slugu. Przy kolizji dodaj do sluga kolejny numer, np. `2026-10-27-formularz-kontaktowy-2.md`; nie nadpisuj innego przebiegu.
 - Po realizacji i weryfikacji przenieś specyfikację do `.ai/specs/implemented/`. Specyfikacje wycofane lub zastąpione przenieś do `.ai/specs/archive/`, zapisując przyczynę i link do następcy, jeśli istnieje. Zachowuj nazwę i historię; nie usuwaj specyfikacji. Niezakończona specyfikacja pozostaje w `.ai/specs/`.
 - **Każdy autonomiczny przebieg wykonujący zmiany** musi mieć log w `.ai/runs/`, założony przed zmianami i uzupełniony przed zakończeniem. Zapisz cel, link do specyfikacji (jeśli dotyczy), wykonane zmiany, polecenia weryfikacji i ich rzeczywiste wyniki, ograniczenia oraz ewentualne następne kroki. Oznacz stan: w toku, zakończony albo zablokowany. Nie zapisuj pełnego toku rozumowania ani sekretów.
-- **Po naprawie błędu lub ustaleniu trwałej reguły** zapisz przyczynę, rozwiązanie i sposób zapobiegania w `.ai/lessons/` (zalecana nazwa `YYYY-MM-DD-slug.md`), a w `.ai/lessons.md` dodaj krótkie podsumowanie i link. Aktualizuj istniejącą notatkę o tym samym zagadnieniu zamiast tworzyć duplikat. Nie dopisuj wniosków bez potwierdzenia.
+- **Po naprawie błędu, korekcie od właściciela lub ustaleniu trwałej reguły** zapisz przyczynę, rozwiązanie i sposób zapobiegania w `.ai/lessons/` (zalecana nazwa `YYYY-MM-DD-slug.md`), a w `.ai/lessons.md` dodaj krótkie podsumowanie i link. Aktualizuj istniejącą notatkę o tym samym zagadnieniu zamiast tworzyć duplikat. Nie dopisuj wniosków bez potwierdzenia. Jeśli korekta ujawnia brak ogólnej zasady pracy, doprecyzuj odpowiedni punkt tego pliku; szczegóły konkretnego błędu zostaw we wnioskach.
 - **Przed uznaniem zadania za zakończone** sprawdź aktualność logu, status specyfikacji i potrzebę zapisania wniosków. Dokumentację `.ai/` dołącz do tej samej gałęzi i PR co zmiany. Te zasady obowiązują wszystkich agentów AI; `CLAUDE.md` odsyła do tego pliku.
+
+## 9. Planowanie i rozwiązywanie problemów
+
+- Złożone zadanie (wiele zależnych kroków, kilka obszarów kodu lub niejasne rozwiązanie) zacznij od krótkiego planu: kroki, ryzyka i sposób sprawdzenia. Zapisz go w specyfikacji z sekcji 8, a przy zadaniu bez specyfikacji — w logu. Gdy nowe fakty podważają plan lub kolejne próby nie działają, wróć do diagnozy i popraw plan przed dalszą implementacją.
+- Przy zgłoszonym błędzie lub nieudanym CI najpierw przeczytaj logi i odtwórz problem, jeśli to możliwe. Ustal przyczynę, wprowadź najprostszą poprawkę w dozwolonym zakresie i sprawdź scenariusz, który wcześniej zawodził. Wykorzystuj istniejące rozwiązania projektu; unikaj poprawek maskujących objawy i przebudowy niezwiązanej z zadaniem.
