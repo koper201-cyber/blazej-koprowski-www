@@ -1,15 +1,17 @@
 ---
 import "../styles/theme.css";
 import { getImage } from "astro:assets";
-import { loadSite } from "../lib/load-site";
+import { loadSite, todayInPoland } from "../lib/load-site";
+import { buildViewModel } from "../lib/view-model";
+import { serializeJsonLd } from "../lib/safe-html";
 import { resolveImage } from "../lib/images";
 import { isPreview, previewBranch } from "../lib/env";
 
 interface Props {
-  title?: string;
-  description?: string;
-  noindex?: boolean;
-  jsonLd?: Record<string, unknown>[];
+  title?: string | undefined;
+  description?: string | undefined;
+  noindex?: boolean | undefined;
+  jsonLd?: Record<string, unknown>[] | undefined;
 }
 
 const site = loadSite();
@@ -19,17 +21,16 @@ const pageTitle = title ? `${title} · ${data.site.name}` : data.seo.title;
 const pageDescription = description ?? data.seo.description;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
-const ogSource = resolveImage(site.imagesDir, data.seo.image ?? data.hero.image);
-const ogImage = ogSource ? await getImage({ src: ogSource, width: 1200, format: "jpg" }) : undefined;
+const ogSource = resolveImage(
+  site.imagesDir,
+  data.seo.image ?? data.hero.image,
+);
+const ogImage = ogSource
+  ? await getImage({ src: ogSource, width: 1200, format: "jpg" })
+  : undefined;
 const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site).href : undefined;
 
-const nav = [
-  data.features.about && site.sections["O mnie"] ? { href: "/#o-mnie", label: "O mnie" } : null,
-  data.features.offer && data.offer.length ? { href: "/#oferta", label: "Oferta" } : null,
-  data.features.products && data.products.length ? { href: "/#produkty", label: "Produkty" } : null,
-  data.features.workshops ? { href: "/#warsztaty", label: "Warsztaty" } : null,
-  data.features.contact ? { href: "/#kontakt", label: "Kontakt" } : null,
-].filter(Boolean) as { href: string; label: string }[];
+const { nav } = buildViewModel(data, site.sections, todayInPoland());
 ---
 
 <!doctype html>
@@ -40,7 +41,9 @@ const nav = [
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
-    {(noindex || isPreview) && <meta name="robots" content="noindex, nofollow" />}
+    {(noindex || isPreview) && (
+      <meta name="robots" content="noindex, nofollow" />
+    )}
     <meta name="theme-color" content={data.site.primary_color} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -52,46 +55,65 @@ const nav = [
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    <meta name="twitter:card" content={ogImageUrl ? "summary_large_image" : "summary"} />
+    <meta
+      name="twitter:card"
+      content={ogImageUrl ? "summary_large_image" : "summary"}
+    />
 
-    <style is:inline set:html={`:root{--primary:${data.site.primary_color};}`}></style>
-    {jsonLd.map((obj) => <script type="application/ld+json" is:inline set:html={JSON.stringify(obj)} />)}
+    <style
+      is:inline
+      set:html={`:root{--primary:${data.site.primary_color};}`}
+    ></style>
+    {jsonLd.map((obj) => (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={serializeJsonLd(obj)}
+      />
+    ))}
   </head>
   <body>
-    {
-      isPreview && (
-        <div class="preview-banner" role="status">
-          <strong>PODGLĄD</strong> — ta wersja nie jest jeszcze opublikowana
-          {previewBranch && <span class="preview-branch"> (zmiana: {previewBranch})</span>}
-        </div>
-      )
-    }
-    <a class="skip" href="#tresc">Przejdź do treści</a>
+    {isPreview && (
+      <div class="preview-banner" role="status">
+        <strong>PODGLĄD</strong> — ta wersja nie jest jeszcze opublikowana
+        {previewBranch && (
+          <span class="preview-branch"> (zmiana: {previewBranch})</span>
+        )}
+      </div>
+    )}
+    <a class="skip" href="#tresc">
+      Przejdź do treści
+    </a>
     <header class="site-header">
       <div class="wrap header-inner">
-        <a class="brand" href="/">{data.site.name}</a>
-        {
-          nav.length > 0 && (
-            <nav aria-label="Menu główne">
-              <ul>
-                {nav.map((n) => (
-                  <li>
-                    <a href={n.href}>{n.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          )
-        }
+        <a class="brand" href="/">
+          {data.site.name}
+        </a>
+        {nav.length > 0 && (
+          <nav aria-label="Menu główne">
+            <ul>
+              {nav.map((n) => (
+                <li>
+                  <a href={n.href}>{n.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
       </div>
     </header>
-    <main id="tresc">
+    <main id="tresc" tabindex="-1">
       <slot />
     </main>
     <footer class="site-footer">
       <div class="wrap footer-inner">
-        <p>© {new Date().getFullYear()} {data.site.name}{data.site.city && ` · ${data.site.city}`}</p>
-        <p><a href="/polityka-prywatnosci/">Polityka prywatności</a></p>
+        <p>
+          © {new Date().getFullYear()} {data.site.name}
+          {data.site.city && ` · ${data.site.city}`}
+        </p>
+        <p>
+          <a href="/polityka-prywatnosci/">Polityka prywatności</a>
+        </p>
       </div>
     </footer>
   </body>

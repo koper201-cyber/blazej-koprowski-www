@@ -1,6 +1,6 @@
 {
   "name": "ai-website-starter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Starter stron: jeden plik site.md + folder zdjecia/ = gotowa strona. Edycja z telefonu przez agenta AI.",
@@ -12,24 +12,49 @@
     "dev": "npm run prepare-images && astro dev",
     "prepare-images": "tsx scripts/prepare-images.ts",
     "site:validate": "tsx scripts/validate-site.ts",
-    "prebuild": "npm run prepare-images && npm run site:validate",
+    "prebuild": "npm run site:validate",
     "build": "astro build",
-    "postbuild": "tsx scripts/check-links.ts",
+    "postbuild": "tsx scripts/finalize-build.ts && tsx scripts/check-links.ts",
     "check": "astro check",
     "preview": "astro preview",
     "demo:validate": "SITE_FILE=examples/demo/site.md npm run site:validate",
-    "demo:build": "SITE_FILE=examples/demo/site.md npm run build"
+    "demo:build": "SITE_FILE=examples/demo/site.md npm run build",
+    "presite:validate": "npm run prepare-images",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:all": "ALL_BROWSERS=1 playwright test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "npm run format:check && npm run lint && npm run check && npm test && npm run site:validate && npm run build",
+    "preview:secure": "node --import tsx scripts/serve-preview.ts"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.12",
     "@astrojs/sitemap": "3.7.4",
     "astro": "7.4.2",
     "gray-matter": "^4.0.3",
     "heic-convert": "^2.1.0",
+    "js-yaml": "4.3.2",
     "marked": "^15.0.0",
-    "sharp": "^0.34.0",
+    "sanitize-html": "2.18.1",
+    "sharp": "0.35.5",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@axe-core/playwright": "4.14.0",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.1",
+    "@types/js-yaml": "4.0.9",
+    "@types/node": "24.19.2",
+    "@types/sanitize-html": "2.16.2",
+    "eslint": "10.13.0",
+    "eslint-plugin-astro": "3.2.1",
+    "parse5": "8.0.1",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.2",
     "tsx": "^4.19.0",
     "typescript": "6.0.3",
-    "zod": "^3.24.0"
+    "typescript-eslint": "8.72.1"
   }
 }

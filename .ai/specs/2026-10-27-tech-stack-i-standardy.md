@@ -1,7 +1,7 @@
 # Stos technologiczny i standardy inżynieryjne
 
 - Data researchu: **2026-10-27**, Europe/Warsaw.
-- Status: **propozycja do wdrożenia**. Dokument pozostaje w `specs/`, dopóki opisane usprawnienia nie zostaną wdrożone i zweryfikowane.
+- Status: **wdrożenie repozytorium gotowe do przeglądu; odbiór operacyjny w toku**. Dokument pozostaje w `specs/`, ponieważ konfiguracja hostingu, rzeczywisty kontakt i test na telefonie wymagają odbioru.
 - Projekt: osobista strona Błażeja Koprowskiego oraz starter stron dla małych firm, artystów i organizatorów warsztatów.
 - Punkt odniesienia: [specyfikacja produktu v2](../../docs/SPEC.md), [zasady agentów](../../AGENTS.md).
 - Zakres tego zadania: research i specyfikacja. Dokument nie oznacza instalacji nowych pakietów, aktualizacji frameworka, zmiany hostingu ani zgody na płatne usługi.
@@ -285,11 +285,11 @@ P0.4 można prowadzić równolegle do technicznych poprawek, ale uruchomienie pu
 ### Gotowość przyszłej implementacji
 
 - [ ] Instalacja i build są powtarzalne na zatwierdzonym Node LTS z lockfile.
-- [ ] Astro, integracje, TypeScript i Zod mają udokumentowane zgodne wersje.
-- [ ] Testy kontraktu i bezpieczeństwa treści działają, a błędy pozostają zrozumiałe po polsku.
-- [ ] Minimalna strona, demo i kombinacje wyłączonych sekcji mają poprawne linki, SEO i obrazy.
-- [ ] Klawiatura/mobile, kontakt i podstawowy odczyt strony działają bez frameworka klienta.
-- [ ] Sprawdzono cele dostępności i wydajności oraz udokumentowano braki danych terenowych.
+- [x] Astro, integracje, TypeScript i Zod mają udokumentowane zgodne wersje.
+- [x] Testy kontraktu i bezpieczeństwa treści działają, a błędy pozostają zrozumiałe po polsku.
+- [x] Minimalna strona, demo i kombinacje wyłączonych sekcji mają poprawne linki, SEO i obrazy.
+- [x] Klawiatura/mobile, kontakt i podstawowy odczyt strony działają bez frameworka klienta.
+- [x] Sprawdzono cele dostępności i wydajności oraz udokumentowano braki danych terenowych.
 - [ ] Preview i produkcja mają właściwą indeksację i działający scenariusz rollback/Revert.
 - [ ] Właściciel wykonuje zmianę z telefonu bez edycji kodu i akceptuje publikację przez PR.
 
@@ -301,3 +301,16 @@ P0.4 można prowadzić równolegle do technicznych poprawek, ale uruchomienie pu
 - Brak aktualnych pomiarów produkcyjnych wydajności; budżety w tej specyfikacji są propozycją, nie wynikiem benchmarku.
 - Nie przeprowadzono audytu prawnego ani pełnego audytu bezpieczeństwa. Treść dokumentu określa wymagania techniczne i nie deklaruje zgodności prawnej.
 - Dane biznesowe, e-mail, domenę i zgodę na dodatkowe narzędzia pozyskać przed pracami, które od nich zależą. Nie blokuje to ukończenia researchu.
+
+## 14. Raport wdrożenia — 2026-10-27
+
+Właściciel zlecił wdrożenie tej specyfikacji. Prace obejmują kod i konfigurację, bez scalenia PR i publikacji produkcyjnej.
+
+- Wersje wdrożone: Node 24.22.1, Astro 7.4.2, TypeScript 6.0.3, Zod 4.6.7, Sharp 0.35.5. Zod 4 przyspieszono po wykryciu [podatności starszej linii](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5); Sharp uaktualniono po [advisory librsvg](https://github.com/advisories/GHSA-wq5f-xc86-pv6w). Research z sekcji 3 pozostaje historyczną migawką.
+- Dodano lockfile, czyste npm ci, podział dependencies/devDependencies, format, lint, strict z dodatkowymi opcjami oraz macierz CI.
+- Wdrożono sanitizację Markdown, bezpieczny JSON-LD, hashe CSP, nagłówki preview, walidację obrazów, dat i URL, model widoku, względne linki, offsety DST oraz budżety JS/CSS/hero.
+- Testy: 11 scenariuszy Node (w tym 64 kombinacje flag), 84 przypadki browser (po 21 dla strony, demo, formularza-preview i strony minimalnej). Dostępne lokalnie Chromium/profil telefonu/WebKit przeszły testy. Firefox lokalnie nie uruchamia się z powodu błędu profilu macOS; nie uznano go za zaliczony. Pozostaje dostępny w ręcznym workflow na Linux.
+- npm audit po aktualizacjach: 0 znanych podatności. Zbadano zrzuty desktop/mobile; naprawiono fokus skip-linka, przepełnienie przy 200% tekstu, honeypot formularza i nadpisywanie koloru z site.md przez CSS.
+- CI sprawdza każdy wariant niezależnie, bez mieszania artefaktów demo i produkcji. Dokumentacja operacyjna: [ENGINEERING.md](../../docs/ENGINEERING.md).
+- Nadal otwarte: konfiguracja kont Cloudflare i ochrony gałęzi, prawdziwy e-mail/domena i formularz, rzeczywisty HEIC z telefonu, terenowe CWV i ścieżka telefon → PR → Merge → Revert. Nie deklarujemy pełnej zgodności WCAG ani gotowości produkcji bez tego odbioru.
+- Zod 4 został wdrożony z przyczyn bezpieczeństwa; Workers/CMS/Content Collections oraz drugi motyw pozostają poza zakresem.
