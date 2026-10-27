@@ -1,0 +1,34 @@
+{
+  "name": "ai-website-starter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Starter stron: jeden plik site.md + folder zdjecia/ = gotowa strona. Edycja z telefonu przez agenta AI.",
+  "engines": {
+    "node": ">=20.3.0"
+  },
+  "scripts": {
+    "dev": "npm run prepare-images && astro dev",
+    "prepare-images": "tsx scripts/prepare-images.ts",
+    "site:validate": "tsx scripts/validate-site.ts",
+    "prebuild": "npm run prepare-images && npm run site:validate",
+    "build": "astro build",
+    "postbuild": "tsx scripts/check-links.ts",
+    "check": "astro check",
+    "preview": "astro preview",
+    "demo:validate": "SITE_FILE=examples/demo/site.md npm run site:validate",
+    "demo:build": "SITE_FILE=examples/demo/site.md npm run build"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.0",
+    "astro": "^5.13.0",
+    "gray-matter": "^4.0.3",
+    "heic-convert": "^2.1.0",
+    "marked": "^15.0.0",
+    "sharp": "^0.34.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "zod": "^3.24.0"
+  }
+}

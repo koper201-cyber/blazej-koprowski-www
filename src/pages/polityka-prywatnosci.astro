@@ -1,0 +1,16 @@
+---
+import Base from "../layouts/Base.astro";
+import { loadSite } from "../lib/load-site";
+
+const { sections } = loadSite();
+const html = sections["Polityka prywatności"] ?? "";
+---
+
+<Base title="Polityka prywatności">
+  <section class="section">
+    <div class="wrap narrow">
+      <h1>Polityka prywatności</h1>
+      <div class="prose" set:html={html} />
+    </div>
+  </section>
+</Base>

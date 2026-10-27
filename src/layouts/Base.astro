@@ -1,0 +1,98 @@
+---
+import "../styles/theme.css";
+import { getImage } from "astro:assets";
+import { loadSite } from "../lib/load-site";
+import { resolveImage } from "../lib/images";
+import { isPreview, previewBranch } from "../lib/env";
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+}
+
+const site = loadSite();
+const { data } = site;
+const { title, description, noindex = false, jsonLd = [] } = Astro.props;
+const pageTitle = title ? `${title} · ${data.site.name}` : data.seo.title;
+const pageDescription = description ?? data.seo.description;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const ogSource = resolveImage(site.imagesDir, data.seo.image ?? data.hero.image);
+const ogImage = ogSource ? await getImage({ src: ogSource, width: 1200, format: "jpg" }) : undefined;
+const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site).href : undefined;
+
+const nav = [
+  data.features.about && site.sections["O mnie"] ? { href: "/#o-mnie", label: "O mnie" } : null,
+  data.features.offer && data.offer.length ? { href: "/#oferta", label: "Oferta" } : null,
+  data.features.products && data.products.length ? { href: "/#produkty", label: "Produkty" } : null,
+  data.features.workshops ? { href: "/#warsztaty", label: "Warsztaty" } : null,
+  data.features.contact ? { href: "/#kontakt", label: "Kontakt" } : null,
+].filter(Boolean) as { href: string; label: string }[];
+---
+
+<!doctype html>
+<html lang={data.site.language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    {(noindex || isPreview) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content={data.site.primary_color} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:site_name" content={data.site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content={ogImageUrl ? "summary_large_image" : "summary"} />
+
+    <style is:inline set:html={`:root{--primary:${data.site.primary_color};}`}></style>
+    {jsonLd.map((obj) => <script type="application/ld+json" is:inline set:html={JSON.stringify(obj)} />)}
+  </head>
+  <body>
+    {
+      isPreview && (
+        <div class="preview-banner" role="status">
+          <strong>PODGLĄD</strong> — ta wersja nie jest jeszcze opublikowana
+          {previewBranch && <span class="preview-branch"> (zmiana: {previewBranch})</span>}
+        </div>
+      )
+    }
+    <a class="skip" href="#tresc">Przejdź do treści</a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="/">{data.site.name}</a>
+        {
+          nav.length > 0 && (
+            <nav aria-label="Menu główne">
+              <ul>
+                {nav.map((n) => (
+                  <li>
+                    <a href={n.href}>{n.label}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )
+        }
+      </div>
+    </header>
+    <main id="tresc">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p>© {new Date().getFullYear()} {data.site.name}{data.site.city && ` · ${data.site.city}`}</p>
+        <p><a href="/polityka-prywatnosci/">Polityka prywatności</a></p>
+      </div>
+    </footer>
+  </body>
+</html>

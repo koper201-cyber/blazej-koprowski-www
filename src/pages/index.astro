@@ -1,0 +1,217 @@
+---
+import Base from "../layouts/Base.astro";
+import Photo from "../components/Photo.astro";
+import Contact from "../components/Contact.astro";
+import { loadSite, upcomingWorkshops } from "../lib/load-site";
+
+const site = loadSite();
+const { data, sections } = site;
+const dir = site.imagesDir;
+const about = sections["O mnie"];
+const workshops = upcomingWorkshops(data);
+const pln = new Intl.NumberFormat("pl-PL", { style: "currency", currency: "PLN", maximumFractionDigits: 0 });
+const longDate = new Intl.DateTimeFormat("pl-PL", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
+const dayNum = new Intl.DateTimeFormat("pl-PL", { day: "numeric", timeZone: "UTC" });
+const monthShort = new Intl.DateTimeFormat("pl-PL", { month: "short", timeZone: "UTC" });
+const d = (iso: string) => new Date(`${iso}T00:00:00Z`);
+const statusClass: Record<string, string> = { dostępna: "ok", sprzedana: "sold", "na zamówienie": "order" };
+
+const sameAs = [data.contact.linkedin, data.contact.instagram, data.contact.facebook, data.contact.github, data.contact.website].filter(
+  (x): x is string => Boolean(x) && /^https?:/.test(x ?? ""),
+);
+const home = Astro.site?.href;
+const jsonLd: Record<string, unknown>[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": data.site.type,
+    name: data.site.name,
+    url: home,
+    description: data.seo.description,
+    email: data.contact.email,
+    ...(data.contact.phone ? { telephone: data.contact.phone } : {}),
+    ...(data.site.city ? { address: { "@type": "PostalAddress", addressLocality: data.site.city, addressCountry: "PL" } } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
+  },
+];
+if (data.features.products) {
+  for (const p of data.products) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: p.name,
+      description: p.description,
+      offers: {
+        "@type": "Offer",
+        price: p.price,
+        priceCurrency: "PLN",
+        availability: p.status === "sprzedana" ? "https://schema.org/SoldOut" : p.status === "na zamówienie" ? "https://schema.org/PreOrder" : "https://schema.org/InStock",
+      },
+    });
+  }
+}
+if (data.features.workshops) {
+  for (const w of workshops) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: w.title,
+      startDate: w.time ? `${w.date}T${w.time}` : w.date,
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      location: { "@type": "Place", name: w.place, address: w.place },
+      organizer: { "@type": data.site.type, name: data.site.name, url: home },
+      ...(w.description ? { description: w.description } : {}),
+      offers: { "@type": "Offer", url: w.signup, priceCurrency: "PLN", ...(w.price !== undefined ? { price: w.price } : {}) },
+    });
+  }
+}
+---
+
+<Base jsonLd={jsonLd}>
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="wrap hero-inner">
+      <div class="hero-text">
+        <h1 id="hero-h">{data.hero.heading}</h1>
+        {data.hero.text && <p class="lead">{data.hero.text}</p>}
+        {data.hero.cta_label && data.hero.cta_link && <a class="btn" href={data.hero.cta_link}>{data.hero.cta_label}</a>}
+      </div>
+      {
+        data.hero.image && (
+          <div class="hero-media">
+            <Photo dir={dir} name={data.hero.image} alt={data.hero.alt} eager sizes="(max-width: 800px) 100vw, 50vw" widths={[480, 800, 1200, 1600]} />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    data.features.about && about && (
+      <section id="o-mnie" class="section" aria-labelledby="o-mnie-h">
+        <div class="wrap narrow">
+          <h2 id="o-mnie-h">O mnie</h2>
+          <div class="prose" set:html={about} />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    data.features.offer && data.offer.length > 0 && (
+      <section id="oferta" class="section section-alt" aria-labelledby="oferta-h">
+        <div class="wrap">
+          <h2 id="oferta-h">Oferta</h2>
+          <ul class="cards">
+            {data.offer.map((o) => (
+              <li class="card">
+                <h3>{o.title}</h3>
+                {o.text && <p>{o.text}</p>}
+                {o.price && <p class="price">{o.price}</p>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    data.features.products && data.products.length > 0 && (
+      <section id="produkty" class="section" aria-labelledby="produkty-h">
+        <div class="wrap">
+          <h2 id="produkty-h">Produkty</h2>
+          <ul class="grid">
+            {data.products.map((p) => (
+              <li class="product">
+                <Photo dir={dir} name={p.image} alt={p.alt ?? p.name} class="product-img" sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+                <div class="product-body">
+                  <h3>{p.name}</h3>
+                  {p.description && <p>{p.description}</p>}
+                  <p class="product-meta">
+                    <span class="price">{pln.format(p.price)}</span>
+                    <span class={`badge badge-${statusClass[p.status]}`}>{p.status}</span>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          {data.features.contact && <p class="after-grid">Chcesz kupić lub zamówić? <a href="#kontakt">Napisz do mnie</a>.</p>}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    data.features.workshops && (
+      <section id="warsztaty" class="section section-alt" aria-labelledby="warsztaty-h">
+        <div class="wrap">
+          <h2 id="warsztaty-h">Warsztaty</h2>
+          <ul class="events" data-events>
+            {workshops.map((w) => (
+              <li class="event" data-date={w.date}>
+                <div class="event-date" aria-hidden="true">
+                  <span class="event-day">{dayNum.format(d(w.date))}</span>
+                  <span class="event-month">{monthShort.format(d(w.date))}</span>
+                </div>
+                <div class="event-body">
+                  <h3>{w.title}</h3>
+                  <p class="event-meta">
+                    <time datetime={w.time ? `${w.date}T${w.time}` : w.date}>
+                      {longDate.format(d(w.date))}
+                      {w.time && `, godz. ${w.time}`}
+                    </time>
+                    {" · "}
+                    {w.place}
+                    {w.price !== undefined && ` · ${pln.format(w.price)}`}
+                  </p>
+                  {w.description && <p>{w.description}</p>}
+                  <a class="btn btn-small" href={w.signup}>
+                    Zapisz się
+                  </a>
+                </div>
+                {w.image && <Photo dir={dir} name={w.image} alt={w.alt ?? w.title} class="event-img" widths={[300, 600]} sizes="(max-width: 700px) 100vw, 240px" />}
+              </li>
+            ))}
+          </ul>
+          <p class="empty" data-events-empty hidden={workshops.length > 0}>
+            Brak nadchodzących terminów. Zajrzyj wkrótce albo <a href="#kontakt">napisz</a>, żeby dostać informację o kolejnych.
+          </p>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    data.features.testimonials && data.testimonials.length > 0 && (
+      <section id="opinie" class="section" aria-labelledby="opinie-h">
+        <div class="wrap">
+          <h2 id="opinie-h">Opinie</h2>
+          <ul class="quotes">
+            {data.testimonials.map((t) => (
+              <li>
+                <blockquote>
+                  <p>{t.text}</p>
+                  <footer>— {t.author}</footer>
+                </blockquote>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  {data.features.contact && <Contact contact={data.contact} />}
+</Base>
+
+<script>
+  // Strona jest statyczna, więc ukrywamy też warsztaty, które minęły od ostatniej publikacji.
+  const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
+  const items = document.querySelectorAll<HTMLElement>("[data-events] [data-date]");
+  let visible = 0;
+  items.forEach((el) => {
+    if ((el.dataset.date ?? "") < today) el.hidden = true;
+    else visible++;
+  });
+  const empty = document.querySelector<HTMLElement>("[data-events-empty]");
+  if (empty && items.length > 0 && visible === 0) empty.hidden = false;
+</script>
