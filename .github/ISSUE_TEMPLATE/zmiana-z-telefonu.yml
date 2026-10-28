@@ -1,0 +1,34 @@
+name: Zmiana z telefonu
+description: Opisz potrzebę jako user story i ustal, po czym poznamy, że jest spełniona.
+title: "Zmiana z telefonu: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        AI pomaga opisać zmianę własnymi słowami. Jeśli nie wiesz, co wpisać,
+        wróć do rozmowy z asystentem: ustalcie dla kogo jest zmiana, co ma się
+        zmienić i po co. Pełny proces opisuje sekcja 10 AGENTS.md.
+        Zapisanie issue nie rozpoczyna automatycznie wdrożenia.
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User story
+      description: Podaj rolę, potrzebę oraz cel lub korzyść.
+      placeholder: "Jako [kto], chcę [co], aby [cel lub korzyść]."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Kryteria akceptacji
+      description: Co musi być prawdą, żeby uznać zmianę za ukończoną?
+      placeholder: |
+        - [ ] Pierwszy sprawdzalny warunek ukończenia.
+        - [ ] Drugi sprawdzalny warunek ukończenia.
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Dodatkowe ustalone szczegóły
+      description: Opcjonalne teksty, zdjęcia lub linki potrzebne do realizacji. Bez haseł i sekretów.

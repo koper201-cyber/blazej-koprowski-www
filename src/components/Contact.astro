@@ -20,57 +20,74 @@ const thanksUrl = new URL("/dziekuje/", Astro.site).href;
     <div>
       <h2 id="kontakt-h">Kontakt</h2>
       <ul class="contact-list">
-        <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
-        {contact.phone && <li><a href={`tel:${contact.phone.replace(/\s+/g, "")}`}>{contact.phone}</a></li>}
+        <li>
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>
+        </li>
+        {contact.phone && (
+          <li>
+            <a href={`tel:${contact.phone.replace(/\s+/g, "")}`}>
+              {contact.phone}
+            </a>
+          </li>
+        )}
         {contact.address && <li>{contact.address}</li>}
       </ul>
-      {
-        socials.length > 0 && (
-          <ul class="socials">
-            {socials.map(([label, href]) => (
-              <li>
-                <a href={href} rel="me noopener" target="_blank">
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
+      {socials.length > 0 && (
+        <ul class="socials">
+          {socials.map(([label, href]) => (
+            <li>
+              <a href={href} rel="me noopener" target="_blank">
+                {label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
-    {
-      contact.form_key ? (
-        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value={contact.form_key} />
-          <input type="hidden" name="subject" value="Wiadomość ze strony" />
-          <input type="hidden" name="redirect" value={thanksUrl} />
-          <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
-          <label>
-            Imię
-            <input type="text" name="name" required autocomplete="name" />
-          </label>
-          <label>
-            E-mail
-            <input type="email" name="email" required autocomplete="email" />
-          </label>
-          <label>
-            Wiadomość
-            <textarea name="message" rows="5" required></textarea>
-          </label>
-          <button class="btn" type="submit">Wyślij wiadomość</button>
-          <p class="form-note">
-            Wysyłając wiadomość, zgadzasz się na jej przetworzenie w celu odpowiedzi.{" "}
-            <a href="/polityka-prywatnosci/">Polityka prywatności</a>.
-          </p>
-        </form>
-      ) : (
-        <div class="contact-cta">
-          <p>Najszybciej odpowiem na e-mail.</p>
-          <a class="btn" href={`mailto:${contact.email}`}>
-            Napisz e-mail
-          </a>
-        </div>
-      )
-    }
+    {contact.form_key ? (
+      <form
+        class="contact-form"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+      >
+        <input type="hidden" name="access_key" value={contact.form_key} />
+        <input type="hidden" name="subject" value="Wiadomość ze strony" />
+        <input type="hidden" name="redirect" value={thanksUrl} />
+        <input
+          type="checkbox"
+          name="botcheck"
+          hidden
+          aria-hidden="true"
+          tabindex="-1"
+          autocomplete="off"
+        />
+        <label>
+          Imię
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label>
+          E-mail
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label>
+          Wiadomość
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button class="btn" type="submit">
+          Wyślij wiadomość
+        </button>
+        <p class="form-note">
+          Wysyłając wiadomość, zgadzasz się na jej przetworzenie w celu
+          odpowiedzi. <a href="/polityka-prywatnosci/">Polityka prywatności</a>.
+        </p>
+      </form>
+    ) : (
+      <div class="contact-cta">
+        <p>Najszybciej odpowiem na e-mail.</p>
+        <a class="btn" href={`mailto:${contact.email}`}>
+          Napisz e-mail
+        </a>
+      </div>
+    )}
   </div>
 </section>

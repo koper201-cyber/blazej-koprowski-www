@@ -16,8 +16,9 @@ export function generatedPathFor(srcDir: string, fileName: string): string {
   return path.join(GENERATED_ROOT, srcDir, `${base}.jpg`);
 }
 
-async function main() {
-  const dir = imagesDir(siteFilePath());
+export async function prepareImages(
+  dir = imagesDir(siteFilePath()),
+): Promise<void> {
   if (!fs.existsSync(dir)) {
     console.log(`Brak folderu ${dir} — pomijam przygotowanie zdjęć.`);
     return;
@@ -27,14 +28,32 @@ async function main() {
   for (const f of heics) {
     const src = path.join(dir, f);
     const out = generatedPathFor(dir, f);
-    if (fs.existsSync(out) && fs.statSync(out).mtimeMs >= fs.statSync(src).mtimeMs) continue;
+    const stat = fs.lstatSync(src);
+    if (
+      !stat.isFile() ||
+      stat.isSymbolicLink() ||
+      stat.size > 15 * 1024 * 1024
+    ) {
+      throw new Error(`Zdjęcie ${f}: wymagany zwykły plik do 15 MB.`);
+    }
+    if (
+      fs.existsSync(out) &&
+      fs.statSync(out).mtimeMs >= fs.statSync(src).mtimeMs
+    )
+      continue;
     fs.mkdirSync(path.dirname(out), { recursive: true });
     try {
-      const jpg = await convert({ buffer: fs.readFileSync(src), format: "JPEG", quality: 0.9 });
+      const jpg = await convert({
+        buffer: fs.readFileSync(src),
+        format: "JPEG",
+        quality: 0.9,
+      });
       fs.writeFileSync(out, Buffer.from(jpg));
       converted++;
     } catch (e) {
-      console.error(`✖ Nie udało się przekonwertować ${src}: ${(e as Error).message}`);
+      console.error(
+        `✖ Nie udało się przekonwertować ${src}: ${(e as Error).message}`,
+      );
       process.exitCode = 1;
     }
   }
@@ -46,6 +65,11 @@ async function main() {
 }
 
 // Uruchom tylko, gdy wywołano skrypt bezpośrednio (nie przy imporcie).
-if (process.argv[1] && path.resolve(process.argv[1]).endsWith(path.join("scripts", "prepare-images.ts"))) {
-  await main();
+if (
+  process.argv[1] &&
+  path
+    .resolve(process.argv[1])
+    .endsWith(path.join("scripts", "prepare-images.ts"))
+) {
+  await prepareImages();
 }

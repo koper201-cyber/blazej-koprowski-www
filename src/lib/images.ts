@@ -14,16 +14,26 @@ const all = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true },
 );
 
-export function resolveImage(imagesDir: string, name: string | undefined): ImageMetadata | undefined {
+export function resolveImage(
+  imagesDir: string,
+  name: string | undefined,
+): ImageMetadata | undefined {
   if (!name) return undefined;
-  const dir = "/" + imagesDir.split(path.sep).join("/").replace(/^\.?\//, "");
+  const dir =
+    "/" +
+    imagesDir
+      .split(path.sep)
+      .join("/")
+      .replace(/^\.?\//, "");
   let key = `${dir}/${name}`;
   if (/\.(heic|heif)$/i.test(name)) {
     key = `/generated-images${dir}/${name.replace(/\.(heic|heif)$/i, "")}.jpg`;
   }
   const mod = all[key];
   if (!mod) {
-    throw new Error(`Nie znaleziono zdjęcia „${name}” (${key}). Uruchom „npm run site:validate”.`);
+    throw new Error(
+      `Nie znaleziono zdjęcia „${name}” (${key}). Uruchom „npm run site:validate”.`,
+    );
   }
   return mod.default;
 }

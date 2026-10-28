@@ -4,10 +4,10 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import matter from "gray-matter";
-import { marked } from "marked";
-import { siteSchema, type SiteData } from "./site-schema";
-import type { ZodIssue } from "zod";
+import { readContent } from "./content";
+import { renderSafeMarkdown } from "./safe-html";
+import { siteSchema, type SiteData, type Workshop } from "./site-schema";
+import type { $ZodIssue as ZodIssue } from "zod/v4/core";
 
 /** Plik z treścią. Domyślnie site.md; demo: SITE_FILE=examples/demo/site.md */
 export function siteFilePath(): string {
@@ -30,15 +30,20 @@ export interface RawSite {
 
 export function readRawSite(file = siteFilePath()): RawSite {
   const source = fs.readFileSync(file, "utf8");
-  const parsed = matter(source);
+  const parsed = readContent(source);
   const sectionsMd: Record<string, string> = {};
   const parts = parsed.content.split(/^#\s+(.+?)\s*$/m);
   const preamble = (parts[0] ?? "").trim();
   for (let i = 1; i < parts.length; i += 2) {
-    const heading = parts[i].trim();
+    const heading = (parts[i] ?? "").trim();
     sectionsMd[heading] = (parts[i + 1] ?? "").trim();
   }
-  return { file, frontmatter: (parsed.data ?? {}) as Record<string, unknown>, sectionsMd, preamble };
+  return {
+    file,
+    frontmatter: (parsed.data ?? {}) as Record<string, unknown>,
+    sectionsMd,
+    preamble,
+  };
 }
 
 export type ParseResult =
@@ -70,19 +75,26 @@ export function loadSite(file = siteFilePath()): Site {
   }
   const sections: Record<string, string> = {};
   for (const [heading, md] of Object.entries(res.raw.sectionsMd)) {
-    sections[heading] = marked.parse(md, { async: false }) as string;
+    sections[heading] = renderSafeMarkdown(md);
   }
   return { data: res.data, sections, file, imagesDir: imagesDir(file) };
 }
 
 /** Dzisiejsza data w Polsce jako RRRR-MM-DD. */
-export function todayInPoland(): string {
-  return new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(new Date());
+export function todayInPoland(now = new Date()): string {
+  return new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Warsaw" }).format(
+    now,
+  );
 }
 
 /** Nadchodzące warsztaty (dziś i później), posortowane od najbliższego. */
-export function upcomingWorkshops(data: SiteData, today = todayInPoland()) {
-  return data.workshops.filter((w) => w.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+export function upcomingWorkshops(
+  data: SiteData,
+  today = todayInPoland(),
+): Workshop[] {
+  return data.workshops
+    .filter((w) => w.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date));
 }
 
 /** Adres podglądu Cloudflare Pages dla gałęzi (taki sam algorytm jak Cloudflare). */

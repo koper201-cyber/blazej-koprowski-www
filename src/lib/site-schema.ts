@@ -11,58 +11,106 @@ const optionalText = z.preprocess(
   z.string().trim().optional(),
 );
 
-const requiredText = z.string({ required_error: "brak wartości" }).trim().min(1, "pole jest puste");
+const requiredText = z
+  .string({ error: "brak wartości" })
+  .trim()
+  .min(1, "pole jest puste");
 
 /** Link http(s), mailto: lub kotwica (#sekcja) albo ścieżka (/strona/). */
-const linkPattern = /^(https?:\/\/\S+|mailto:\S+|tel:\S+|#\S*|\/\S*)$/;
+const linkPattern =
+  /^(https?:\/\/[^\s\\]+|mailto:[^\s\\]+|tel:[^\s\\]+|#[^\s\\]*|\/(?!\/)[^\s\\]*)$/;
+const safeLink = (value: string): boolean => {
+  if (
+    !linkPattern.test(value) ||
+    Array.from(value).some(
+      (char) => char.charCodeAt(0) <= 32 || char.charCodeAt(0) === 127,
+    )
+  )
+    return false;
+  if (/^https?:/.test(value)) {
+    try {
+      const url = new URL(value);
+      return Boolean(url.hostname) && !url.username && !url.password;
+    } catch {
+      return false;
+    }
+  }
+  return true;
+};
 const optionalLink = z.preprocess(
   (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
-  z.string().trim().regex(linkPattern, "niepoprawny link — użyj https://…, mailto:… albo #sekcja").optional(),
+  z
+    .string()
+    .trim()
+    .refine(
+      safeLink,
+      "niepoprawny link — użyj https://…, mailto:… albo #sekcja",
+    )
+    .optional(),
+);
+const socialLink = optionalLink.refine(
+  (v) => v === undefined || v.startsWith("https://"),
+  "link profilu musi zaczynać się od https://",
 );
 const requiredLink = z
-  .string({ required_error: "brak linku" })
+  .string({ error: "brak linku" })
   .trim()
-  .regex(linkPattern, "niepoprawny link — użyj https://…, mailto:… albo #sekcja");
+  .refine(safeLink, "niepoprawny link — użyj https://…, mailto:… albo #sekcja");
 
 /** Nazwa pliku z folderu zdjecia/ (bez ścieżki). */
 const imageName = z
   .string()
   .trim()
-  .regex(/^[^/\\]+\.(jpe?g|png|webp|avif|heic|heif)$/i, "to nie wygląda na nazwę pliku zdjęcia (np. mandala.jpg)");
+  .regex(
+    /^[^/\\]+\.(jpe?g|png|webp|avif|heic|heif)$/i,
+    "to nie wygląda na nazwę pliku zdjęcia (np. mandala.jpg)",
+  );
 const optionalImage = z.preprocess(
   (v) => (typeof v === "string" && v.trim() === "" ? undefined : v),
   imageName.optional(),
 );
 
 /** Data RRRR-MM-DD. YAML zamienia ją na obiekt Date — wtedy też akceptujemy. */
-const isoDate = z
-  .union([z.date(), z.string()])
-  .transform((v, ctx) => {
-    if (v instanceof Date) {
-      if (Number.isNaN(v.getTime())) {
-        ctx.addIssue({ code: z.ZodIssueCode.custom, message: "zła data — użyj formatu RRRR-MM-DD, np. 2027-02-14" });
-        return z.NEVER;
-      }
-      return v.toISOString().slice(0, 10);
-    }
-    const s = v.trim();
-    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
-    const d = m ? new Date(`${s}T00:00:00Z`) : null;
-    if (!m || !d || Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== s) {
+const isoDate = z.union([z.date(), z.string()]).transform((v, ctx) => {
+  if (v instanceof Date) {
+    if (Number.isNaN(v.getTime())) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `zła data «${s}» — użyj formatu RRRR-MM-DD, np. 2027-02-14`,
+        code: "custom",
+        message: "zła data — użyj formatu RRRR-MM-DD, np. 2027-02-14",
       });
       return z.NEVER;
     }
-    return s;
-  });
+    return v.toISOString().slice(0, 10);
+  }
+  const s = v.trim();
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  const d = m ? new Date(`${s}T00:00:00Z`) : null;
+  if (
+    !m ||
+    !d ||
+    Number.isNaN(d.getTime()) ||
+    d.toISOString().slice(0, 10) !== s
+  ) {
+    ctx.addIssue({
+      code: "custom",
+      message: `zła data «${s}» — użyj formatu RRRR-MM-DD, np. 2027-02-14`,
+    });
+    return z.NEVER;
+  }
+  return s;
+});
 
 const price = z
-  .number({ invalid_type_error: "cena musi być samą liczbą (np. 300), bez „zł” i „PLN”", required_error: "brak ceny" })
+  .number({
+    error: "cena musi być samą liczbą (np. 300), bez „zł” i „PLN”",
+  })
   .nonnegative("cena nie może być ujemna");
 
-export const productStatuses = ["dostępna", "sprzedana", "na zamówienie"] as const;
+export const productStatuses = [
+  "dostępna",
+  "sprzedana",
+  "na zamówienie",
+] as const;
 
 export const siteSchema = z
   .object({
@@ -97,15 +145,18 @@ export const siteSchema = z
       .strict(),
     contact: z
       .object({
-        email: z.string({ required_error: "brak adresu e-mail" }).trim().email("niepoprawny adres e-mail"),
+        email: z
+          .string({ error: "brak adresu e-mail" })
+          .trim()
+          .pipe(z.email("niepoprawny adres e-mail")),
         phone: optionalText,
         address: optionalText,
         form_key: optionalText,
-        instagram: optionalLink,
-        facebook: optionalLink,
-        linkedin: optionalLink,
-        github: optionalLink,
-        website: optionalLink,
+        instagram: socialLink,
+        facebook: socialLink,
+        linkedin: socialLink,
+        github: socialLink,
+        website: socialLink,
       })
       .strict(),
     hero: z
@@ -128,7 +179,7 @@ export const siteSchema = z
         contact: z.boolean().default(true),
       })
       .strict()
-      .default({}),
+      .prefault({}),
     offer: z
       .array(
         z
@@ -149,7 +200,7 @@ export const siteSchema = z
             image: imageName,
             alt: optionalText,
             status: z.enum(productStatuses, {
-              errorMap: () => ({ message: `status musi być jednym z: ${productStatuses.join(", ")}` }),
+              error: `status musi być jednym z: ${productStatuses.join(", ")}`,
             }),
             description: optionalText,
           })

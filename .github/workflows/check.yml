@@ -4,10 +4,22 @@ on:
   pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      all_browsers:
+        description: "Sprawdź także Firefox i WebKit"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
 
 concurrency:
   group: check-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  ASTRO_TELEMETRY_DISABLED: "1"
 
 jobs:
   check:
@@ -15,27 +27,61 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: 22
+          node-version-file: .node-version
           cache: npm
-          cache-dependency-path: package.json
+      - run: npm ci
+      - run: npm run verify
+      - name: Zgodność wersji
+        run: npm ls --depth=0
 
-      - name: Instalacja
+  browser:
+    name: Przeglądarka (${{ matrix.variant }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: strona
+            file: site.md
+            branch: main
+          - variant: demo
+            file: examples/demo/site.md
+            branch: main
+          - variant: formularz-preview
+            file: tests/fixtures/site.md
+            branch: test-preview
+          - variant: minimalna
+            file: tests/fixtures/minimal.md
+            branch: main
+    env:
+      SITE_FILE: ${{ matrix.file }}
+      CF_PAGES_BRANCH: ${{ matrix.branch }}
+      ALL_BROWSERS: ${{ inputs.all_browsers && '1' || '' }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - run: npm ci
+      - name: Instalacja przeglądarek
         run: |
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
-
-      - name: Sprawdzenie site.md
-        run: npm run site:validate
-
-      - name: Sprawdzenie typów
-        run: npm run check
-
-      - name: Budowa strony i test linków
-        run: npm run build
-
-      - name: Strona demonstracyjna (tylko w repo szablonu)
-        if: hashFiles('examples/demo/site.md') != ''
-        run: npm run demo:build
+          if [ "$ALL_BROWSERS" = "1" ]; then
+            npx playwright install --with-deps chromium firefox webkit
+          else
+            npx playwright install --with-deps chromium
+          fi
+      - run: npm run build
+      - run: npm run test:e2e
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: browser-${{ matrix.variant }}
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

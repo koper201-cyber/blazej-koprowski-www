@@ -4,5 +4,7 @@ declare module "heic-convert" {
     format: "JPEG" | "PNG";
     quality?: number;
   }
-  export default function convert(options: ConvertOptions): Promise<ArrayBuffer>;
+  export default function convert(
+    options: ConvertOptions,
+  ): Promise<ArrayBuffer>;
 }
