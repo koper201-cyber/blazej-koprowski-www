@@ -101,7 +101,7 @@ Cloudflare → projekt → _Deployments_ → poprzednie wdrożenie produkcyjne �
 ## Ograniczenia MVP
 
 - Brak koszyka, płatności i rezerwacji z limitem miejsc (zapisy przez link, np. Google Forms).
-- Jeden motyw (`natural-warm`), kolor z `site.primary_color`.
+- Motywy `natural-warm` i `elevate`, wybierane przez `site.theme`; kolor główny z `site.primary_color`. Źródło adaptacji Elevate: [docs/DESIGN-SOURCES.md](docs/DESIGN-SOURCES.md).
 - Ukrywanie minionych warsztatów działa w przeglądarce od razu, ale z kodu strony znikają przy kolejnym buildzie (każdy merge).
 - Zapis zdjęcia załączonego w zadaniu agenta zależy od aplikacji — plan B opisany w `OWNER_GUIDE.md`.
 - Cloudflare rozwija teraz głównie Workers Static Assets; strona to czysty `dist/`, więc ewentualna migracja to zmiana konfiguracji hostingu, bez zmian w kodzie.

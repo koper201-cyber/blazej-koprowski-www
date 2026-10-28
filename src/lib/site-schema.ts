@@ -127,7 +127,7 @@ export const siteSchema = z
           "nazwa projektu Cloudflare: małe litery, cyfry i myślniki",
         ),
         language: z.string().default("pl"),
-        theme: z.enum(["natural-warm"]).default("natural-warm"),
+        theme: z.enum(["natural-warm", "elevate"]).default("natural-warm"),
         primary_color: z
           .string()
           .regex(/^#[0-9a-fA-F]{6}$/, "kolor w formacie #RRGGBB, np. #8A6C63")

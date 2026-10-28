@@ -4,10 +4,13 @@ import { eventStart } from "../lib/dates";
 import Base from "../layouts/Base.astro";
 import Photo from "../components/Photo.astro";
 import Contact from "../components/Contact.astro";
+import ElevateBackdrop from "../components/ElevateBackdrop.astro";
+import mindIcon from "../assets/elevate/mind.svg";
 import { loadSite, todayInPoland } from "../lib/load-site";
 
 const site = loadSite();
 const { data, sections } = site;
+const isElevate = data.site.theme === "elevate";
 const dir = site.imagesDir;
 const about = sections["O mnie"];
 const { workshops, visible, ctaLink } = buildViewModel(
@@ -115,15 +118,30 @@ if (visible.workshops) {
 
 <Base jsonLd={jsonLd}>
   <section class="hero" aria-labelledby="hero-h">
+    {isElevate && <ElevateBackdrop />}
     <div class="wrap hero-inner">
       <div class="hero-text">
+        {isElevate && (
+          <p class="hero-eyebrow">
+            <span aria-hidden="true">✦</span> {data.site.name}{" "}
+            <span aria-hidden="true">/</span> Dane · Chmura · AI
+          </p>
+        )}
         <h1 id="hero-h">{data.hero.heading}</h1>
         {data.hero.text && <p class="lead">{data.hero.text}</p>}
-        {data.hero.cta_label && ctaLink && (
-          <a class="btn" href={ctaLink}>
-            {data.hero.cta_label}
-          </a>
-        )}
+        <div class="hero-actions">
+          {data.hero.cta_label && ctaLink && (
+            <a class="btn" href={ctaLink}>
+              {data.hero.cta_label}
+              {isElevate && <span aria-hidden="true"> ↗</span>}
+            </a>
+          )}
+          {isElevate && visible.offer && (
+            <a class="hero-secondary" href="#oferta">
+              Zobacz ofertę <span aria-hidden="true">↓</span>
+            </a>
+          )}
+        </div>
       </div>
       {data.hero.image && (
         <div class="hero-media">
@@ -140,28 +158,48 @@ if (visible.workshops) {
     </div>
   </section>
 
-  {visible.about && about && (
-    <section id="o-mnie" class="section" aria-labelledby="o-mnie-h">
-      <div class="wrap narrow">
-        <h2 id="o-mnie-h">O mnie</h2>
-        <div class="prose" set:html={about} />
-      </div>
-    </section>
-  )}
-
   {visible.offer && data.offer.length > 0 && (
     <section id="oferta" class="section section-alt" aria-labelledby="oferta-h">
       <div class="wrap">
         <h2 id="oferta-h">Oferta</h2>
         <ul class="cards">
-          {data.offer.map((o) => (
+          {data.offer.map((o, index) => (
             <li class="card">
+              {isElevate && (
+                <div class="offer-card-top">
+                  <span class="offer-index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  {index === 0 ? (
+                    <img
+                      src={mindIcon.src}
+                      width="87"
+                      height="87"
+                      alt=""
+                      loading="lazy"
+                    />
+                  ) : (
+                    <span class="offer-symbol" aria-hidden="true">
+                      ↗
+                    </span>
+                  )}
+                </div>
+              )}
               <h3>{o.title}</h3>
               {o.text && <p>{o.text}</p>}
               {o.price && <p class="price">{o.price}</p>}
             </li>
           ))}
         </ul>
+      </div>
+    </section>
+  )}
+
+  {visible.about && about && (
+    <section id="o-mnie" class="section" aria-labelledby="o-mnie-h">
+      <div class:list={["wrap", isElevate ? "about-layout" : "narrow"]}>
+        <h2 id="o-mnie-h">O mnie</h2>
+        <div class="prose" set:html={about} />
       </div>
     </section>
   )}
@@ -278,7 +316,7 @@ if (visible.workshops) {
     </section>
   )}
 
-  {visible.contact && <Contact contact={data.contact} />}
+  {visible.contact && <Contact contact={data.contact} elevated={isElevate} />}
 </Base>
 
 <script>
