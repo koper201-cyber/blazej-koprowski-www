@@ -12,3 +12,4 @@ Data: 2026-10-27. Wnioski potwierdzone podczas wdrożenia standardów.
 
 - Po migracji Astro kolejność CSS nadpisywała kolor z site.md. Usunięto zbędną wartość domyślną z arkusza; test przeglądarkowy porównuje aktywny token z ustawieniem motywu.
 - Adaptacja Elevate ujawniła, że dodatkowy CTA w wspólnym nagłówku nie może używać samego `#kontakt` na podstronach. Normalizować lokalne kotwice do `/#kontakt`; istniejący check-links wykrywa brak celu na 404, stronie podziękowania i polityce prywatności. Dotyczy wszystkich wspólnych komponentów nawigacyjnych.
+- Fotograficzny PNG z edycji obrazu może przekraczać budżet hero nawet przy lekkich wariantach AVIF/WebP: kontrola obejmuje fallback. Kodowanie zdjęcia do JPEG przed buildem zachowuje efekt i pozwala spełnić limit bez wyłączania kontroli.

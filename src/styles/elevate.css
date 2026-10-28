@@ -371,6 +371,54 @@
     );
   }
 }
+
+/* Wyraźny portret w geometrycznej kompozycji, tylko w motywie Elevate. */
+[data-theme="elevate"] .hero-media {
+  position: relative;
+  isolation: isolate;
+  width: min(460px, calc(100% - 1rem));
+  justify-self: end;
+  margin: 0 auto;
+  padding: 10px;
+  background: #12131e;
+  border: 1px solid #9a89d2;
+  border-radius: 28px 28px 8px 28px;
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.28);
+}
+[data-theme="elevate"] .hero-media::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16px -12px -14px 18px;
+  background: #4b32d9;
+  border: 1px solid #a994ff;
+  border-radius: 28px 28px 8px 28px;
+  pointer-events: none;
+}
+[data-theme="elevate"] .hero-media::after {
+  content: "";
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  top: -15px;
+  right: -12px;
+  border-top: 3px solid #d8ff6b;
+  border-right: 3px solid #d8ff6b;
+  border-radius: 0 12px 0 0;
+  pointer-events: none;
+}
+[data-theme="elevate"] .hero-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 53% center;
+  border: 0;
+  border-radius: 18px 18px 3px 18px;
+  box-shadow: none;
+  mask-image: none;
+}
 .elevate-backdrop-contact {
   .elevate-layer-0 {
     width: 100%;
@@ -470,5 +518,28 @@
     .section {
       padding-block: 3.5rem;
     }
+  }
+}
+
+@media (min-width: 1000px) {
+  [data-theme="elevate"] .hero-inner:has(.hero-media) {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 3rem;
+    text-align: left;
+    align-items: center;
+  }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) .hero-eyebrow {
+    margin-left: 0;
+  }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) h1 {
+    font-size: clamp(2.8rem, 4vw, 3.8rem);
+    text-wrap: pretty;
+  }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) .hero-actions {
+    justify-content: flex-start;
+  }
+  [data-theme="elevate"] .hero-media {
+    width: min(500px, 100%);
+    margin: 0 0 0 auto;
   }
 }
