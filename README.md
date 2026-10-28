@@ -1,6 +1,6 @@
 # AI Website Starter
 
-Jedna baza kodu + jeden plik `site.md` + folder `zdjecia/` = nowa strona. Po przekazaniu właściciel zmienia stronę z telefonu przez agenta AI w chmurze (Codex albo Claude Code): **zgłoszenie → user story → issue → zlecone wdrożenie → pull request → podgląd → Merge → publikacja**, a cofnięcie to **Revert**.
+Jedna baza kodu + jeden plik `site.md` + folder `zdjecia/` = nowa strona. Po przekazaniu właściciel zmienia stronę z telefonu przez agenta AI w chmurze (Codex albo Claude Code): **zgłoszenie → user story → issue → przygotowanie zmiany → sprawdzony podgląd → zatwierdzenie albo odrzucenie**. Operacje GitHub wykonuje agent; publikacja wymaga wyraźnej decyzji o pokazanej wersji.
 
 Instrukcja dla właściciela strony: [`OWNER_GUIDE.md`](OWNER_GUIDE.md). Zasady dla agenta: [`AGENTS.md`](AGENTS.md).
 
@@ -9,9 +9,10 @@ Instrukcja dla właściciela strony: [`OWNER_GUIDE.md`](OWNER_GUIDE.md). Zasady 
 ```
 telefon → AI redaguje user story (dopytuje o braki) → GitHub Issue
 zlecone wdrożenie issue → gałąź + PR → GitHub Actions (walidacja, build)
-                                  └──► Cloudflare Pages: podgląd https://<gałąź>.<projekt>.pages.dev
-właściciel klika Merge ──► main ──► Cloudflare Pages: produkcja
-cofnięcie: Revert na scalonym PR ──► nowy PR z podglądem ──► Merge
+                                  └──► Cloudflare Pages: sprawdzony Preview URL konkretnego SHA
+właściciel zatwierdza wersję → AI sprawdza SHA i kontrole → merge → produkcja
+odrzucenie → zamknięcie propozycji bez zmiany produkcji
+cofnięcie → nowy PR przywracający treść → podgląd → decyzja
 ```
 
 - **Astro** (strona statyczna), **zod** (schemat `site.md`), zdjęcia optymalizowane do AVIF/WebP, HEIC z iPhone'a konwertowany automatycznie.
@@ -66,7 +67,7 @@ Pełny proces kontroli i ograniczenia wdrożenia: [docs/ENGINEERING.md](docs/ENG
 
 - Target: default branch.
 - ✔ Restrict deletions, ✔ Block force pushes.
-- ✔ Require a pull request before merging (0 wymaganych akceptacji — klient zatwierdza sam, scalając).
+- ✔ Require a pull request before merging (0 wymaganych recenzji GitHub — właściciel zatwierdza pokazaną wersję w rozmowie).
 - ✔ Require status checks to pass → dodaj **Sprawdzenie strony** (job z `check.yml`; pojawi się po pierwszym uruchomieniu).
 
 ### 5. Agent AI właściciela
@@ -74,7 +75,7 @@ Pełny proces kontroli i ograniczenia wdrożenia: [docs/ENGINEERING.md](docs/ENG
 **Codex (ChatGPT):** chatgpt.com/codex → _Settings → Environments → Create environment_ → wybierz repo.
 
 - Setup script: `npm ci`
-- Internet dla agenta: może zostać wyłączony (zależności instalują się w setupie).
+- Zachowaj ograniczony dostęp sieciowy: rejestry pakietów oraz dodatkowo `api.github.com`, `*.blazej-koprowski.pages.dev` i `blazej-koprowski.pages.dev` dla tej strony. Dla kopii startera użyj domen własnego projektu. Po zmianie zapisz szkic, sprawdź API i HTTP podglądu z chmury, a następnie opublikuj prywatne środowisko. Sama instalacja zależności nie zapewnia dostępu do GitHuba.
 - Sprawdź, że w zakładce Code review / GitHub aplikacja ChatGPT Codex Connector ma dostęp do organizacji klienta.
 
 **Claude Code (aplikacja Claude):** claude.ai/code → połącz GitHub → zainstaluj aplikację Claude GitHub na organizacji klienta → wybierz repo. W ustawieniach środowiska jako setup ustaw `npm ci` (albo dopuść dostęp do rejestru npm).

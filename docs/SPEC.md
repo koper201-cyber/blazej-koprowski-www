@@ -162,7 +162,7 @@ Zasady:
 - Zwykłe zmiany treści: edytuj **tylko** `site.md` i `zdjecia/`. Zmiany w `src/`, konfiguracji, zależnościach — tylko na wyraźną prośbę i z wyjaśnieniem w PR.
 - Przed PR zawsze: `npm run site:validate` i `npm run build`; nie twórz PR z błędami.
 - Zawsze przez gałąź i PR, nigdy bezpośrednio na `main`. Nazwa gałęzi krótka, bez polskich znaków (np. `warsztat-luty`).
-- Opis PR po polsku, prostym językiem: co zmieniono, sekcja „⚠️ Do sprawdzenia” dla cen/linków/kontaktu, link podglądu `https://<gałąź>.<projekt>.pages.dev`.
+- Opis PR po polsku, prostym językiem: co zmieniono, sekcja „⚠️ Do sprawdzenia” dla cen/linków/kontaktu, sprawdzony Preview URL konkretnego commita (sekcja 11 `AGENTS.md`).
 - Nie wymyślaj danych (cen, dat, adresów) — jeśli brakuje, zapytaj.
 - Nie usuwaj treści bez wyraźnej prośby; nigdy nie wpisuj sekretów do repo.
 - `CLAUDE.md` zawiera jedną linię: „Zasady pracy w tym repo: zobacz AGENTS.md”.
@@ -171,7 +171,7 @@ Zasady:
 - Sekrety wyłącznie w ustawieniach usług, nigdy w repo (klucz publiczny formularza nie jest sekretem).
 - Osobne repo i konta dla każdego klienta.
 - Brak przechowywania danych osobowych i płatności po naszej stronie (formularze/zapisy u zewnętrznych dostawców; polityka prywatności je wymienia).
-- Nic wygenerowanego przez AI nie trafia na produkcję bez merge właściciela; ochrona `main` to wymusza.
+- Nic wygenerowanego przez AI nie trafia na produkcję bez wyraźnej decyzji właściciela o pokazanej wersji. AI może wykonać zlecone scalenie dopiero po sprawdzeniu warunków sekcji 11 `AGENTS.md`; wcześniejszy zakaz scalania pozostaje wiążący.
 - Dependabot (miesięcznie) dla zależności; zmiany zależności zatwierdza wykonawca, nie klient.
 
 ## 12. Poza MVP
