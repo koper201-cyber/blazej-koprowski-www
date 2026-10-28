@@ -26,8 +26,8 @@ contact:
   linkedin: "https://www.linkedin.com/in/blazej-koprowski-89287b17/"
 
 hero:
-  heading: "Twój pomysł. Moje doświadczenie. Oprogramowanie tworzone z AI."
-  text: "Jestem Błażej Koprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
+  heading: "Twój pomysł. Moje doświadczenie."
+  text: "Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
   cta_label: "Porozmawiajmy tu i teraz"
   cta_link: "#kontakt"
   image: "blazej-na-zaglowce.jpg"
