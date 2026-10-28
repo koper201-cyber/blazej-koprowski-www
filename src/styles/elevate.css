@@ -371,6 +371,38 @@
     );
   }
 }
+
+/* Portret przenika do tła; efekt jest aktywny wyłącznie przy zdjęciu. */
+[data-theme="elevate"] .hero-media {
+  position: relative;
+  isolation: isolate;
+  width: min(540px, 100%);
+  margin: -1rem auto -3rem;
+}
+[data-theme="elevate"] .hero-media::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16% 8% 12%;
+  background: radial-gradient(ellipse, rgb(95 57 175 / 0.32), transparent 70%);
+  filter: blur(28px);
+  pointer-events: none;
+}
+[data-theme="elevate"] .hero-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(180deg, transparent, #000 20%, #000 62%, transparent);
+  mask-composite: intersect;
+}
 .elevate-backdrop-contact {
   .elevate-layer-0 {
     width: 100%;
@@ -470,5 +502,29 @@
     .section {
       padding-block: 3.5rem;
     }
+  }
+}
+
+@media (min-width: 1000px) {
+  [data-theme="elevate"] .hero-inner:has(.hero-media) {
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 1.5rem;
+    text-align: left;
+    align-items: center;
+  }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) .hero-eyebrow {
+    margin-left: 0;
+  }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) h1 {
+    font-size: clamp(2.8rem, 4vw, 3.8rem);
+    text-wrap: pretty;
+  }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) .hero-actions {
+    justify-content: flex-start;
+  }
+  [data-theme="elevate"] .hero-media {
+    width: 115%;
+    max-width: none;
+    margin: -3rem -8% -4rem 0;
   }
 }
