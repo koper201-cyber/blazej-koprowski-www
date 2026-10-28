@@ -51,7 +51,7 @@ offer:
   - title: "Programowanie z AI"
     text: "Tworzenie oprogramowania i automatyzacji z wykorzystaniem agentów i modeli AI."
   - title: "Szkolenia"
-    text: "Szkolenia z baz danych, ETL i BI dla zespołów."
+    text: "Szkolenia z programowania z AI oraz z baz danych, ETL i BI dla zespołów."
 ---
 
 # O mnie

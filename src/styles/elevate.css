@@ -240,15 +240,17 @@
     letter-spacing: 0.12em;
     color: #bbb0df;
   }
-  .offer-card-top img {
-    width: 87px;
-    height: 87px;
-    max-width: none;
-  }
-  .offer-symbol {
-    font-size: 2rem;
-    color: #a89bc9;
-    line-height: 1;
+  .offer-icon {
+    display: grid;
+    place-items: center;
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    color: #d8ff6b;
+    background: linear-gradient(145deg, #3a2868, #20192f);
+    border: 1px solid #7964ac;
+    border-radius: 18px 18px 5px 18px;
+    box-shadow: 4px 4px 0 #30204e;
   }
   .card p {
     color: #c1c0d2;
