@@ -102,6 +102,7 @@ Cloudflare → projekt → _Deployments_ → poprzednie wdrożenie produkcyjne �
 
 - Brak koszyka, płatności i rezerwacji z limitem miejsc (zapisy przez link, np. Google Forms).
 - Motywy `natural-warm` i `elevate`, wybierane przez `site.theme`; kolor główny z `site.primary_color`. Źródło adaptacji Elevate: [docs/DESIGN-SOURCES.md](docs/DESIGN-SOURCES.md).
+- Opcjonalny blok `sales` w `site.md` zawiera etykiety nagłówków, opis kontaktu i `mobile_contact` (pasek telefonu/poczty na małych ekranach, tylko przy `features.contact: true`). `sales.process` i `sales.expertise` można pominąć niezależnie; pominięcie całego `sales` przywraca dotychczasowy układ bez nowych sekcji. Przykład w głównym `site.md`; lista problemów klienta korzysta z istniejącego `offer`. Schemat pozostaje źródłem dozwolonych pól.
 - Ukrywanie minionych warsztatów działa w przeglądarce od razu, ale z kodu strony znikają przy kolejnym buildzie (każdy merge).
 - Zapis zdjęcia załączonego w zadaniu agenta zależy od aplikacji — plan B opisany w `OWNER_GUIDE.md`.
 - Cloudflare rozwija teraz głównie Workers Static Assets; strona to czysty `dist/`, więc ewentualna migracja to zmiana konfiguracji hostingu, bez zmian w kodzie.

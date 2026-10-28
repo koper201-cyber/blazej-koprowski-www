@@ -5,8 +5,10 @@ import ElevateBackdrop from "./ElevateBackdrop.astro";
 interface Props {
   contact: SiteData["contact"];
   elevated?: boolean;
+  heading?: string | undefined;
+  text?: string | undefined;
 }
-const { contact, elevated = false } = Astro.props;
+const { contact, elevated = false, heading = "Kontakt", text } = Astro.props;
 const socials = [
   ["LinkedIn", contact.linkedin],
   ["Instagram", contact.instagram],
@@ -21,7 +23,8 @@ const thanksUrl = new URL("/dziekuje/", Astro.site).href;
   {elevated && <ElevateBackdrop variant="contact" />}
   <div class="wrap contact-grid">
     <div>
-      <h2 id="kontakt-h">Kontakt</h2>
+      <h2 id="kontakt-h">{heading}</h2>
+      {text && <p class="sales-contact-intro">{text}</p>}
       <ul class="contact-list">
         <li>
           <a href={`mailto:${contact.email}`}>{contact.email}</a>
@@ -90,6 +93,14 @@ const thanksUrl = new URL("/dziekuje/", Astro.site).href;
         <a class="btn" href={`mailto:${contact.email}`}>
           Napisz e-mail
         </a>
+        {text && contact.phone && (
+          <a
+            class="sales-contact-phone"
+            href={`tel:${contact.phone.replace(/\s+/g, "")}`}
+          >
+            Zadzwoń: {contact.phone}
+          </a>
+        )}
       </div>
     )}
   </div>

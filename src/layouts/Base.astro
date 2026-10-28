@@ -1,6 +1,7 @@
 ---
 import "../styles/theme.css";
 import "../styles/elevate.css";
+import "../styles/sales.css";
 import { getImage } from "astro:assets";
 import { loadSite, todayInPoland } from "../lib/load-site";
 import { buildViewModel } from "../lib/view-model";
@@ -31,7 +32,12 @@ const ogImage = ogSource
   : undefined;
 const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site).href : undefined;
 
-const { nav, ctaLink } = buildViewModel(data, site.sections, todayInPoland());
+const { nav, ctaLink, visible } = buildViewModel(
+  data,
+  site.sections,
+  todayInPoland(),
+);
+const mobileContact = Boolean(data.sales?.mobile_contact && visible.contact);
 const isElevate = data.site.theme === "elevate";
 const headerCtaLink = ctaLink?.startsWith("#") ? `/${ctaLink}` : ctaLink;
 const initials = data.site.name
@@ -80,7 +86,7 @@ const initials = data.site.name
       />
     ))}
   </head>
-  <body>
+  <body class:list={[{ "has-mobile-contact": mobileContact }]}>
     {isPreview && (
       <div class="preview-banner" role="status">
         <strong>PODGLĄD</strong> — ta wersja nie jest jeszcze opublikowana
@@ -148,5 +154,13 @@ const initials = data.site.name
         </p>
       </div>
     </footer>
+    {mobileContact && (
+      <nav class="sales-mobile-contact" aria-label="Szybki kontakt">
+        {data.contact.phone && (
+          <a href={`tel:${data.contact.phone.replace(/\s+/g, "")}`}>Zadzwoń</a>
+        )}
+        <a href={`mailto:${data.contact.email}`}>Napisz</a>
+      </nav>
+    )}
   </body>
 </html>

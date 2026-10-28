@@ -1,0 +1,139 @@
+.sales-hero-contact {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.95rem;
+}
+.sales-hero-contact a,
+.sales-contact-phone {
+  overflow-wrap: anywhere;
+  color: var(--text);
+  text-underline-offset: 0.25em;
+}
+[data-theme="elevate"] .sales-offer .cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+[data-theme="elevate"] .sales-offer .offer-card-top {
+  min-height: 95px;
+}
+.sales-process h2 {
+  max-width: 850px;
+  margin-bottom: 3rem;
+}
+.sales-steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem;
+}
+.sales-steps li {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 1.5rem;
+}
+.sales-step-number {
+  display: block;
+  color: var(--primary-dark);
+  margin-bottom: 1.75rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+.sales-steps p,
+.sales-expertise p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.sales-expertise-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  align-items: start;
+  gap: 4rem;
+}
+.sales-enterprise {
+  padding: 2rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.sales-contact-intro {
+  margin-block: 1.5rem;
+  max-width: 55ch;
+  color: var(--muted);
+}
+.sales-contact-phone {
+  display: block;
+  margin-top: 1.5rem;
+}
+.sales-mobile-contact {
+  display: none;
+}
+@media (max-width: 900px) {
+  .sales-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sales-expertise-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+@media (max-width: 640px) {
+  [data-theme="elevate"] .hero:has(.sales-hero-contact) {
+    padding-top: 2rem;
+  }
+  [data-theme="elevate"] .hero:has(.sales-hero-contact) h1 {
+    font-size: clamp(1.65rem, 7.8vw, 3rem);
+  }
+  [data-theme="elevate"] .sales-offer .cards,
+  .sales-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sales-enterprise {
+    padding: 1.5rem;
+  }
+  .has-mobile-contact {
+    --contact-bar-height: calc(4.5rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: var(--contact-bar-height);
+  }
+  html:has(.has-mobile-contact) {
+    scroll-padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px));
+  }
+  .has-mobile-contact :focus-visible {
+    scroll-margin-bottom: var(--contact-bar-height);
+  }
+  .sales-mobile-contact {
+    display: flex;
+    position: fixed;
+    z-index: 30;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    min-height: var(--contact-bar-height);
+    padding: 0.65rem 1rem calc(0.65rem + env(safe-area-inset-bottom, 0px));
+    gap: 0.75rem;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
+  }
+  .sales-mobile-contact a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.35rem;
+    color: var(--bg);
+    background: var(--text);
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 650;
+  }
+  .sales-mobile-contact a:hover {
+    color: var(--bg);
+    background: var(--primary-dark);
+  }
+}

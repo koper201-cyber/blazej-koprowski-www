@@ -98,6 +98,8 @@ Możesz zacząć od poniższych zdań. Asystent dopisze user story na podstawie 
 
 ## Ważne
 
+Po publikacji oferty sprawdź ją z osobą spoza IT: po pierwszym ekranie powinna umieć powiedzieć, co oferujesz, dla kogo i jak się odezwać. Raz w tygodniu zanotuj liczbę zapytań, ile dotyczyło pasującego projektu oraz skąd te osoby trafiły na stronę (możesz je o to zapytać). Wystarczą zbiorcze liczby bez danych osobowych klientów. To ręczna ocena skuteczności; strona nie otrzymuje nowego śledzenia ani automatycznych raportów.
+
 - Nic nie trafia na stronę bez wyraźnego zatwierdzenia konkretnej wersji do publikacji.
 - Asystent nie powinien wymyślać cen ani dat — jeśli o coś zapyta, po prostu odpowiedz.
 - Jeżeli asystent nie ma dostępu do GitHuba, pokaże szkic i napisze, że zgłoszenie nie zostało zapisane. Najpierw trzeba udostępnić repozytorium lub ręcznie zapisać issue; sam szkic nie uruchamia wdrożenia.

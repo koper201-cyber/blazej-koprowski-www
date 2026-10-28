@@ -5,6 +5,7 @@ import Base from "../layouts/Base.astro";
 import Photo from "../components/Photo.astro";
 import Contact from "../components/Contact.astro";
 import ElevateBackdrop from "../components/ElevateBackdrop.astro";
+import SalesSections from "../components/SalesSections.astro";
 import mindIcon from "../assets/elevate/mind.svg";
 import { loadSite, todayInPoland } from "../lib/load-site";
 
@@ -123,8 +124,15 @@ if (visible.workshops) {
       <div class="hero-text">
         {isElevate && (
           <p class="hero-eyebrow">
-            <span aria-hidden="true">✦</span> {data.site.name}{" "}
-            <span aria-hidden="true">/</span> Dane · Chmura · AI
+            <span aria-hidden="true">✦</span>
+            {data.sales ? (
+              data.sales.eyebrow
+            ) : (
+              <>
+                {data.site.name} <span aria-hidden="true">/</span> Dane · Chmura
+                · AI
+              </>
+            )}
           </p>
         )}
         <h1 id="hero-h">{data.hero.heading}</h1>
@@ -136,12 +144,36 @@ if (visible.workshops) {
               {isElevate && <span aria-hidden="true"> ↗</span>}
             </a>
           )}
-          {isElevate && visible.offer && (
-            <a class="hero-secondary" href="#oferta">
-              Zobacz ofertę <span aria-hidden="true">↓</span>
+          {data.sales && visible.contact && data.contact.phone ? (
+            <a
+              class="hero-secondary"
+              href={`tel:${data.contact.phone.replace(/\s+/g, "")}`}
+            >
+              Zadzwoń
             </a>
+          ) : (
+            isElevate &&
+            visible.offer && (
+              <a class="hero-secondary" href="#oferta">
+                Zobacz ofertę <span aria-hidden="true">↓</span>
+              </a>
+            )
           )}
         </div>
+        {data.sales && visible.contact && (
+          <ul class="sales-hero-contact" aria-label="Kontakt bezpośredni">
+            <li>
+              <a href={`mailto:${data.contact.email}`}>{data.contact.email}</a>
+            </li>
+            {data.contact.phone && (
+              <li>
+                <a href={`tel:${data.contact.phone.replace(/\s+/g, "")}`}>
+                  {data.contact.phone}
+                </a>
+              </li>
+            )}
+          </ul>
+        )}
       </div>
       {data.hero.image && (
         <div class="hero-media">
@@ -159,9 +191,17 @@ if (visible.workshops) {
   </section>
 
   {visible.offer && data.offer.length > 0 && (
-    <section id="oferta" class="section section-alt" aria-labelledby="oferta-h">
+    <section
+      id="oferta"
+      class:list={[
+        "section",
+        "section-alt",
+        { "sales-offer": Boolean(data.sales) },
+      ]}
+      aria-labelledby="oferta-h"
+    >
       <div class="wrap">
-        <h2 id="oferta-h">Oferta</h2>
+        <h2 id="oferta-h">{data.sales?.offer_heading ?? "Oferta"}</h2>
         <ul class="cards">
           {data.offer.map((o, index) => (
             <li class="card">
@@ -195,10 +235,12 @@ if (visible.workshops) {
     </section>
   )}
 
+  {data.sales && <SalesSections sales={data.sales} />}
+
   {visible.about && about && (
     <section id="o-mnie" class="section" aria-labelledby="o-mnie-h">
       <div class:list={["wrap", isElevate ? "about-layout" : "narrow"]}>
-        <h2 id="o-mnie-h">O mnie</h2>
+        <h2 id="o-mnie-h">{data.sales?.about_heading ?? "O mnie"}</h2>
         <div class="prose" set:html={about} />
       </div>
     </section>
@@ -316,7 +358,14 @@ if (visible.workshops) {
     </section>
   )}
 
-  {visible.contact && <Contact contact={data.contact} elevated={isElevate} />}
+  {visible.contact && (
+    <Contact
+      contact={data.contact}
+      elevated={isElevate}
+      heading={data.sales?.contact_heading}
+      text={data.sales?.contact_text}
+    />
+  )}
 </Base>
 
 <script>

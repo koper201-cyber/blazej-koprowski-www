@@ -1,5 +1,62 @@
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { readFileSync } from "node:fs";
+import { readContent } from "../../src/lib/content";
+import { siteSchema } from "../../src/lib/site-schema";
+
+const siteData = siteSchema.parse(
+  readContent(readFileSync(process.env.SITE_FILE ?? "site.md", "utf8")).data,
+);
+
+test("sekcje oferty i mobilny kontakt działają bez zasłaniania stopki", async ({
+  page,
+}, testInfo) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto("/");
+  const bar = page.getByRole("navigation", { name: "Szybki kontakt" });
+  if (!siteData.sales) {
+    await expect(page.locator("#wspolpraca, #doswiadczenie")).toHaveCount(0);
+    await expect(bar).toHaveCount(0);
+    return;
+  }
+  if (siteData.sales.process)
+    await expect(page.locator("#wspolpraca ol > li")).toHaveCount(
+      siteData.sales.process.steps.length,
+    );
+  if (siteData.sales.expertise)
+    await expect(
+      page.getByRole("heading", {
+        name: siteData.sales.expertise.enterprise_heading,
+      }),
+    ).toBeVisible();
+  if (!siteData.features.contact || !siteData.sales.mobile_contact) {
+    await expect(bar).toHaveCount(0);
+    return;
+  }
+  await expect(bar).toBeVisible();
+  await expect(
+    bar.getByRole("link", { name: "Napisz", exact: true }),
+  ).toHaveAttribute("href", `mailto:${siteData.contact.email}`);
+  if (siteData.contact.phone)
+    await expect(
+      bar.getByRole("link", { name: "Zadzwoń", exact: true }),
+    ).toHaveAttribute(
+      "href",
+      `tel:${siteData.contact.phone.replace(/\s+/g, "")}`,
+    );
+  await page.evaluate(() =>
+    window.scrollTo(0, document.documentElement.scrollHeight),
+  );
+  const footer = await page.locator(".site-footer").boundingBox();
+  const bounds = await bar.boundingBox();
+  expect(footer!.y + footer!.height).toBeLessThanOrEqual(bounds!.y + 1);
+  await page.locator(".site-footer a").last().focus();
+  const focused = await page.locator(".site-footer a").last().boundingBox();
+  expect(focused!.y + focused!.height).toBeLessThanOrEqual(bounds!.y);
+  await page.screenshot({ path: testInfo.outputPath("mobile-footer.png") });
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await expect(bar).toBeHidden();
+});
 
 test("semantyka, bezpieczeństwo i dostępność", async ({ page }) => {
   const errors: string[] = [];
@@ -152,11 +209,13 @@ test("powiększony tekst, ograniczenie ruchu i podgląd wizualny", async ({
     document.documentElement.style.fontSize = "";
   });
   await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.screenshot({ path: testInfo.outputPath("desktop-viewport.png") });
   await page.screenshot({
     path: testInfo.outputPath("desktop.png"),
     fullPage: true,
   });
   await page.setViewportSize({ width: 320, height: 800 });
+  await page.screenshot({ path: testInfo.outputPath("mobile-viewport.png") });
   await page.screenshot({
     path: testInfo.outputPath("mobile.png"),
     fullPage: true,

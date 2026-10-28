@@ -159,6 +159,37 @@ export const siteSchema = z
         website: socialLink,
       })
       .strict(),
+    sales: z
+      .object({
+        eyebrow: requiredText,
+        offer_heading: requiredText,
+        about_heading: requiredText,
+        contact_heading: requiredText,
+        contact_text: requiredText,
+        mobile_contact: z.boolean().default(false),
+        process: z
+          .object({
+            heading: requiredText,
+            steps: z
+              .array(
+                z.object({ title: requiredText, text: requiredText }).strict(),
+              )
+              .min(1),
+          })
+          .strict()
+          .optional(),
+        expertise: z
+          .object({
+            heading: requiredText,
+            text: requiredText,
+            enterprise_heading: requiredText,
+            enterprise_text: requiredText,
+          })
+          .strict()
+          .optional(),
+      })
+      .strict()
+      .optional(),
     hero: z
       .object({
         heading: requiredText,
@@ -254,6 +285,7 @@ export const FIELD_LABELS: Record<string, string> = {
   site: "Ustawienia strony (site)",
   seo: "SEO (seo)",
   contact: "Kontakt (contact)",
+  sales: "Oferta i współpraca (sales)",
   hero: "Nagłówek strony (hero)",
   features: "Włączone sekcje (features)",
   offer: "Oferta",

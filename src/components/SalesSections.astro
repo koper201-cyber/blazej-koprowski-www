@@ -1,0 +1,49 @@
+---
+import type { SiteData } from "../lib/site-schema";
+
+interface Props {
+  sales: NonNullable<SiteData["sales"]>;
+}
+const { sales } = Astro.props;
+---
+
+{sales.process && (
+  <section
+    id="wspolpraca"
+    class="section sales-process"
+    aria-labelledby="wspolpraca-h"
+  >
+    <div class="wrap">
+      <h2 id="wspolpraca-h">{sales.process.heading}</h2>
+      <ol class="sales-steps">
+        {sales.process.steps.map((step, index) => (
+          <li>
+            <span class="sales-step-number" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+)}
+{sales.expertise && (
+  <section
+    id="doswiadczenie"
+    class="section section-alt sales-expertise"
+    aria-labelledby="doswiadczenie-h"
+  >
+    <div class="wrap sales-expertise-grid">
+      <div>
+        <h2 id="doswiadczenie-h">{sales.expertise.heading}</h2>
+        <p>{sales.expertise.text}</p>
+      </div>
+      <div class="sales-enterprise">
+        <h3>{sales.expertise.enterprise_heading}</h3>
+        <p>{sales.expertise.enterprise_text}</p>
+      </div>
+    </div>
+  </section>
+)}

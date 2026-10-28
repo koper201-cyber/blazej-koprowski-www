@@ -25,6 +25,49 @@ import {
 const source = fs.readFileSync("examples/demo/site.md", "utf8");
 const fixture = () => siteSchema.parse(readContent(source).data);
 
+test("opcjonalna oferta sprzedażowa zachowuje stare warianty i odrzuca puste etapy", () => {
+  assert.equal(fixture().sales, undefined);
+  const data = {
+    ...fixture(),
+    sales: {
+      eyebrow: "Aplikacje",
+      offer_heading: "Problemy",
+      about_heading: "Osoba",
+      contact_heading: "Rozmowa",
+      contact_text: "Opisz projekt",
+      mobile_contact: true,
+      process: {
+        heading: "Proces",
+        steps: [{ title: "Ustalenia", text: "Poznajemy cel" }],
+      },
+    },
+  };
+  assert.equal(siteSchema.safeParse(data).success, true);
+  assert.equal(
+    siteSchema.safeParse({
+      ...data,
+      sales: { ...data.sales, process: { heading: "Proces", steps: [] } },
+    }).success,
+    false,
+  );
+  assert.equal(
+    siteSchema.safeParse({ ...data, sales: undefined }).success,
+    true,
+  );
+  assert.equal(
+    siteSchema.safeParse({
+      ...data,
+      sales: {
+        ...data.sales,
+        process: undefined,
+        expertise: undefined,
+        mobile_contact: false,
+      },
+    }).success,
+    true,
+  );
+});
+
 test("parser zachowuje niecytowane daty; schemat odrzuca nieistniejący dzień", () => {
   const raw = readContent(source.replace("2027-02-14", "2027-02-30"));
   assert.equal(
