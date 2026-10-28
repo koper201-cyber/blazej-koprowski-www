@@ -28,7 +28,7 @@ contact:
 hero:
   heading: "Twój pomysł. Moje doświadczenie. Oprogramowanie tworzone z AI."
   text: "Tworzę kompletne aplikacje dla firm i founderów — od ustalenia potrzeb, przez programowanie z pomocą AI i testy, po wdrożenie oraz dalszy rozwój. Łączę doświadczenie startupowe z ponad 18 latami pracy w IT, bazach danych, integracjach i chmurze."
-  cta_label: "Porozmawiajmy o Twojej aplikacji"
+  cta_label: "Porozmawiajmy tu i teraz"
   cta_link: "#kontakt"
   image: ""                      # np. portret.jpg z folderu zdjecia/
   alt: ""
