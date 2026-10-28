@@ -30,8 +30,8 @@ hero:
   text: "Jestem Błażej Koprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
   cta_label: "Porozmawiajmy"
   cta_link: "#kontakt"
-  image: ""                      # np. portret.jpg z folderu zdjecia/
-  alt: ""
+  image: "blazej-koprowski.jpg"
+  alt: "Błażej Koprowski w białym swetrze, na tle tablicy w biurze"
 
 features:
   about: true
@@ -60,7 +60,7 @@ Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz w�
 
 **Doświadczenie**
 
-- **Senior Data Engineer** — Autoliv, freelance (od 2022)
+- **Senior Data Engineer** — Autoliv (od 2022)
 - **Senior Business Intelligence Specialist** — DNA Oyj, freelance (2016–2022)
 - **ETL Developer** — Roche (2012–2016)
 - **Deployment Specialist** — ATREM (2008–2012)
