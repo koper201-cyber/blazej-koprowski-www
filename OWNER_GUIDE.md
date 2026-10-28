@@ -33,31 +33,32 @@ Asystent zapisze **issue**, czyli zgłoszenie w GitHubie, z user story i listą 
 
 Telefon możesz zablokować — po doprecyzowaniu i zleceniu wdrożenia asystent pracuje w chmurze.
 
-### 4. Utwórz zmianę do sprawdzenia (pull request)
+### 4. Poczekaj na podgląd
 
-Gdy asystent skończy, przeczytaj podsumowanie i naciśnij **Create PR** (Utwórz PR).
+Asystent sam przygotowuje zmianę i zapisuje ją do sprawdzenia. Dostaniesz krótki opis, numer wersji i klikalny link **Obejrzyj podgląd**. Nie musisz otwierać GitHuba ani tworzyć PR.
 
-### 5. Obejrzyj podgląd
+Podgląd pokazuje propozycję; strona publiczna czeka na Twoją decyzję. Jeśli budowanie trwa albo wystąpi błąd, asystent powinien to wyjaśnić. Sam komunikat „zmieniono plik” nie kończy pracy.
 
-Po 1–2 minutach pod PR-em pojawi się link do podglądu (komentarz od Cloudflare), a asystent podaje go też w opisie. Strona podglądu ma u góry czarny pasek **PODGLĄD** — to jeszcze nie jest wersja, którą widzą inni.
+### 5. Sprawdź na telefonie
 
-- Coś nie tak? Wróć do tego samego zadania i napisz poprawkę, np. „Zmień godzinę na 18:30”.
-- Sprawdź zawsze sekcję **⚠️ Do sprawdzenia** w opisie — są tam zmienione ceny, linki i dane kontaktowe.
+Otwórz podgląd i obejrzyj zmieniony fragment. Sprawdź też wskazane ceny, linki i dane kontaktowe.
 
-### 6. Opublikuj
+- Chcesz poprawki? Wróć do tej samej rozmowy i napisz, co poprawić. Dostaniesz nowy podgląd do sprawdzenia.
+- Rezygnujesz? Napisz **„Odrzucam tę wersję”**. Strona publiczna pozostaje bez zmian.
 
-W PR-ze (aplikacja GitHub albo github.com) naciśnij **Merge pull request** → **Confirm merge**. Po 1–2 minutach zmiana jest na stronie.
+### 6. Podejmij decyzję o publikacji
+
+Jeżeli podgląd jest dobry, napisz **„Zatwierdzam tę wersję do publikacji”**. Asystent sprawdzi, czy wersja nadal jest ta sama i czy kontrole przeszły, a następnie wykona zleconą publikację. Dopiero po sprawdzeniu publicznej strony potwierdzi „Opublikowane” i poda jej adres.
+
+Jeśli wcześniej zakazałeś publikowania lub scalania, musisz wyraźnie odwołać ten zakaz dla zatwierdzanej wersji. Akceptacja podglądu nie zatwierdza innych otwartych zmian.
+
+Ten proces wymaga włączonej integracji i opublikowanych instrukcji projektu. Otwarte PR z instrukcjami jeszcze nie zmieniają działania nowych rozmów na głównej gałęzi.
 
 ---
 
 ## Jak cofnąć zmianę
 
-1. Wejdź na github.com → Twoje repozytorium → **Pull requests** → **Closed**.
-2. Otwórz PR ze zmianą, którą chcesz cofnąć.
-3. Na dole naciśnij **Revert** → **Create pull request**.
-4. Obejrzyj podgląd (jak w kroku 5) i naciśnij **Merge**.
-
-Strona wraca do poprzedniej wersji. Jeśli coś pójdzie bardzo źle — napisz do osoby, która zrobiła Ci stronę; może przywrócić poprzednią wersję w kilka sekund.
+Napisz: „Cofnij zmianę [opis lub numer wersji]”. Asystent przygotuje propozycję przywrócenia poprzedniej treści. Obejrzysz podgląd i zdecydujesz o publikacji tak samo jak przy każdej innej zmianie.
 
 ---
 
@@ -97,7 +98,7 @@ Możesz zacząć od poniższych zdań. Asystent dopisze user story na podstawie 
 
 ## Ważne
 
-- Nic nie trafia na stronę, dopóki nie naciśniesz **Merge**.
+- Nic nie trafia na stronę bez wyraźnego zatwierdzenia konkretnej wersji do publikacji.
 - Asystent nie powinien wymyślać cen ani dat — jeśli o coś zapyta, po prostu odpowiedz.
 - Jeżeli asystent nie ma dostępu do GitHuba, pokaże szkic i napisze, że zgłoszenie nie zostało zapisane. Najpierw trzeba udostępnić repozytorium lub ręcznie zapisać issue; sam szkic nie uruchamia wdrożenia.
 - Nie wpisuj w poleceniach haseł ani numerów kart.

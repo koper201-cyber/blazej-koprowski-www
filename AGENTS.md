@@ -53,42 +53,44 @@ npm run build
 
 ```markdown
 ## Co zmieniłem
+
 - Dodałem warsztat „Spotkanie z oddechem”, 14 lutego 2027, 18:00, Poznań.
 
 ## ⚠️ Do sprawdzenia
+
 - Cena warsztatu: (nowa) 150 zł
 - Link do zapisów: https://forms.gle/...
 
 ## Podgląd
-https://<gałąź>.<pages_project>.pages.dev
-(gotowy ok. 1–2 minuty po utworzeniu PR; link pojawi się też w komentarzu pod PR)
 
-Jeśli wszystko wygląda dobrze — kliknij **Merge**. Strona zaktualizuje się w 1–2 minuty.
+<sprawdzony Preview URL z Cloudflare dla aktualnego commita>
+
+Obejrzyj podgląd i napisz: „Zatwierdzam tę wersję do publikacji” albo „Odrzucam”.
 ```
 
 - Sekcję „⚠️ Do sprawdzenia” dodawaj **zawsze**, gdy zmieniasz: ceny, linki zapisów lub płatności, e-mail, telefon, adres. Podaj starą → nową wartość.
-- Adres podglądu: `<pages_project>` weź z `site.md` (`site.pages_project`); `<gałąź>` to nazwa gałęzi małymi literami, inne znaki niż litery/cyfry zamienione na `-`, maks. 28 znaków.
+- Podgląd pobierz i sprawdź zgodnie z sekcją 11. Nie przedstawiaj przewidywanego adresu gałęzi jako gotowego podglądu.
 
 ## 6. Czego nie robić
 
 - Nie wymyślaj danych (cen, dat, godzin, adresów, linków, opinii klientów). Jeśli czegoś brakuje — **zapytaj**.
 - Nie usuwaj treści bez wyraźnej prośby.
 - Nigdy nie wpisuj do repozytorium haseł, tokenów ani kluczy prywatnych. (Klucz formularza Web3Forms w `contact.form_key` jest publiczny — to w porządku.)
-- Nie scalaj (merge) PR samodzielnie — akceptuje zawsze właściciel.
+- Nie scalaj (merge) PR bez wyraźnego zlecenia właściciela dotyczącego pokazanej wersji. Obowiązują bramki z sekcji 11 i wcześniejsze zakazy scalania; samo zlecenie przygotowania zmiany nie pozwala jej opublikować.
 
 ## 7. Typowe prośby
 
 Poniższe przykłady opisują edycję po ustaleniu user story i zapisaniu issue zgodnie z sekcją 10. Nie pomijaj tego kroku przy krótkiej prośbie o treść.
 
-| Prośba | Co zrobić |
-|---|---|
-| „Zmień cenę mandali Spokój na 320 zł” | `products` → znajdź po `name` → `price: 320`; „⚠️ Do sprawdzenia”: 300 → 320 zł |
-| „Dodaj warsztat 14 lutego o 18 w Poznaniu za 150 zł” | dopisz do `workshops`; jeśli brak linku do zapisów — zapytaj |
-| „Mandala Las sprzedana” | `status: "sprzedana"` |
-| „Zmień tekst o mnie: …” | zmień tekst pod `# O mnie` |
-| „Ukryj warsztaty” | `features.workshops: false` |
-| „Cofnij ostatnią zmianę” | wyjaśnij: na scalonym PR kliknij **Revert**, potem **Merge** nowego PR |
-| „Napraw błąd w PR” | uruchom `npm run site:validate`, popraw `site.md`, wypchnij poprawkę do tej samej gałęzi |
+| Prośba                                               | Co zrobić                                                                                              |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| „Zmień cenę mandali Spokój na 320 zł”                | `products` → znajdź po `name` → `price: 320`; „⚠️ Do sprawdzenia”: 300 → 320 zł                        |
+| „Dodaj warsztat 14 lutego o 18 w Poznaniu za 150 zł” | dopisz do `workshops`; jeśli brak linku do zapisów — zapytaj                                           |
+| „Mandala Las sprzedana”                              | `status: "sprzedana"`                                                                                  |
+| „Zmień tekst o mnie: …”                              | zmień tekst pod `# O mnie`                                                                             |
+| „Ukryj warsztaty”                                    | `features.workshops: false`                                                                            |
+| „Cofnij ostatnią zmianę”                             | przygotuj PR przywracający poprzednią treść, sprawdzony podgląd i poproś o decyzję zgodnie z sekcją 11 |
+| „Napraw błąd w PR”                                   | uruchom `npm run site:validate`, popraw `site.md`, wypchnij poprawkę do tej samej gałęzi               |
 
 ## 8. Obowiązkowa dokumentacja pracy AI
 
@@ -121,5 +123,16 @@ Poniższe przykłady opisują edycję po ustaleniu user story i zapisaniu issue 
 2. **Jeśli user story nie została ustalona, zapytaj o nią przed utworzeniem issue i przed zmianą treści lub kodu.** Pomóż prostymi pytaniami o brakujące elementy: „Dla kogo jest ta zmiana?”, „Co ma się zmienić?”, „Po co / jaki ma być efekt?”. Nie wymagaj od właściciela technicznego szablonu i nie wymyślaj odpowiedzi. Gdy rola, potrzeba i korzyść są już jasne, sam ułóż user story; nie pytaj ponownie o znane informacje ani o zgodę tylko na przepisanie zgłoszenia.
 3. **Najważniejszym wynikiem przyjęcia zgłoszenia jest GitHub Issue.** Zapisz w nim sekcje „User story” oraz „Kryteria akceptacji” z konkretnymi, sprawdzalnymi warunkami ukończenia. Dodaj tylko ustalone szczegóły i przekaż właścicielowi rzeczywisty link. Formularz `.github/ISSUE_TEMPLATE/zmiana-z-telefonu.yml` pomaga przy ręcznym zgłoszeniu; te same wymagania obowiązują przez API lub CLI.
 4. **Użyj istniejącego issue, jeśli użytkownik je wskazuje lub dotyczy ono tej samej potrzeby.** Przeczytaj jego treść i kryteria; przy brakującej user story najpierw dopytaj, a potem uzupełnij issue. Poprawki w ramach tej samej potrzeby i PR dopisuj do niego, zamiast tworzyć duplikaty. Osobna nowa potrzeba wymaga nowego issue.
-5. **Zapisanie issue nie jest samo w sobie zleceniem wdrożenia.** „Zapisz na potem” kończy się na issue. Do implementacji potrzebna jest prośba właściciela, np. „wdrażaj issue #8”; może ona być już zawarta w pierwotnym zgłoszeniu, wtedy nie proś o kolejną zgodę. Dalej obowiązują zakres zmian, specyfikacja, weryfikacja i PR z pozostałych sekcji. Merge wykonuje właściciel.
+5. **Zapisanie issue nie jest samo w sobie zleceniem wdrożenia.** „Zapisz na potem” kończy się na issue. Do implementacji potrzebna jest prośba właściciela, np. „wdrażaj issue #8”; może ona być już zawarta w pierwotnym zgłoszeniu, wtedy nie proś o kolejną zgodę. Dalej obowiązują zakres zmian, specyfikacja, weryfikacja i PR z pozostałych sekcji. Publikacja wymaga osobnej decyzji z sekcji 11.
 6. **Brak dostępu do GitHub nie usprawiedliwia pominięcia issue.** Przygotuj szkic user story i kryteriów, zaznacz, że issue nie zostało zapisane, i poproś o udostępnienie repozytorium lub ręczne zapisanie szkicu. Nie wymyślaj numeru ani linku i nie zaczynaj implementacji przed zapisaniem issue.
+
+## 11. Telefon: obowiązkowy podgląd i decyzja
+
+- AI obsługuje issue, gałąź i PR w tle. Nie odsyłaj właściciela do przycisków Create PR lub Merge. Po walidacji wyślij gałąź i utwórz PR do aktualnego main; nie dodawaj do zwykłej zmiany treści innych otwartych prac.
+- Zapisz pełny SHA propozycji. Odczytaj `gh api repos/{owner}/{repo}/commits/{sha}/check-runs`; znajdź udany check „Cloudflare Pages” od aplikacji `cloudflare-workers-and-pages`, związany z tym SHA. Z jego `output.summary` pobierz **Preview URL**, nie Branch Preview URL ani adres panelu. Nie zgaduj adresu. W tej stronie domena musi należeć do projektu z `site.pages_project`.
+- Poczekaj na wdrożenie i sprawdź HTTP 200 oraz zamierzoną treść/interakcję pod rzeczywistym adresem. Sam build, status PR ani działający localhost nie potwierdzają dostępności podglądu na telefonie. Przy oczekiwaniu podawaj stan, a przy błędzie diagnozuj go; nie ogłaszaj zadania jako gotowego. Jeżeli PR zawiedzie, ale podgląd istnieje, pokaż sprawdzony podgląd i wyjaśnij blokadę publikacji.
+- Przekaż krótką kartę: co zmieniono, klikalny podgląd, wymagane dane do sprawdzenia, numer wersji (skrót SHA) i prośbę o „Zatwierdzam tę wersję do publikacji” albo „Odrzucam”. Zachowaj link do issue/PR i pełny SHA w logu oraz opisie PR. Nie obiecuj dodatkowych przycisków w interfejsie ChatGPT.
+- Brak odpowiedzi, odrzucenie i prośba o poprawkę nie pozwalają zmieniać main. Po odrzuceniu zamknij właściwy PR bez scalania, jeśli właściciel zleca odrzucenie; zachowaj gałąź i zapisz wynik. Poprawka tworzy nową wersję, która wymaga nowego sprawdzonego podglądu i nowej decyzji.
+- Publikacja: tylko po jednoznacznym zatwierdzeniu pokazanej wersji, braku obowiązującego zakazu scalania, zgodnym SHA i zakończonych pomyślnie wymaganych kontrolach (co najmniej „Sprawdzenie strony” oraz Cloudflare). Brak kontroli, oczekiwanie, błąd, konflikt lub zmiana SHA blokują publikację. Tuż przed scaleniem sprawdź ponownie PR, jego bazę main i head SHA; użyj `gh pr merge --match-head-commit {pełny-sha}` bez omijania zabezpieczeń i bez automatycznego scalania późniejszej wersji. Akceptacja jednego podglądu nie zatwierdza innych PR.
+- Po scaleniu sprawdź udane wdrożenie tego commita oraz publiczny adres strony i zamierzoną zmianę. Dopiero wtedy napisz „Opublikowane”. Gdy wdrożenie zawiedzie, poinformuj o błędzie i naprawie; nie przedstawiaj samego scalenia jako sukcesu.
+- Nowy czat musi korzystać z opublikowanego środowiska i instrukcji faktycznie obecnych na jego gałęzi. Otwarte PR z zasadami nie działają jeszcze na main. Nie uznawaj procesu za sprawdzony bez rzeczywistego testu; osobno zapisuj test przygotowania, podglądu, odrzucenia i publikacji.
