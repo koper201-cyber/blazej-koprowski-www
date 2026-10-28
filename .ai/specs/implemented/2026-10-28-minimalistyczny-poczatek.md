@@ -1,5 +1,9 @@
 # Minimalistyczny początek
 
+## Ostateczny zakres po korekcie właściciela
+
+Właściciel odrzucił minimalistyczny wygląd. Przywrócić wygląd i opis z aktualnego main; jedyną zmianą strony ma być hero.heading = „Twój pomysł. Moje doświadczenie.”. Nie usuwać „Jestem…”, dekoracji, kolorów, oprawy zdjęcia ani innych treści. Poniższy opis wcześniejszej koncepcji jest historią, nie obowiązującym zakresem. Weryfikacja: różnica site.md obejmuje tylko nagłówek, src/ bez różnic względem main; site:validate/build i nowy podgląd.
+
 ## Cel i zakres
 
 Właściciel zlecił zaproponowanie i przygotowanie minimalistycznego, lekko spartańskiego, eleganckiego początku. Header i hero: jednolite ciemne tło, spokojne zdanie zamiast wersalików, krótki opis, usunięcie powtórzonej etykiety imienia i dekoracyjnych warstw zdjęcia. Pozostałe sekcje zachowane. Zmiany src/CSS wynikają bezpośrednio z prośby o wygląd.

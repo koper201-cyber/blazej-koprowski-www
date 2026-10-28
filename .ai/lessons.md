@@ -2,7 +2,7 @@
 
 - [Styl ikon oferty](lessons/2026-10-28-styl-ikon-oferty.md) — wzór mind.svg: turkus, szare gradienty i brak kafelków; korekta właściciela w #30.
 
-- [Iteracje portretu](lessons/2026-10-28-portret-drugoplanowy.md) — po geometrycznej wersji właściciel poprosił o minimalistyczny początek; każda propozycja wymaga aktualnego podglądu.
+- [Iteracje portretu](lessons/2026-10-28-portret-drugoplanowy.md) — najnowszy wybór: duży, ostry portret z geometryczną oprawą; wcześniejsze wersje nie zatwierdzają nowej.
 
 Przed rozpoczęciem zadania przeczytaj ten indeks oraz powiązane notatki. Szczegółowe wnioski zapisuj w `lessons/`, najlepiej jako `YYYY-MM-DD-slug.md`. Każdy wpis w indeksie powinien krótko opisywać ustalenie i zawierać link do notatki. Aktualizuj istniejące wpisy zamiast powielać ten sam temat. Zapisuj wyłącznie potwierdzone ustalenia, bez sekretów.
 

@@ -92,13 +92,12 @@
     color: #11121b;
   }
   .header-cta {
-    background: transparent;
-    border: 1px solid #65656d;
-    color: #f2f2f5;
+    background: #3b2aef;
+    color: #fff;
     font-size: 0.85rem;
   }
   .header-cta:hover {
-    background: #25252b;
+    background: #5744ff;
     color: #fff;
   }
   .hero {
@@ -106,28 +105,45 @@
     isolation: isolate;
     overflow: clip;
     background: #090a10;
-    padding: clamp(4rem, 7vw, 6.5rem) 0;
+    padding: clamp(5rem, 9vw, 8rem) 0 clamp(6rem, 10vw, 9rem);
   }
   .hero-inner {
     position: relative;
     z-index: 1;
-    justify-items: start;
-    text-align: left;
+    justify-items: center;
+    text-align: center;
     gap: 3rem;
   }
   .hero-text {
     min-width: 0;
     width: 100%;
   }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 2.75rem;
+    padding: 0.5rem 0.85rem;
+    border: 1px solid #7b65c6;
+    background: rgb(16 13 32 / 0.85);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #f4edff;
+  }
   .hero h1 {
     max-width: 1120px;
     margin-inline: auto;
     margin-bottom: 1.65rem;
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 450;
-    line-height: 1.12;
-    letter-spacing: -0.045em;
-    text-transform: none;
+    font-size: clamp(2.7rem, 5.2vw, 4.75rem);
+    line-height: 1.01;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
     text-wrap: balance;
   }
   .lead {
@@ -143,7 +159,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0.75rem;
   }
   .hero-secondary {
@@ -360,13 +376,40 @@
   }
 }
 
-/* Prosta oprawa fotografii w spokojnym hero. */
+/* Wyraźny portret w geometrycznej kompozycji, tylko w motywie Elevate. */
 [data-theme="elevate"] .hero-media {
   position: relative;
   isolation: isolate;
-  width: min(400px, 100%);
+  width: min(460px, calc(100% - 1rem));
   justify-self: end;
-  margin: 0;
+  margin: 0 auto;
+  padding: 10px;
+  background: #12131e;
+  border: 1px solid #9a89d2;
+  border-radius: 28px 28px 8px 28px;
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.28);
+}
+[data-theme="elevate"] .hero-media::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 16px -12px -14px 18px;
+  background: #4b32d9;
+  border: 1px solid #a994ff;
+  border-radius: 28px 28px 8px 28px;
+  pointer-events: none;
+}
+[data-theme="elevate"] .hero-media::after {
+  content: "";
+  position: absolute;
+  width: 56px;
+  height: 56px;
+  top: -15px;
+  right: -12px;
+  border-top: 3px solid #d8ff6b;
+  border-right: 3px solid #d8ff6b;
+  border-radius: 0 12px 0 0;
+  pointer-events: none;
 }
 [data-theme="elevate"] .hero-media img {
   display: block;
@@ -376,7 +419,7 @@
   object-fit: cover;
   object-position: 53% center;
   border: 0;
-  border-radius: 4px;
+  border-radius: 18px 18px 3px 18px;
   box-shadow: none;
   mask-image: none;
 }
@@ -454,8 +497,12 @@
       padding-top: 3.5rem;
       padding-bottom: 5rem;
     }
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      margin-bottom: 2rem;
+    }
     .hero h1 {
-      font-size: clamp(2rem, 8vw, 3rem);
+      font-size: clamp(2.2rem, 9.8vw, 3.75rem);
     }
     .lead {
       font-size: 1rem;
@@ -485,15 +532,18 @@
     text-align: left;
     align-items: center;
   }
+  [data-theme="elevate"] .hero-inner:has(.hero-media) .hero-eyebrow {
+    margin-left: 0;
+  }
   [data-theme="elevate"] .hero-inner:has(.hero-media) h1 {
-    font-size: clamp(3rem, 4.5vw, 4.5rem);
+    font-size: clamp(2.8rem, 4vw, 3.8rem);
     text-wrap: pretty;
   }
   [data-theme="elevate"] .hero-inner:has(.hero-media) .hero-actions {
     justify-content: flex-start;
   }
   [data-theme="elevate"] .hero-media {
-    width: min(400px, 100%);
+    width: min(500px, 100%);
     margin: 0 0 0 auto;
   }
 }

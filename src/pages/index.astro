@@ -4,6 +4,7 @@ import { eventStart } from "../lib/dates";
 import Base from "../layouts/Base.astro";
 import Photo from "../components/Photo.astro";
 import Contact from "../components/Contact.astro";
+import ElevateBackdrop from "../components/ElevateBackdrop.astro";
 import OfferIcon from "../components/OfferIcon.astro";
 import { loadSite, todayInPoland } from "../lib/load-site";
 
@@ -117,8 +118,15 @@ if (visible.workshops) {
 
 <Base jsonLd={jsonLd}>
   <section class="hero" aria-labelledby="hero-h">
+    {isElevate && <ElevateBackdrop />}
     <div class="wrap hero-inner">
       <div class="hero-text">
+        {isElevate && (
+          <p class="hero-eyebrow">
+            <span aria-hidden="true">✦</span> {data.site.name}{" "}
+            <span aria-hidden="true">/</span> Dane · Chmura · AI
+          </p>
+        )}
         <h1 id="hero-h">{data.hero.heading}</h1>
         {data.hero.text && <p class="lead">{data.hero.text}</p>}
         <div class="hero-actions">
