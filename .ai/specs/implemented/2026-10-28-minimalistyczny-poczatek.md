@@ -1,5 +1,7 @@
 # Minimalistyczny początek
 
+Ostatnie doprecyzowanie: rozmiar nagłówka ma być dokładnie jak na oryginalnej stronie, także na telefonie. Nie zmniejszać liter dla wymuszenia dwóch wierszy. Pozostaje podział między zdaniami; naturalne zawinięcie dłuższego zdania jest dopuszczalne przy oryginalnym rozmiarze.
+
 Najnowsza korekta zastępuje poniższe wcześniejsze ograniczenia: opis hero zaczyna się od „Błażej Kaprowski” (dokładna pisownia zlecenia), CTA „Porozmawiajmy”, nagłówek „Twój pomysł.” i „Moje doświadczenie.” w osobnych wierszach. Oryginalny wygląd zachowany. Znak nowej linii w treści i white-space: pre-line w CSS; na bardzo wąskim ekranie dopuszczalne naturalne łamanie dla zachowania reflow.
 
 ## Ostateczny zakres po korekcie właściciela
