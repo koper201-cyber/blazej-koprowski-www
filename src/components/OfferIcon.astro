@@ -1,0 +1,90 @@
+---
+import mindIcon from "../assets/elevate/mind.svg";
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const label = title.toLocaleLowerCase("pl");
+const icons = {
+  data: [
+    "M4 6c0-4 16-4 16 0s-16 4-16 0Z",
+    "M4 6v12c0 4 16 4 16 0V6",
+    "M4 12c0 4 16 4 16 0",
+  ],
+  flow: [
+    "M3 4h6v6H3z",
+    "M15 14h6v6h-6z",
+    "M6 10v7h9",
+    "m12 14 3 3-3 3",
+    "M15 4h6v6h-6z",
+    "M9 7h6",
+  ],
+  cloud: [
+    "M7 18h11a4 4 0 0 0 .4-8A6.5 6.5 0 0 0 6 8a5 5 0 0 0 1 10Z",
+    "m9 13 3-3 3 3",
+    "M12 10v7",
+  ],
+  code: ["m7 7-5 5 5 5", "m17 7 5 5-5 5", "m13 7-2 10", "M17 2v4m-2-2h4"],
+  training: [
+    "m2 8 10-5 10 5-10 5-10-5Z",
+    "M6 10v6c4 3 8 3 12 0v-6",
+    "M22 8v8",
+    "M4 21h16",
+  ],
+  default: ["m12 2 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z"],
+};
+const kind = label.includes("szkol")
+  ? "training"
+  : label.includes("etl")
+    ? "flow"
+    : label.includes("chmur") || label.includes("aws")
+      ? "cloud"
+      : label.includes("program")
+        ? "code"
+        : label.includes("dany")
+          ? "data"
+          : "default";
+const gradientId = `offer-${crypto.randomUUID()}`;
+---
+
+<span class="offer-icon" aria-hidden="true">
+  {kind === "code" ? (
+    <img src={mindIcon.src} width="87" height="87" alt="" loading="lazy" />
+  ) : (
+    <svg
+      viewBox="0 0 24 24"
+      width="87"
+      height="87"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="0.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      focusable="false"
+    >
+      <defs>
+        <linearGradient id={`${gradientId}-line`} x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#fff" />
+          <stop offset="1" stop-color="#999" stop-opacity="0.1" />
+        </linearGradient>
+        <linearGradient id={`${gradientId}-fill`} x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#fff" stop-opacity="0.22" />
+          <stop offset="1" stop-color="#999" stop-opacity="0.04" />
+        </linearGradient>
+      </defs>
+      <circle
+        cx="12"
+        cy="11"
+        r="7.5"
+        fill={`url(#${gradientId}-fill)`}
+        stroke="none"
+      />
+      {icons[kind].map((d, index) => (
+        <path
+          d={d}
+          stroke={index === 0 ? `url(#${gradientId}-line)` : "#58e6ff"}
+        />
+      ))}
+    </svg>
+  )}
+</span>

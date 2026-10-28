@@ -5,7 +5,7 @@ import Base from "../layouts/Base.astro";
 import Photo from "../components/Photo.astro";
 import Contact from "../components/Contact.astro";
 import ElevateBackdrop from "../components/ElevateBackdrop.astro";
-import mindIcon from "../assets/elevate/mind.svg";
+import OfferIcon from "../components/OfferIcon.astro";
 import { loadSite, todayInPoland } from "../lib/load-site";
 
 const site = loadSite();
@@ -170,19 +170,7 @@ if (visible.workshops) {
                   <span class="offer-index">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  {index === 0 ? (
-                    <img
-                      src={mindIcon.src}
-                      width="87"
-                      height="87"
-                      alt=""
-                      loading="lazy"
-                    />
-                  ) : (
-                    <span class="offer-symbol" aria-hidden="true">
-                      ↗
-                    </span>
-                  )}
+                  <OfferIcon title={o.title} />
                 </div>
               )}
               <h3>{o.title}</h3>
