@@ -1,5 +1,7 @@
 # Minimalistyczny początek
 
+Najnowsza korekta zastępuje poniższe wcześniejsze ograniczenia: opis hero zaczyna się od „Błażej Kaprowski” (dokładna pisownia zlecenia), CTA „Porozmawiajmy”, nagłówek „Twój pomysł.” i „Moje doświadczenie.” w osobnych wierszach. Oryginalny wygląd zachowany. Znak nowej linii w treści i white-space: pre-line w CSS; na bardzo wąskim ekranie dopuszczalne naturalne łamanie dla zachowania reflow.
+
 ## Ostateczny zakres po korekcie właściciela
 
 Właściciel odrzucił minimalistyczny wygląd. Przywrócić wygląd i opis z aktualnego main; jedyną zmianą strony ma być hero.heading = „Twój pomysł. Moje doświadczenie.”. Nie usuwać „Jestem…”, dekoracji, kolorów, oprawy zdjęcia ani innych treści. Poniższy opis wcześniejszej koncepcji jest historią, nie obowiązującym zakresem. Weryfikacja: różnica site.md obejmuje tylko nagłówek, src/ bez różnic względem main; site:validate/build i nowy podgląd.
