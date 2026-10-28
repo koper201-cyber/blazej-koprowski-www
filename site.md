@@ -60,7 +60,7 @@ Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz w�
 
 **Doświadczenie**
 
-- **Senior Data Engineer** — Autoliv (od 2022)
+- **Senior Data Engineer** — Autoliv, freelance (od 2022)
 - **Senior Business Intelligence Specialist** — DNA Oyj, freelance (2016–2022)
 - **ETL Developer** — Roche (2012–2016)
 - **Deployment Specialist** — ATREM (2008–2012)
