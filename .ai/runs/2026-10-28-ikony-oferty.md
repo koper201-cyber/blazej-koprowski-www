@@ -10,3 +10,5 @@
 - site:validate/build/check: kod 0; 31 plików typów, 0 błędów. Znane ostrzeżenie o dwóch miejscach do uzupełnienia. Linki, kotwice, CSP i budżety zasobów poprawne.
 - Chromium 320/390/1440: pięć ikon i treść potwierdzone, brak overflow; przejrzano zrzuty mobile/desktop. Axe mobile 0 naruszeń. Bez testu na fizycznym telefonie. Brak nowej trwałej reguły do lessons.
 - Pełny SHA i publiczny Preview URL z wynikami kontroli zapisujemy w opisie PR, aby nie zmieniać weryfikowanego commita samym adresem podglądu.
+- Korekta właściciela: styl jak oryginalna grafika głowy z kołem zębatym, zamiast limonkowych ikon na kafelkach. Przywrócono tę grafikę dla programowania AI; pozostałe tematyczne ikony mają turkusowe detale, szare kontury z gradientem i przezroczyste cieniowanie. Rozmiar 87 px, bez obramowanego kafelka. Opis szkoleń AI zachowany.
+- Kontrola poprawki: site:validate/build/check kod 0, istniejące ostrzeżenie bez zmian. Chromium 320/390/1440: pięć ikon, brak overflow; przejrzano zrzut desktop. Axe mobile 0 naruszeń. Nie publikowano; aktualny SHA i nowy podgląd zostaną zapisane w opisie PR #30.

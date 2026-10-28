@@ -1,5 +1,7 @@
 # Ikony oferty i szkolenia AI
 
+Aktualizacja po podglądzie: właściciel wybrał styl oryginalnej grafiki mind.svg — turkusowe detale, szare kontury z gradientem i przezroczyste cieniowanie, 87 px bez kafelków. Zastępuje to wcześniejszą fioletowo-limonkową oprawę. Pozostają symbole dopasowane do tematów; programowanie AI używa mind.svg. Tekst szkoleń bez zmian.
+
 ## Cel i zakres
 
 Pięć spójnych ikon liniowych SVG w kartach Elevate zamiast obecnej pojedynczej grafiki i strzałek. Komponent dobiera ikonę według tytułu karty, z neutralnym wariantem domyślnym. Bez zależności i zmian schematu. Tekst szkoleń rozszerzony o programowanie z AI.
