@@ -10,6 +10,7 @@ Właściciel zlecił kadrowanie nowego zdjęcia z żaglówki i miękkie przenika
 - Tło i brzegi zdjęcia przechodzą w ciemnofioletowe tło; bez ramki i karty.
 - Tekst poza obszarem zdjęcia, przycisk czytelny i klikalny.
 - Desktop: tekst i portret obok siebie; mobile: zdjęcie poniżej tekstu, bez poziomego przewijania.
+- Korekta właściciela: portret wyraźnie mniejszy, po prawej i drugoplanowy; nagłówek oraz CTA dominują. Desktop do 360 px, mobile do 250 px, bez zmiany samej fotografii.
 - Pozostałe motywy bez zmian; efekt tylko przy zdjęciu w Elevate.
 
 ## Plan i weryfikacja

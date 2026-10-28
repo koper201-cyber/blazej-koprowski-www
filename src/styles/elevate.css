@@ -376,8 +376,9 @@
 [data-theme="elevate"] .hero-media {
   position: relative;
   isolation: isolate;
-  width: min(540px, 100%);
-  margin: -1rem auto -3rem;
+  width: min(250px, 70%);
+  justify-self: end;
+  margin: -1rem 0 -2rem auto;
 }
 [data-theme="elevate"] .hero-media::before {
   content: "";
@@ -507,8 +508,8 @@
 
 @media (min-width: 1000px) {
   [data-theme="elevate"] .hero-inner:has(.hero-media) {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 1.5rem;
+    grid-template-columns: 1.65fr 0.65fr;
+    gap: 3rem;
     text-align: left;
     align-items: center;
   }
@@ -523,8 +524,7 @@
     justify-content: flex-start;
   }
   [data-theme="elevate"] .hero-media {
-    width: 115%;
-    max-width: none;
-    margin: -3rem -8% -4rem 0;
+    width: min(360px, 100%);
+    margin: 0 0 0 auto;
   }
 }
