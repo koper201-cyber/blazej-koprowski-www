@@ -1,15 +1,15 @@
 # AI Website Starter
 
-Jedna baza kodu + jeden plik `site.md` + folder `zdjecia/` = nowa strona. Po przekazaniu właściciel zmienia stronę z telefonu przez agenta AI w chmurze (Codex albo Claude Code): **polecenie → pull request → podgląd → Merge → publikacja**, a cofnięcie to **Revert**.
+Jedna baza kodu + jeden plik `site.md` + folder `zdjecia/` = nowa strona. Po przekazaniu właściciel zmienia stronę z telefonu przez agenta AI w chmurze (Codex albo Claude Code): **zgłoszenie → user story → issue → zlecone wdrożenie → pull request → podgląd → Merge → publikacja**, a cofnięcie to **Revert**.
 
 Instrukcja dla właściciela strony: [`OWNER_GUIDE.md`](OWNER_GUIDE.md). Zasady dla agenta: [`AGENTS.md`](AGENTS.md).
 
 ## Jak to działa
 
 ```
-telefon ──► agent AI w chmurze ──► gałąź + PR ──► GitHub Actions (walidacja, build)
-                                         │
-                                         └──► Cloudflare Pages: podgląd https://<gałąź>.<projekt>.pages.dev
+telefon → AI redaguje user story (dopytuje o braki) → GitHub Issue
+zlecone wdrożenie issue → gałąź + PR → GitHub Actions (walidacja, build)
+                                  └──► Cloudflare Pages: podgląd https://<gałąź>.<projekt>.pages.dev
 właściciel klika Merge ──► main ──► Cloudflare Pages: produkcja
 cofnięcie: Revert na scalonym PR ──► nowy PR z podglądem ──► Merge
 ```
@@ -80,6 +80,8 @@ Pełny proces kontroli i ograniczenia wdrożenia: [docs/ENGINEERING.md](docs/ENG
 **Claude Code (aplikacja Claude):** claude.ai/code → połącz GitHub → zainstaluj aplikację Claude GitHub na organizacji klienta → wybierz repo. W ustawieniach środowiska jako setup ustaw `npm ci` (albo dopuść dostęp do rejestru npm).
 
 Oba agenty czytają zasady: Codex z `AGENTS.md`, Claude z `CLAUDE.md` (który odsyła do `AGENTS.md`).
+
+Obowiązkowe przyjmowanie zgłoszeń opisuje [sekcja 10 AGENTS.md](AGENTS.md#10-zgłoszenia-z-telefonu-najpierw-user-story-i-issue). Formularz GitHub „Zmiana z telefonu” wymaga user story i kryteriów akceptacji. Przez API/CLI agent ma zapisać te same sekcje. Brak informacji oznacza dopytanie, a istniejące issue jest używane ponownie. Samo zapisanie pomysłu nie zleca jego wdrożenia.
 
 ### 6. Formularz kontaktowy (opcjonalnie)
 

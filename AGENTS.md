@@ -45,6 +45,7 @@ npm run build
 
 ## 5. Gałąź i pull request
 
+- Przed zmianą musi istnieć issue z ustaloną user story i kryteriami akceptacji (sekcja 10). W opisie PR podaj link do tego issue; `Closes #numer` stosuj tylko wtedy, gdy PR realizuje cały jego zakres.
 - **Nigdy nie zapisuj zmian bezpośrednio na `main`.** Zawsze nowa gałąź + pull request.
 - Nazwa gałęzi: krótka, małe litery, bez polskich znaków, np. `warsztat-luty`, `cena-mandala`.
 - Tytuł PR po polsku, np. „Nowy warsztat 14 lutego”.
@@ -76,6 +77,8 @@ Jeśli wszystko wygląda dobrze — kliknij **Merge**. Strona zaktualizuje się 
 - Nie scalaj (merge) PR samodzielnie — akceptuje zawsze właściciel.
 
 ## 7. Typowe prośby
+
+Poniższe przykłady opisują edycję po ustaleniu user story i zapisaniu issue zgodnie z sekcją 10. Nie pomijaj tego kroku przy krótkiej prośbie o treść.
 
 | Prośba | Co zrobić |
 |---|---|
@@ -111,3 +114,12 @@ Jeśli wszystko wygląda dobrze — kliknij **Merge**. Strona zaktualizuje się 
 
 - Złożone zadanie (wiele zależnych kroków, kilka obszarów kodu lub niejasne rozwiązanie) zacznij od krótkiego planu: kroki, ryzyka i sposób sprawdzenia. Zapisz go w specyfikacji z sekcji 8, a przy zadaniu bez specyfikacji — w logu. Gdy nowe fakty podważają plan lub kolejne próby nie działają, wróć do diagnozy i popraw plan przed dalszą implementacją.
 - Przy zgłoszonym błędzie lub nieudanym CI najpierw przeczytaj logi i odtwórz problem, jeśli to możliwe. Ustal przyczynę, wprowadź najprostszą poprawkę w dozwolonym zakresie i sprawdź scenariusz, który wcześniej zawodził. Wykorzystuj istniejące rozwiązania projektu; unikaj poprawek maskujących objawy i przebudowy niezwiązanej z zadaniem.
+
+## 10. Zgłoszenia z telefonu: najpierw user story i issue
+
+1. **Każdą prośbę właściciela o zmianę, także potoczną lub dyktowaną, zredaguj własnymi słowami jako user story:** „Jako [rola], chcę [potrzeba], aby [cel lub korzyść]”. Stosuj ten proces także wtedy, gdy nie wiesz, czy właściciel pisze z telefonu. Zachowaj jego intencję i wykorzystaj informacje już ustalone w rozmowie.
+2. **Jeśli user story nie została ustalona, zapytaj o nią przed utworzeniem issue i przed zmianą treści lub kodu.** Pomóż prostymi pytaniami o brakujące elementy: „Dla kogo jest ta zmiana?”, „Co ma się zmienić?”, „Po co / jaki ma być efekt?”. Nie wymagaj od właściciela technicznego szablonu i nie wymyślaj odpowiedzi. Gdy rola, potrzeba i korzyść są już jasne, sam ułóż user story; nie pytaj ponownie o znane informacje ani o zgodę tylko na przepisanie zgłoszenia.
+3. **Najważniejszym wynikiem przyjęcia zgłoszenia jest GitHub Issue.** Zapisz w nim sekcje „User story” oraz „Kryteria akceptacji” z konkretnymi, sprawdzalnymi warunkami ukończenia. Dodaj tylko ustalone szczegóły i przekaż właścicielowi rzeczywisty link. Formularz `.github/ISSUE_TEMPLATE/zmiana-z-telefonu.yml` pomaga przy ręcznym zgłoszeniu; te same wymagania obowiązują przez API lub CLI.
+4. **Użyj istniejącego issue, jeśli użytkownik je wskazuje lub dotyczy ono tej samej potrzeby.** Przeczytaj jego treść i kryteria; przy brakującej user story najpierw dopytaj, a potem uzupełnij issue. Poprawki w ramach tej samej potrzeby i PR dopisuj do niego, zamiast tworzyć duplikaty. Osobna nowa potrzeba wymaga nowego issue.
+5. **Zapisanie issue nie jest samo w sobie zleceniem wdrożenia.** „Zapisz na potem” kończy się na issue. Do implementacji potrzebna jest prośba właściciela, np. „wdrażaj issue #8”; może ona być już zawarta w pierwotnym zgłoszeniu, wtedy nie proś o kolejną zgodę. Dalej obowiązują zakres zmian, specyfikacja, weryfikacja i PR z pozostałych sekcji. Merge wykonuje właściciel.
+6. **Brak dostępu do GitHub nie usprawiedliwia pominięcia issue.** Przygotuj szkic user story i kryteriów, zaznacz, że issue nie zostało zapisane, i poproś o udostępnienie repozytorium lub ręczne zapisanie szkicu. Nie wymyślaj numeru ani linku i nie zaczynaj implementacji przed zapisaniem issue.
