@@ -28,7 +28,7 @@ contact:
 hero:
   heading: "Dane, chmura i AI — od pomysłu do działającego rozwiązania"
   text: "Jestem Błażej Koprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
-  cta_label: "Porozmawiajmy"
+  cta_label: "Porozmawiajmy wkrótce"
   cta_link: "#kontakt"
   image: ""                      # np. portret.jpg z folderu zdjecia/
   alt: ""
