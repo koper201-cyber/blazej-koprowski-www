@@ -1,5 +1,9 @@
 # Zdjęcie wtopione w Elevate
 
+## Aktualna decyzja projektowa właściciela
+
+Po dwóch podglądach właściciel wraca do dużego zdjęcia, ale odrzuca efekt rozmycia. Wymagania poniżej dotyczące wtopienia i małego portretu są historią poprzednich iteracji, zastąpioną przez: oryginalne ostre zdjęcie, duży portret po prawej, geometryczna oprawa z przesuniętą fioletową warstwą i limonkowym narożnikiem, bez masek i blur. Na telefonie karta pod tekstem, bez overflow. Inne treści bez zmian; osobny aktualny podgląd przed publikacją.
+
 ## Cel i zakres
 
 Właściciel zlecił kadrowanie nowego zdjęcia z żaglówki i miękkie przenikanie fotografii z tłem. Zmiana zdjęcia, site.md oraz stylów hero Elevate jest wyraźnie objęta prośbą. Bez nowych zależności i zmian pozostałej treści.
