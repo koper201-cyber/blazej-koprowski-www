@@ -39,4 +39,6 @@ Nie wymyślam kontaktu ani domeny. Nie scalam PR samodzielnie. Właściciel rozs
 - Za zgodą właściciela dodano zakres workflow do istniejącej autoryzacji GitHub CLI; właściciel wykonał dodatkowe potwierdzenie e-mailem. Nie zmieniano globalnych poświadczeń Git.
 - Kod wysłany do codex/wdrozenie-standardow. Utworzono draft PR #7 do codex/migracja-astro. Niczego nie scalono.
 - CI PR #6 wykryło niezgodny Node 22 ze starszej konfiguracji. Nowy workflow w PR #7 korzysta z .node-version (24.22.1).
-- Środowisko Codex: otwarto logowanie w IAB; konfiguracja czeka na zalogowanie właściciela.
+- Podgląd PR #7: https://b1e4aa82.blazej-koprowski.pages.dev/ — potwierdzono stronę z paskiem PODGLĄD. Automatyczne podglądy wszystkich gałęzi poza main oraz komentarze buildów są włączone.
+- GitHub Actions run 40568643659: wszystkie 5 zadań zaliczone, Cloudflare Pages również. Dodatkowy run 40569030168 z all_browsers=true: wszystkie 5 zadań zaliczone, obejmuje Chromium, Firefox i WebKit na Linux dla 4 wariantów. Lokalny problem profilu Firefox nie występuje na runnerze Linux.
+- Środowisko Codex: właściciel zalogował się do ChatGPT w IAB i potwierdził MFA. Po osobnych zgodach na odczyt e-maili i operacje konektora zainstalowano ChatGPT Codex Connector wyłącznie dla blazej-koprowski-www. Rozpoczęto przygotowanie prywatnego środowiska; instalacja i publikacja w toku.
