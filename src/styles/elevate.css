@@ -137,6 +137,7 @@
     color: #f4edff;
   }
   .hero h1 {
+    white-space: pre-line;
     max-width: 1120px;
     margin-inline: auto;
     margin-bottom: 1.65rem;
