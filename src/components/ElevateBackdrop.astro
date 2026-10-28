@@ -1,0 +1,34 @@
+---
+import { getImage } from "astro:assets";
+import texture from "../assets/elevate/texture.png";
+import prism from "../assets/elevate/prism.png";
+import light from "../assets/elevate/light.png";
+import contact from "../assets/elevate/contact.png";
+import streaks from "../assets/elevate/streaks.png";
+
+interface Props {
+  variant?: "hero" | "contact";
+}
+const { variant = "hero" } = Astro.props;
+const sources =
+  variant === "hero" ? [texture, prism, light] : [contact, streaks];
+const images = await Promise.all(
+  sources.map((src) =>
+    getImage({ src, width: 1600, format: "webp", quality: 75 }),
+  ),
+);
+---
+
+<div class={`elevate-backdrop elevate-backdrop-${variant}`} aria-hidden="true">
+  {images.map((image, index) => (
+    <img
+      src={image.src}
+      width={Number(image.attributes.width)}
+      height={Number(image.attributes.height)}
+      alt=""
+      class={`elevate-layer elevate-layer-${index}`}
+      loading={variant === "hero" ? "eager" : "lazy"}
+      decoding="async"
+    />
+  ))}
+</div>

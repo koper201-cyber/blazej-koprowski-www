@@ -1,5 +1,6 @@
 ---
 import "../styles/theme.css";
+import "../styles/elevate.css";
 import { getImage } from "astro:assets";
 import { loadSite, todayInPoland } from "../lib/load-site";
 import { buildViewModel } from "../lib/view-model";
@@ -30,11 +31,18 @@ const ogImage = ogSource
   : undefined;
 const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site).href : undefined;
 
-const { nav } = buildViewModel(data, site.sections, todayInPoland());
+const { nav, ctaLink } = buildViewModel(data, site.sections, todayInPoland());
+const isElevate = data.site.theme === "elevate";
+const headerCtaLink = ctaLink?.startsWith("#") ? `/${ctaLink}` : ctaLink;
+const initials = data.site.name
+  .split(/\s+/)
+  .map((part) => part[0])
+  .slice(0, 2)
+  .join("");
 ---
 
 <!doctype html>
-<html lang={data.site.language}>
+<html lang={data.site.language} data-theme={data.site.theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -87,6 +95,11 @@ const { nav } = buildViewModel(data, site.sections, todayInPoland());
     <header class="site-header">
       <div class="wrap header-inner">
         <a class="brand" href="/">
+          {isElevate && (
+            <span class="brand-mark" aria-hidden="true">
+              {initials}
+            </span>
+          )}
           {data.site.name}
         </a>
         {nav.length > 0 && (
@@ -99,6 +112,12 @@ const { nav } = buildViewModel(data, site.sections, todayInPoland());
               ))}
             </ul>
           </nav>
+        )}
+        {isElevate && data.hero.cta_label && ctaLink && (
+          <a class="btn header-cta" href={headerCtaLink}>
+            {data.hero.cta_label}
+            <span aria-hidden="true"> ↗</span>
+          </a>
         )}
       </div>
     </header>
@@ -113,6 +132,19 @@ const { nav } = buildViewModel(data, site.sections, todayInPoland());
         </p>
         <p>
           <a href="/polityka-prywatnosci/">Polityka prywatności</a>
+          {isElevate && (
+            <span class="design-credit">
+              Projekt na bazie{" "}
+              <a
+                href="https://www.figma.com/community/file/1502180307181819798/elevate-agency-ai-landing-page"
+                rel="noopener"
+                target="_blank"
+              >
+                Elevate / flowcub
+              </a>{" "}
+              · adaptacja
+            </span>
+          )}
         </p>
       </div>
     </footer>

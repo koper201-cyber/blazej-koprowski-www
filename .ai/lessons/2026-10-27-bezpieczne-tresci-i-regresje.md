@@ -11,3 +11,4 @@ Data: 2026-10-27. Wnioski potwierdzone podczas wdrożenia standardów.
 - Firefox nie uruchomił się lokalnie (błąd profilu macOS); nie uznawać tego testu za zaliczony. Chromium, profil mobile i WebKit są testowane lokalnie; pełny workflow Linux udostępnia również Firefox.
 
 - Po migracji Astro kolejność CSS nadpisywała kolor z site.md. Usunięto zbędną wartość domyślną z arkusza; test przeglądarkowy porównuje aktywny token z ustawieniem motywu.
+- Adaptacja Elevate ujawniła, że dodatkowy CTA w wspólnym nagłówku nie może używać samego `#kontakt` na podstronach. Normalizować lokalne kotwice do `/#kontakt`; istniejący check-links wykrywa brak celu na 404, stronie podziękowania i polityce prywatności. Dotyczy wszystkich wspólnych komponentów nawigacyjnych.

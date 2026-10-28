@@ -11,7 +11,7 @@ site:
   domain: ""                     # np. koprowski.pl — puste, dopóki nie ma domeny
   pages_project: "blazej-koprowski"   # nazwa projektu w Cloudflare Pages
   language: "pl"
-  theme: "natural-warm"
+  theme: "elevate"
   primary_color: "#3F5E6B"
   city: "Poznań"
 

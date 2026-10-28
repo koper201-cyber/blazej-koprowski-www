@@ -1,10 +1,12 @@
 ---
 import type { SiteData } from "../lib/site-schema";
+import ElevateBackdrop from "./ElevateBackdrop.astro";
 
 interface Props {
   contact: SiteData["contact"];
+  elevated?: boolean;
 }
-const { contact } = Astro.props;
+const { contact, elevated = false } = Astro.props;
 const socials = [
   ["LinkedIn", contact.linkedin],
   ["Instagram", contact.instagram],
@@ -16,6 +18,7 @@ const thanksUrl = new URL("/dziekuje/", Astro.site).href;
 ---
 
 <section id="kontakt" class="section section-alt" aria-labelledby="kontakt-h">
+  {elevated && <ElevateBackdrop variant="contact" />}
   <div class="wrap contact-grid">
     <div>
       <h2 id="kontakt-h">Kontakt</h2>
