@@ -33,6 +33,7 @@ jobs:
           node-version-file: .node-version
           cache: npm
       - run: npm ci
+      - run: node --test tests/content-scope.test.mjs
       - run: npm run verify
       - name: Zgodność wersji
         run: npm ls --depth=0
