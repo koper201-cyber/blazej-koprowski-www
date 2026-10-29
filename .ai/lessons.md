@@ -1,5 +1,7 @@
 # Ustalenia i wnioski
 
+- [Szybki podgląd przed pełnymi testami](lessons/2026-10-29-podglad-przed-testami.md) — priorytet właściciela: push/PR i działający podgląd jak najszybciej; testy później, zielone kontrole i akceptacja nadal wymagane przed publikacją.
+
 - [Styl ikon oferty](lessons/2026-10-28-styl-ikon-oferty.md) — wzór mind.svg: turkus, szare gradienty i brak kafelków; korekta właściciela w #30.
 
 - [Iteracje portretu](lessons/2026-10-28-portret-drugoplanowy.md) — najnowszy wybór: duży, ostry portret z geometryczną oprawą; wcześniejsze wersje nie zatwierdzają nowej.

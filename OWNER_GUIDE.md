@@ -37,6 +37,8 @@ Telefon możesz zablokować — po doprecyzowaniu i zleceniu wdrożenia asystent
 
 Asystent sam przygotowuje zmianę i zapisuje ją do sprawdzenia. Dostaniesz krótki opis, numer wersji i klikalny link **Obejrzyj podgląd**. Nie musisz otwierać GitHuba ani tworzyć PR.
 
+Przy prostej zmianie priorytetem jest szybki podgląd. Asystent wysyła link zaraz po sprawdzeniu, że podgląd działa i pokazuje zmianę — nie czeka na wszystkie testy. Może dopisać „Testy jeszcze trwają”; to nie jest potwierdzenie gotowości do publikacji. Kontrole są kontynuowane, gdy oglądasz propozycję.
+
 Podgląd pokazuje propozycję; strona publiczna czeka na Twoją decyzję. Jeśli budowanie trwa albo wystąpi błąd, asystent powinien to wyjaśnić. Sam komunikat „zmieniono plik” nie kończy pracy.
 
 ### 5. Sprawdź na telefonie
