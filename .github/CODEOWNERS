@@ -1,0 +1,8 @@
+# Wymaga wlaczenia ochrony main i Require review from Code Owners.
+# W kopii dla klienta podmien konto na administratora TEGO repozytorium.
+* @koper201-cyber
+
+# Edytor tresci: brak wymaganego code ownera tylko dla tresci i zdjec.
+# Chronione pola site.md i bezpieczne typy zdjec sprawdza osobny status.
+/site.md
+/zdjecia/**

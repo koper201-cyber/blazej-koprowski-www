@@ -1,5 +1,7 @@
 # Ustalenia i wnioski
 
+- [Role edytora i administratora](lessons/2026-10-29-role-edytora.md) — instrukcje nie zastępują ochrony GitHuba, osobnych kont i ograniczonych uprawnień aplikacji; test w repo edytora przed udostępnieniem.
+
 - [Styl ikon oferty](lessons/2026-10-28-styl-ikon-oferty.md) — wzór mind.svg: turkus, szare gradienty i brak kafelków; korekta właściciela w #30.
 
 - [Iteracje portretu](lessons/2026-10-28-portret-drugoplanowy.md) — najnowszy wybór: duży, ostry portret z geometryczną oprawą; wcześniejsze wersje nie zatwierdzają nowej.

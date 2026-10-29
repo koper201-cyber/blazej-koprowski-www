@@ -1,5 +1,11 @@
 # Jak zmieniać swoją stronę z telefonu
 
+## Dostęp edytora treści
+
+Edytor może zmieniać teksty, zdjęcia, ofertę, ceny i terminy oraz zatwierdzać podgląd tych zmian. Jeśli poprosisz o zmianę instrukcji AI, kodu, hostingu lub zabezpieczeń, asystent wyjaśni konsekwencje i zapisze prośbę dla administratora. Samo „tak, na pewno” nie odblokuje zmiany technicznej. To chroni działanie strony, nie ogranicza zwykłych poprawek.
+
+Administrator musi najpierw uruchomić zabezpieczenia i osobny dostęp według [instrukcji konfiguracji](docs/CONTENT-EDITOR.md). Sam zapis tych zasad nie oznacza aktywnej blokady. Agnieszka nie ma jeszcze docelowego repozytorium — przygotowano wzorzec, bez nadawania dostępu.
+
 Nie potrzebujesz komputera ani znajomości programowania. Piszesz do asystenta AI, co chcesz zmienić i po co. Asystent porządkuje zgłoszenie, zapisuje je w GitHubie, a po zleceniu wdrożenia przygotowuje podgląd. Każdą opublikowaną zmianę można cofnąć.
 
 **Potrzebne aplikacje:** ChatGPT (z Codexem) albo Claude — oraz GitHub (opcjonalnie, można przez przeglądarkę).

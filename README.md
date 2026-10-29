@@ -4,6 +4,8 @@ Jedna baza kodu + jeden plik `site.md` + folder `zdjecia/` = nowa strona. Po prz
 
 Instrukcja dla właściciela strony: [`OWNER_GUIDE.md`](OWNER_GUIDE.md). Zasady dla agenta: [`AGENTS.md`](AGENTS.md).
 
+Współdzielenie strony: [tryb edytora treści i aktywacja ochrony](docs/CONTENT-EDITOR.md). Sam plik instrukcji lub CODEOWNERS nie włącza zabezpieczeń GitHuba.
+
 ## Jak to działa
 
 ```

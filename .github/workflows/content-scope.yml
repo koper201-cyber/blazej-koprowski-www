@@ -1,0 +1,33 @@
+name: Zakres edycji treści
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+
+permissions:
+  contents: read
+  statuses: write
+
+concurrency:
+  group: content-scope-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Zawsze zaufana baza, nigdy head ani merge-ref PR.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .node-version
+      # Lockfile i skrypty instalacji wyłącznie z zatwierdzonej bazy.
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: node scripts/check-content-scope.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
