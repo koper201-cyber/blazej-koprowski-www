@@ -98,6 +98,18 @@ Możesz zacząć od poniższych zdań. Asystent dopisze user story na podstawie 
 
 ## Ważne
 
+### Gdy polecenie może zniszczyć stronę lub dane
+
+Jeśli poprosisz np. o usunięcie strony, skasowanie wszystkich zdjęć, odłączenie domeny albo działanie grożące utratą danych lub dostępu, asystent najpierw wyjaśni skutki i zaproponuje bezpieczniejszą opcję.
+
+Zada **trzy pytania, jedno po drugim, innymi słowami**: czy taki jest Twój zamiar i zakres, czy akceptujesz konkretne konsekwencje oraz czy ostatecznie zlecasz tę operację. Na każde potrzebuje osobnej, jednoznacznej odpowiedzi. Możesz w każdej chwili powiedzieć „Nie” albo „Wycofuję zgodę”. Zmiana planu oznacza ponowne potwierdzenia.
+
+Asystent ma sprawdzić możliwość odzyskania danych. Nie powinien sam trwale usuwać jedynej kopii, jeśli nie potwierdził sposobu przywrócenia. Trzy zgody nie pozwalają ujawniać haseł, obchodzić zabezpieczeń ani robić czegoś poza Twoim zleceniem. Ta procedura chroni pracę przez AI; nie blokuje Twoich własnych kliknięć w panelach usług.
+
+Przy zwykłej poprawce tekstu lub ukryciu sekcji nadal wystarczy podgląd i jedna decyzja o publikacji.
+
+### Pozostałe zasady
+
 - Nic nie trafia na stronę bez wyraźnego zatwierdzenia konkretnej wersji do publikacji.
 - Asystent nie powinien wymyślać cen ani dat — jeśli o coś zapyta, po prostu odpowiedz.
 - Jeżeli asystent nie ma dostępu do GitHuba, pokaże szkic i napisze, że zgłoszenie nie zostało zapisane. Najpierw trzeba udostępnić repozytorium lub ręcznie zapisać issue; sam szkic nie uruchamia wdrożenia.
