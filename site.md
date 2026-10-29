@@ -27,7 +27,7 @@ contact:
 
 hero:
   heading: "Twój pomysł.\nMoje doświadczenie."
-  text: "Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
+  text: "Błażej Koprowski. Founder. Data Engineer. Partner od pomysłu do rozwiązania."
   cta_label: "Porozmawiajmy"
   cta_link: "#kontakt"
   image: "blazej-na-zaglowce.jpg"
