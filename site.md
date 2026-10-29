@@ -58,6 +58,14 @@ offer:
 
 Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz właścicielem firmy **Legnumcloud**. Pracowałem dla firm z sektora motoryzacyjnego, farmaceutycznego, telekomunikacyjnego i gazowniczego. Pasjonuje mnie Business Intelligence, a ostatnio — budowanie oprogramowania z pomocą AI.
 
+### Dobra współpraca zaczyna się od rozmowy
+
+Zanim przejdę do technologii, chcę zrozumieć, co chcesz osiągnąć i jaki problem rozwiązujemy. **Stawiam na uważne słuchanie, trafne pytania i prosty język** — tak, żebyśmy rozumieli się również wtedy, gdy nie zajmujesz się IT. Zależy mi na otwartej komunikacji i wspólnym szukaniu rozwiązań.
+
+Łączę doświadczenie techniczne z perspektywą startupowca. Wcześniej jako **CEO Trackick**, dziś jako **co-founder roboprocess** patrzę na oprogramowanie także od strony produktu i biznesu: komu ma pomóc, co jest naprawdę potrzebne i od czego warto zacząć.
+
+Mam otwartą głowę. Interesuje mnie nie tylko to, jak działają systemy, ale też jak myślą i podejmują decyzje ludzie — stąd między innymi moje zainteresowanie psychologią. W pracy zależy mi na tym, żeby **po drugiej stronie kodu widzieć człowieka**. Chcę być partnerem, z którym można przemyśleć pomysł, porozmawiać bez technicznego żargonu i przejść do konkretnego rozwiązania.
+
 **Doświadczenie**
 
 - **Senior Data Engineer** — Autoliv, freelance (od 2022)
