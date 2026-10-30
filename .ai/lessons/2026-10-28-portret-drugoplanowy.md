@@ -8,3 +8,4 @@
 - Następna korekta właściciela: portret główny nadal za duży. Zachować wyraźne zdjęcie i geometryczną ramkę, lecz zmniejszyć całość o około 15–20% względem podglądu 0a1580c. Nie wracać automatycznie do wcześniejszego dużego rozmiaru.
 - Kurs AI Tech Leaders — Open Mercato ma być widoczny na początku O mnie, przed biografią, z wyróżnioną nazwą; nie chować go ponownie pod listą umiejętności i nie powielać informacji.
 - Właściciel doprecyzował, że programowanie z pomocą AI ma być jawnie wymienione również w opisie pierwszego ekranu, obok doświadczenia danych/ETL/chmury; nie ograniczać tej informacji do kart oferty i biografii.
+- Najnowsze dokładne brzmienie hero zaczyna się od „Błażej Kaprowski, Senior Data Engineer…” i obejmuje Legnumcloud sp. z o.o., następnie „Tworzę oprogramowanie z pomocą AI.”. Kafelek Programowanie z AI ma być pierwszy, pozostałe usługi w dotychczasowej kolejności. Ta korekta zastępuje wcześniejszą kolejność zdań, nie samą obecność AI.

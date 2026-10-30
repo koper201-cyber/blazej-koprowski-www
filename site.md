@@ -27,7 +27,7 @@ contact:
 
 hero:
   heading: "Twój pomysł.\nMoje doświadczenie."
-  text: "Tworzę oprogramowanie z pomocą AI. Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
+  text: "Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud sp. z o.o. Tworzę oprogramowanie z pomocą AI. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
   cta_label: "Porozmawiajmy"
   cta_link: "#kontakt"
   image: "blazej-portret.png"
@@ -47,14 +47,14 @@ features:
   contact: true
 
 offer:
+  - title: "Programowanie z AI"
+    text: "Tworzenie oprogramowania i automatyzacji z wykorzystaniem agentów i modeli AI."
   - title: "Hurtownie danych"
     text: "Projektowanie i rozwój hurtowni danych na Snowflake, Oracle i Amazon Redshift."
   - title: "Procesy ETL"
     text: "Budowa i utrzymanie przepływów danych: Informatica PowerCenter, Talend, SSIS, Pentaho, PL/SQL."
   - title: "Chmura AWS"
     text: "Architektura rozwiązań w AWS (certyfikat AWS Solutions Architect) i przetwarzanie dużych wolumenów danych: Kafka, Hadoop."
-  - title: "Programowanie z AI"
-    text: "Tworzenie oprogramowania i automatyzacji z wykorzystaniem agentów i modeli AI."
   - title: "Szkolenia"
     text: "Szkolenia z programowania z AI oraz z baz danych, ETL i BI dla zespołów."
 ---
