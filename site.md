@@ -61,8 +61,6 @@ offer:
 
 # O mnie
 
-Ukończyłem kurs **AI Tech Leaders — Open Mercato: profesjonalne programowanie z AI**.
-
 Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz właścicielem firmy **Legnumcloud**. Pracowałem dla firm z sektora motoryzacyjnego, farmaceutycznego, telekomunikacyjnego i gazowniczego. Pasjonuje mnie Business Intelligence, a ostatnio — budowanie oprogramowania z pomocą AI.
 
 ### Dobra współpraca zaczyna się od rozmowy
@@ -91,6 +89,10 @@ Mam otwartą głowę. Interesuje mnie nie tylko to, jak działają systemy, ale 
 - Linux i Windows
 - Prowadzenie szkoleń
 - Języki: angielski biegle, hiszpański podstawowy
+
+**Kursy**
+
+Ukończyłem kurs **AI Tech Leaders — Open Mercato: profesjonalne programowanie z AI**.
 
 **Wykształcenie**
 
