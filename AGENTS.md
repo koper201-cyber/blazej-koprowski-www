@@ -31,17 +31,21 @@ To repozytorium to strona internetowa. Właściciel(ka) strony **nie zna się na
 - Jeśli nie da się zapisać załączonego zdjęcia jako pliku, napisz właścicielowi wprost: „Wgraj zdjęcie przez github.com do folderu `zdjecia/` (Add file → Upload files) i napisz mi jego nazwę”.
 - Maksymalny rozmiar pliku: 15 MB.
 
-## 4. Zanim utworzysz pull request — obowiązkowo
+## 4. Najpierw szybki podgląd, potem pełne kontrole
+
+- **Priorytet właściciela: jak najszybszy działający podgląd.** Przy prostych, odwracalnych zmianach tekstu, zdjęcia lub wyglądu nie wykonuj pełnej lokalnej walidacji, buildu, typów ani testów przeglądarkowych przed wysłaniem gałęzi i utworzeniem PR.
+- Przed wysłaniem wykonaj minimum: sprawdź zakres różnic, przypadkowe pliki i sekrety oraz `git diff --check`. Użyj istniejących zależności; nie instaluj ich ponownie bez potrzeby. Issue i log prowadź zwięźle w ramach tej samej pracy, bez osobnego oczekiwania na zgodę na rutynowe kroki.
+- Wyślij zmianę i utwórz PR od razu, aby Cloudflare budował podgląd, a GitHub Actions uruchamiał kontrole równolegle. PR może istnieć z kontrolami w toku lub z błędami; **błędy blokują publikację, nie utworzenie PR ani pokazanie działającego podglądu**.
+- Po udanym wdrożeniu sprawdź Preview URL konkretnego SHA, HTTP 200 i zamierzony efekt. Natychmiast przekaż link (sekcja 11), nie czekając na pozostałe CI, pełny przegląd wizualny ani dodatkowe testy. Jasno podaj „Testy jeszcze trwają” lub rzeczywisty wynik błędu.
+- Następnie kontynuuj wymagane kontrole w tle bez nowego polecenia właściciela. Nie powielaj lokalnie tego samego zielonego sprawdzenia CI dla tego SHA, chyba że diagnozujesz problem lub brakuje pokrycia. Przed publikacją muszą przejść co najmniej walidacja treści i build (w CI lub lokalnie):
 
 ```bash
 npm run site:validate
 npm run build
 ```
 
-- Oba polecenia muszą zakończyć się bez błędów. **Nie twórz PR z błędami.**
-- Błędy walidatora są po polsku i mówią, co poprawić. Ostrzeżenia (⚠️) nie blokują.
-- Jeśli `npm` nie działa (brak zależności), uruchom najpierw `npm install`.
-- Przed PR przejrzyj różnice pod kątem zakresu zadania i przypadkowych zmian. Weryfikację dobierz też do efektu: przy zmianach kodu uruchom `npm run check`, a przy zmianach wyglądu lub interakcji sprawdź zmieniony fragment w przeglądarce na telefonie i komputerze (lub w odpowiadających im rozmiarach okna). Jeśli nie możesz wykonać kontroli, zapisz to w logu i podsumowaniu; nie przedstawiaj jej jako zaliczonej.
+- Przy zmianach kodu wymagane jest też sprawdzenie typów, a przy zmianach wyglądu/interakcji kontrola zmienionego fragmentu w rozmiarze telefonu i komputera. Inne kontrole dobierz do ryzyka i istniejących wymagań CI. Nie dodawaj zbędnych testów dla prostej podmiany tekstu. Zapisuj faktyczne wyniki i ograniczenia; nie uznawaj niewykonanego testu za zaliczony.
+- Jeśli minimum kontroli ujawni problem albo zmiana dotyczy bezpieczeństwa, zależności, formularza lub innego wrażliwego działania, wykonaj potrzebną diagnozę/kontrolę przed wysłaniem. Nie omijaj zabezpieczeń dla szybkości. Ostrzeżenia walidatora nie blokują; nie wyłączaj testów ani weryfikacji, żeby uzyskać podgląd.
 
 ## 5. Gałąź i pull request
 
@@ -128,11 +132,12 @@ Poniższe przykłady opisują edycję po ustaleniu user story i zapisaniu issue 
 
 ## 11. Telefon: obowiązkowy podgląd i decyzja
 
-- AI obsługuje issue, gałąź i PR w tle. Nie odsyłaj właściciela do przycisków Create PR lub Merge. Po walidacji wyślij gałąź i utwórz PR do aktualnego main; nie dodawaj do zwykłej zmiany treści innych otwartych prac.
+- AI obsługuje issue, gałąź i PR w tle. Nie odsyłaj właściciela do przycisków Create PR lub Merge. Po minimalnym przeglądzie z sekcji 4 wyślij gałąź i utwórz PR do aktualnego main; nie dodawaj do zwykłej zmiany treści innych otwartych prac.
 - Zapisz pełny SHA propozycji. Odczytaj `gh api repos/{owner}/{repo}/commits/{sha}/check-runs`; znajdź udany check „Cloudflare Pages” od aplikacji `cloudflare-workers-and-pages`, związany z tym SHA. Z jego `output.summary` pobierz **Preview URL**, nie Branch Preview URL ani adres panelu. Nie zgaduj adresu. W tej stronie domena musi należeć do projektu z `site.pages_project`.
 - Poczekaj na wdrożenie i sprawdź HTTP 200 oraz zamierzoną treść/interakcję pod rzeczywistym adresem. Sam build, status PR ani działający localhost nie potwierdzają dostępności podglądu na telefonie. Przy oczekiwaniu podawaj stan, a przy błędzie diagnozuj go; nie ogłaszaj zadania jako gotowego. Jeżeli PR zawiedzie, ale podgląd istnieje, pokaż sprawdzony podgląd i wyjaśnij blokadę publikacji.
-- Przekaż krótką kartę: co zmieniono, klikalny podgląd, wymagane dane do sprawdzenia, numer wersji (skrót SHA) i prośbę o „Zatwierdzam tę wersję do publikacji” albo „Odrzucam”. Zachowaj link do issue/PR i pełny SHA w logu oraz opisie PR. Nie obiecuj dodatkowych przycisków w interfejsie ChatGPT.
+- Gdy podgląd jest dostępny i szybko sprawdzony, wyślij link od razu jako aktualizację w trwającej pracy, nawet gdy CI jeszcze trwa. Nie odkładaj linku do końcowego raportu. Kontynuuj kontrole i diagnozę; nie kończ pracy tylko dlatego, że wysłano podgląd. Nie obiecuj wykonania w tle po zakończeniu swojej pracy.
+- Przekaż krótką kartę: status pozostałych kontroli, co zmieniono, klikalny podgląd, wymagane dane do sprawdzenia, numer wersji (skrót SHA) i prośbę o „Zatwierdzam tę wersję do publikacji” albo „Odrzucam”. Zachowaj link do issue/PR i pełny SHA w logu oraz opisie PR. Nie obiecuj dodatkowych przycisków w interfejsie ChatGPT.
 - Brak odpowiedzi, odrzucenie i prośba o poprawkę nie pozwalają zmieniać main. Po odrzuceniu zamknij właściwy PR bez scalania, jeśli właściciel zleca odrzucenie; zachowaj gałąź i zapisz wynik. Poprawka tworzy nową wersję, która wymaga nowego sprawdzonego podglądu i nowej decyzji.
-- Publikacja: tylko po jednoznacznym zatwierdzeniu pokazanej wersji, braku obowiązującego zakazu scalania, zgodnym SHA i zakończonych pomyślnie wymaganych kontrolach (co najmniej „Sprawdzenie strony” oraz Cloudflare). Brak kontroli, oczekiwanie, błąd, konflikt lub zmiana SHA blokują publikację. Tuż przed scaleniem sprawdź ponownie PR, jego bazę main i head SHA; użyj `gh pr merge --match-head-commit {pełny-sha}` bez omijania zabezpieczeń i bez automatycznego scalania późniejszej wersji. Akceptacja jednego podglądu nie zatwierdza innych PR.
+- Publikacja: tylko po jednoznacznym zatwierdzeniu pokazanej wersji, braku obowiązującego zakazu scalania, zgodnym SHA i zakończonych pomyślnie wymaganych kontrolach (co najmniej „Sprawdzenie strony” oraz Cloudflare). Brak kontroli, oczekiwanie, błąd, konflikt lub zmiana SHA blokują publikację, ale nie pokazanie działającego podglądu. Akceptacja udzielona podczas testów dotyczy wyłącznie pokazanego SHA; poczekaj na wszystkie wymagane wyniki, ponownie sprawdź bramki i dopiero wtedy scalaj. Nie włączaj automatycznego scalania. Tuż przed scaleniem sprawdź ponownie PR, jego bazę main i head SHA; użyj `gh pr merge --match-head-commit {pełny-sha}` bez omijania zabezpieczeń i bez automatycznego scalania późniejszej wersji. Akceptacja jednego podglądu nie zatwierdza innych PR.
 - Po scaleniu sprawdź udane wdrożenie tego commita oraz publiczny adres strony i zamierzoną zmianę. Dopiero wtedy napisz „Opublikowane”. Gdy wdrożenie zawiedzie, poinformuj o błędzie i naprawie; nie przedstawiaj samego scalenia jako sukcesu.
 - Nowy czat musi korzystać z opublikowanego środowiska i instrukcji faktycznie obecnych na jego gałęzi. Otwarte PR z zasadami nie działają jeszcze na main. Nie uznawaj procesu za sprawdzony bez rzeczywistego testu; osobno zapisuj test przygotowania, podglądu, odrzucenia i publikacji.

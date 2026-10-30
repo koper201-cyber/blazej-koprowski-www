@@ -4,6 +4,8 @@ Jedna baza kodu + jeden plik `site.md` + folder `zdjecia/` = nowa strona. Po prz
 
 Instrukcja dla właściciela strony: [`OWNER_GUIDE.md`](OWNER_GUIDE.md). Zasady dla agenta: [`AGENTS.md`](AGENTS.md).
 
+Przy prostych zmianach najpierw pokazujemy działający podgląd konkretnej wersji, a pełne kontrole kończymy później. Link nie czeka na wszystkie testy; publikacja zawsze wymaga akceptacji właściciela i poprawnych wymaganych wyników. Szczegóły dla wszystkich agentów: sekcje 4 i 11 `AGENTS.md`.
+
 ## Jak to działa
 
 ```
