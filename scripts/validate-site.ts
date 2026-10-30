@@ -214,6 +214,7 @@ async function checkSite(d: SiteData): Promise<void> {
   };
 
   checkImage(d.hero.image, "Nagłówek strony (hero)", d.hero.alt);
+  checkImage(d.about_photo?.image, "Zdjęcie w O mnie", d.about_photo?.alt);
   checkImage(d.seo.image, "SEO, zdjęcie do udostępnień", "");
   checkImage(d.site.logo, "Logo", "");
   d.products.forEach((p, i) =>

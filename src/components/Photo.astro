@@ -10,6 +10,7 @@ interface Props {
   widths?: number[] | undefined;
   sizes?: string | undefined;
   eager?: boolean | undefined;
+  fallbackFormat?: "webp" | undefined;
   class?: string | undefined;
 }
 const {
@@ -19,6 +20,7 @@ const {
   widths = [400, 800, 1200],
   sizes = "(max-width: 700px) 100vw, 600px",
   eager = false,
+  fallbackFormat,
   class: cls,
 } = Astro.props;
 const src = resolveImage(dir, name);
@@ -29,6 +31,7 @@ const src = resolveImage(dir, name);
     src={src}
     alt={alt}
     formats={["avif", "webp"]}
+    {...(fallbackFormat ? { fallbackFormat } : {})}
     widths={
       widths.filter((w) => w <= src.width).length
         ? widths.filter((w) => w <= src.width)

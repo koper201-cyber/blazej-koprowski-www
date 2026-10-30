@@ -184,7 +184,8 @@
     gap: 5rem;
     align-items: start;
   }
-  .about-layout > h2 {
+  .about-layout > h2,
+  .about-intro > h2 {
     text-transform: uppercase;
   }
   .prose {
@@ -381,7 +382,7 @@
 [data-theme="elevate"] .hero-media {
   position: relative;
   isolation: isolate;
-  width: min(460px, calc(100% - 1rem));
+  width: min(380px, calc(85% - 1rem));
   justify-self: end;
   margin: 0 auto;
   padding: 10px;
@@ -544,7 +545,7 @@
     justify-content: flex-start;
   }
   [data-theme="elevate"] .hero-media {
-    width: min(500px, 100%);
+    width: min(400px, 85%);
     margin: 0 0 0 auto;
   }
 }

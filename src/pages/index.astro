@@ -150,6 +150,7 @@ if (visible.workshops) {
             name={data.hero.image}
             alt={data.hero.alt}
             eager
+            fallbackFormat="webp"
             sizes="(max-width: 800px) 100vw, 50vw"
             widths={[480, 800, 1200, 1600]}
           />
@@ -186,7 +187,23 @@ if (visible.workshops) {
   {visible.about && about && (
     <section id="o-mnie" class="section" aria-labelledby="o-mnie-h">
       <div class:list={["wrap", isElevate ? "about-layout" : "narrow"]}>
-        <h2 id="o-mnie-h">O mnie</h2>
+        <div class="about-intro">
+          <h2 id="o-mnie-h">O mnie</h2>
+          {data.about_photo && (
+            <figure class="about-photo">
+              <Photo
+                dir={dir}
+                name={data.about_photo.image}
+                alt={data.about_photo.alt}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 900px) 100vw, 480px"
+              />
+              {data.about_photo.caption && (
+                <figcaption>{data.about_photo.caption}</figcaption>
+              )}
+            </figure>
+          )}
+        </div>
         <div class="prose" set:html={about} />
       </div>
     </section>

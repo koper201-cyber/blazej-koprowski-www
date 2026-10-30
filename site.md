@@ -27,11 +27,16 @@ contact:
 
 hero:
   heading: "Twój pomysł.\nMoje doświadczenie."
-  text: "Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
+  text: "Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud sp. z o.o. Tworzę oprogramowanie z pomocą AI. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
   cta_label: "Porozmawiajmy"
   cta_link: "#kontakt"
+  image: "blazej-portret.png"
+  alt: "Portret Błażeja Koprowskiego w granatowej koszulce polo na jasnym tle"
+
+about_photo:
   image: "blazej-na-zaglowce.jpg"
   alt: "Błażej Koprowski w czerwonej kurtce i czapce przy sterze żaglówki"
+  caption: "Prowadzę projekt od pomysłu do wdrożenia. Ustalam cel, pilnuję kursu i reaguję na przeszkody, żeby doprowadzić pracę do działającego rozwiązania."
 
 features:
   about: true
@@ -42,14 +47,14 @@ features:
   contact: true
 
 offer:
+  - title: "Programowanie z AI"
+    text: "Tworzenie oprogramowania i automatyzacji z wykorzystaniem agentów i modeli AI."
   - title: "Hurtownie danych"
     text: "Projektowanie i rozwój hurtowni danych na Snowflake, Oracle i Amazon Redshift."
   - title: "Procesy ETL"
     text: "Budowa i utrzymanie przepływów danych: Informatica PowerCenter, Talend, SSIS, Pentaho, PL/SQL."
   - title: "Chmura AWS"
     text: "Architektura rozwiązań w AWS (certyfikat AWS Solutions Architect) i przetwarzanie dużych wolumenów danych: Kafka, Hadoop."
-  - title: "Programowanie z AI"
-    text: "Tworzenie oprogramowania i automatyzacji z wykorzystaniem agentów i modeli AI."
   - title: "Szkolenia"
     text: "Szkolenia z programowania z AI oraz z baz danych, ETL i BI dla zespołów."
 ---
@@ -62,9 +67,9 @@ Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz w�
 
 Zanim przejdę do technologii, chcę zrozumieć, co chcesz osiągnąć i jaki problem rozwiązujemy. **Stawiam na uważne słuchanie, trafne pytania i prosty język** — tak, żebyśmy rozumieli się również wtedy, gdy nie zajmujesz się IT. Zależy mi na otwartej komunikacji i wspólnym szukaniu rozwiązań.
 
-Łączę doświadczenie techniczne z perspektywą startupowca. Wcześniej jako **CEO Trackick**, dziś jako **co-founder roboprocess** patrzę na oprogramowanie także od strony produktu i biznesu: komu ma pomóc, co jest naprawdę potrzebne i od czego warto zacząć.
+Łączę doświadczenie techniczne z perspektywą startupowca. Wcześniej jako **CEO Trackick**, dziś jako **co-founder [roboprocess](https://www.roboprocess.pl)** patrzę na oprogramowanie także od strony produktu i biznesu: komu ma pomóc, co jest naprawdę potrzebne i od czego warto zacząć.
 
-Mam otwartą głowę. Interesuje mnie nie tylko to, jak działają systemy, ale też jak myślą i podejmują decyzje ludzie — stąd między innymi moje zainteresowanie psychologią. W pracy zależy mi na tym, żeby **po drugiej stronie kodu widzieć człowieka**. Chcę być partnerem, z którym można przemyśleć pomysł, porozmawiać bez technicznego żargonu i przejść do konkretnego rozwiązania.
+Mam otwartą głowę. Interesuje mnie nie tylko to, jak działają systemy, ale też jak myślą i podejmują decyzje ludzie — stąd między innymi moje zainteresowanie psychologią. Chcę być partnerem, z którym można przemyśleć pomysł, porozmawiać bez technicznego żargonu i przejść do konkretnego rozwiązania.
 
 **Doświadczenie**
 
@@ -84,6 +89,10 @@ Mam otwartą głowę. Interesuje mnie nie tylko to, jak działają systemy, ale 
 - Linux i Windows
 - Prowadzenie szkoleń
 - Języki: angielski biegle, hiszpański podstawowy
+
+**Kursy**
+
+Ukończyłem kurs **AI Tech Leaders — Open Mercato: profesjonalne programowanie z AI**.
 
 **Wykształcenie**
 
