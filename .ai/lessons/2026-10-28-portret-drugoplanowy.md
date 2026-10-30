@@ -4,3 +4,4 @@
 - Zmniejszono portret i wyrównano go do prawej; pozostawiono miękkie maski i poświatę.
 - Przy kolejnych zmianach tej strony zachować hierarchię: tekst i CTA jako pierwszy plan, zdjęcie jako dyskretne uzupełnienie, chyba że właściciel zleci inaczej.
 - Aktualizacja: właściciel następnie wybrał ponownie duży portret, ale w nowoczesnej, ostrej i geometrycznej oprawie zamiast rozmycia. Najnowsza decyzja zastępuje preferencję małego zdjęcia; nie traktować wcześniejszego podglądu jako akceptacji kolejnej wersji.
+- Korekta 2026-10-30 w #40/#41: nowy portret w hero, zdjęcie przy sterze w O mnie. Podpis ma zaczynać się wprost od „Prowadzę projekt…”, bez „Jak kapitan na pokładzie”. Usunięte na życzenie zdanie o „człowieku po drugiej stronie kodu” nie powinno wracać przy dalszej redakcji. Zachować link roboprocess oraz podany przez właściciela ukończony kurs AI Tech Leaders — Open Mercato, bez dopisywania certyfikatu lub daty.
