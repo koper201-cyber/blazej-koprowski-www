@@ -30,8 +30,13 @@ hero:
   text: "Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
   cta_label: "Porozmawiajmy"
   cta_link: "#kontakt"
+  image: "blazej-portret.png"
+  alt: "Portret Błażeja Koprowskiego w granatowej koszulce polo na jasnym tle"
+
+about_photo:
   image: "blazej-na-zaglowce.jpg"
   alt: "Błażej Koprowski w czerwonej kurtce i czapce przy sterze żaglówki"
+  caption: "Jak kapitan na pokładzie, prowadzę projekt od pomysłu do wdrożenia. Ustalam cel, pilnuję kursu i reaguję na przeszkody, żeby doprowadzić pracę do działającego rozwiązania."
 
 features:
   about: true

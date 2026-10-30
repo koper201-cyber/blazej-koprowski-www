@@ -94,6 +94,24 @@ p {
 .section-alt {
   background: var(--bg-alt);
 }
+.about-intro {
+  min-width: 0;
+}
+.about-photo {
+  margin: 1.75rem 0 0;
+}
+.about-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+.about-photo figcaption {
+  margin-top: 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
 .visually-hidden {
   position: absolute !important;
   width: 1px;

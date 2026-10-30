@@ -184,7 +184,8 @@
     gap: 5rem;
     align-items: start;
   }
-  .about-layout > h2 {
+  .about-layout > h2,
+  .about-intro > h2 {
     text-transform: uppercase;
   }
   .prose {

@@ -169,6 +169,10 @@ export const siteSchema = z
         alt: optionalText,
       })
       .strict(),
+    about_photo: z
+      .object({ image: imageName, alt: requiredText, caption: optionalText })
+      .strict()
+      .optional(),
     features: z
       .object({
         about: z.boolean().default(true),
@@ -255,6 +259,7 @@ export const FIELD_LABELS: Record<string, string> = {
   seo: "SEO (seo)",
   contact: "Kontakt (contact)",
   hero: "Nagłówek strony (hero)",
+  about_photo: "Zdjęcie w O mnie (about_photo)",
   features: "Włączone sekcje (features)",
   offer: "Oferta",
   products: "Produkt",
