@@ -8,7 +8,7 @@
 site:
   name: "Błażej Koprowski"
   type: "Person"                 # Person = osoba, LocalBusiness = firma
-  domain: ""                     # np. koprowski.pl — puste, dopóki nie ma domeny
+  domain: "blazejkoprowski.pl"     # własny adres strony
   pages_project: "blazej-koprowski"   # nazwa projektu w Cloudflare Pages
   language: "pl"
   theme: "elevate"
