@@ -6,7 +6,7 @@
 # Oferta: tyle samo pozycji i w tej samej kolejności co w site.md.
 # ─────────────────────────────────────────────────────────────
 seo:
-  title: "Błażej Koprowski — Senior Data Engineer, owner of Legnumcloud"
+  title: "Błażej Koprowski — Senior Data Engineer, owner of Legnumcloud sp. z o.o."
   description: "Data engineer with 18 years of experience: Snowflake, AWS, ETL, data warehouses and programming with AI. Poznań, Poland."
 
 hero:
@@ -33,7 +33,7 @@ offer:
 
 # About me
 
-I am a data engineer with over 18 years of experience in IT and the owner of **Legnumcloud**. I have worked for companies in the automotive, pharmaceutical, telecommunications and gas industries. I am passionate about Business Intelligence and, more recently, about building software with the help of AI.
+I am a data engineer with over 18 years of experience in IT and the owner of **Legnumcloud sp. z o.o.** I have worked for companies in the automotive, pharmaceutical, telecommunications and gas industries. I am passionate about Business Intelligence and, more recently, about building software with the help of AI.
 
 ### Good collaboration starts with a conversation
 
