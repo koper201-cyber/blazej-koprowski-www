@@ -1,7 +1,7 @@
 # Wersja angielska strony z przełącznikiem flag
 
 - Issue: https://github.com/koper201-cyber/blazej-koprowski-www/issues/52
-- Stan: w realizacji.
+- Stan: zrealizowana i opublikowana (PR #53).
 
 ## Cel
 

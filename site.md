@@ -16,7 +16,7 @@ site:
   city: "Poznań"
 
 seo:
-  title: "Błażej Koprowski — Senior Data Engineer, właściciel Legnumcloud"
+  title: "Błażej Koprowski — Senior Data Engineer, właściciel Legnumcloud sp. z o.o."
   description: "Data engineer z 18-letnim doświadczeniem: Snowflake, AWS, ETL, hurtownie danych i programowanie z AI. Poznań."
 
 contact:
@@ -27,7 +27,7 @@ contact:
 
 hero:
   heading: "Twój pomysł.\nMoje doświadczenie."
-  text: "Błażej Kaprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud sp. z o.o. Tworzę oprogramowanie z pomocą AI. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
+  text: "Błażej Koprowski, Senior Data Engineer z ponad 18-letnim doświadczeniem w IT i właściciel Legnumcloud sp. z o.o. Tworzę oprogramowanie z pomocą AI. Projektuję hurtownie danych, procesy ETL i rozwiązania w chmurze."
   cta_label: "Porozmawiajmy"
   cta_link: "#kontakt"
   image: "blazej-portret.png"
@@ -60,7 +60,7 @@ offer:
 
 # O mnie
 
-Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz właścicielem firmy **Legnumcloud**. Pracowałem dla firm z sektora motoryzacyjnego, farmaceutycznego, telekomunikacyjnego i gazowniczego. Pasjonuje mnie Business Intelligence, a ostatnio — budowanie oprogramowania z pomocą AI.
+Jestem inżynierem danych z ponad 18-letnim doświadczeniem w branży IT oraz właścicielem firmy **Legnumcloud sp. z o.o.** Pracowałem dla firm z sektora motoryzacyjnego, farmaceutycznego, telekomunikacyjnego i gazowniczego. Pasjonuje mnie Business Intelligence, a ostatnio — budowanie oprogramowania z pomocą AI.
 
 ### Dobra współpraca zaczyna się od rozmowy
 
