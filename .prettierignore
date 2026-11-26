@@ -6,7 +6,9 @@ playwright-report/
 test-results/
 package-lock.json
 site.md
+site.en.md
 examples/**/site.md
+examples/**/site.en.md
 .ai/
 
 AGENTS.md

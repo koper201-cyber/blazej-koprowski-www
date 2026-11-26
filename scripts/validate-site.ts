@@ -23,6 +23,7 @@ import {
   type SiteData,
 } from "../src/lib/site-schema";
 import { generatedPathFor } from "./prepare-images";
+import { parseTranslation, translationFilePath } from "../src/lib/i18n";
 
 const MAX_IMAGE_MB = 15;
 const errors: string[] = [];
@@ -320,6 +321,21 @@ function luminance(hex: string) {
 function contrast(a: string, b: string) {
   const [l1, l2] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return ((l1 ?? 0) + 0.05) / ((l2 ?? 0) + 0.05);
+}
+
+// Wersja angielska (site.en.md obok site.md), jeśli istnieje
+const enFile = translationFilePath(file);
+if (res.ok && fs.existsSync(enFile)) {
+  const label = `Wersja angielska (${enFile})`;
+  try {
+    const en = parseTranslation(res.data, file);
+    for (const warning of en.warnings) warnings.push(`${label}: ${warning}`);
+    if (!en.ok)
+      for (const error of en.errors) errors.push(`${label}: ${error}`);
+  } catch (e) {
+    const detail = e instanceof Error ? e.message.split("\n")[0] : String(e);
+    errors.push(`${label}: błąd składni YAML — ${detail}`);
+  }
 }
 
 // Wynik

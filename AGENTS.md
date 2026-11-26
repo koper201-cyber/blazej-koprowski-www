@@ -24,6 +24,7 @@ To repozytorium to strona internetowa. Właściciel(ka) strony **nie zna się na
 - Nowy produkt/warsztat dopisz na końcu odpowiedniej listy, chyba że właściciel prosi inaczej.
 - Minione warsztaty ukrywają się same — nie usuwaj ich, chyba że właściciel o to poprosi.
 - Sekcję włącza/wyłącza `features` (np. `workshops: true`).
+- **Wersja angielska:** jeśli obok `site.md` jest `site.en.md`, strona ma też wersję `/en/`. Przy każdej zmianie tekstu w `site.md` (opis, oferta, „O mnie”, polityka prywatności, opisy zdjęć, SEO) wprowadź w tym samym PR odpowiednik w `site.en.md` — naturalnym angielskim, bez dopisywania faktów. Oferta i opinie: tyle samo pozycji, w tej samej kolejności. Kontaktu, zdjęć i ustawień nie powtarzaj w `site.en.md` — są wspólne. W opisie PR podaj, co zmieniono w obu wersjach, i link do podglądu `/en/`.
 
 ## 3. Zdjęcia
 

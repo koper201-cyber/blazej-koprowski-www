@@ -1,0 +1,11 @@
+---
+import HomePage from "../../components/HomePage.astro";
+import { englishAvailable } from "../../lib/i18n";
+
+// Wersja angielska powstaje tylko wtedy, gdy obok site.md jest site.en.md.
+export function getStaticPaths() {
+  return englishAvailable() ? [{ params: { lang: "en" } }] : [];
+}
+---
+
+<HomePage locale="en" />

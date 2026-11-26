@@ -1,27 +1,30 @@
 ---
 import type { SiteData } from "../lib/site-schema";
 import ElevateBackdrop from "./ElevateBackdrop.astro";
+import { PATHS, UI, type Locale } from "../lib/i18n";
 
 interface Props {
   contact: SiteData["contact"];
   elevated?: boolean;
+  locale?: Locale;
 }
-const { contact, elevated = false } = Astro.props;
+const { contact, elevated = false, locale = "pl" } = Astro.props;
+const t = UI[locale];
 const socials = [
   ["LinkedIn", contact.linkedin],
   ["Instagram", contact.instagram],
   ["Facebook", contact.facebook],
   ["GitHub", contact.github],
-  ["Strona", contact.website],
+  [t.website, contact.website],
 ].filter(([, href]) => href) as [string, string][];
-const thanksUrl = new URL("/dziekuje/", Astro.site).href;
+const thanksUrl = new URL(PATHS.thanks[locale], Astro.site).href;
 ---
 
 <section id="kontakt" class="section section-alt" aria-labelledby="kontakt-h">
   {elevated && <ElevateBackdrop variant="contact" />}
   <div class="wrap contact-grid">
     <div>
-      <h2 id="kontakt-h">Kontakt</h2>
+      <h2 id="kontakt-h">{t.nav.contact}</h2>
       <ul class="contact-list">
         <li>
           <a href={`mailto:${contact.email}`}>{contact.email}</a>
@@ -54,7 +57,7 @@ const thanksUrl = new URL("/dziekuje/", Astro.site).href;
         method="POST"
       >
         <input type="hidden" name="access_key" value={contact.form_key} />
-        <input type="hidden" name="subject" value="Wiadomość ze strony" />
+        <input type="hidden" name="subject" value={t.formSubject} />
         <input type="hidden" name="redirect" value={thanksUrl} />
         <input
           type="checkbox"
@@ -65,30 +68,29 @@ const thanksUrl = new URL("/dziekuje/", Astro.site).href;
           autocomplete="off"
         />
         <label>
-          Imię
+          {t.formName}
           <input type="text" name="name" required autocomplete="name" />
         </label>
         <label>
-          E-mail
+          {t.formEmail}
           <input type="email" name="email" required autocomplete="email" />
         </label>
         <label>
-          Wiadomość
+          {t.formMessage}
           <textarea name="message" rows="5" required></textarea>
         </label>
         <button class="btn" type="submit">
-          Wyślij wiadomość
+          {t.formSubmit}
         </button>
         <p class="form-note">
-          Wysyłając wiadomość, zgadzasz się na jej przetworzenie w celu
-          odpowiedzi. <a href="/polityka-prywatnosci/">Polityka prywatności</a>.
+          {t.formConsent} <a href={PATHS.privacy[locale]}>{t.privacy}</a>.
         </p>
       </form>
     ) : (
       <div class="contact-cta">
-        <p>Najszybciej odpowiem na e-mail.</p>
+        <p>{t.contactNote}</p>
         <a class="btn" href={`mailto:${contact.email}`}>
-          Napisz e-mail
+          {t.writeEmail}
         </a>
       </div>
     )}

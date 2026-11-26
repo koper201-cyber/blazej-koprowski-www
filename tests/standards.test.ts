@@ -21,6 +21,12 @@ import {
   securityHeaders,
   checkBudgets,
 } from "../src/lib/artifacts";
+import {
+  checkTranslation,
+  mergeTranslation,
+  translationFilePath,
+  translationSchema,
+} from "../src/lib/i18n";
 
 const source = fs.readFileSync("examples/demo/site.md", "utf8");
 const fixture = () => siteSchema.parse(readContent(source).data);
@@ -222,4 +228,38 @@ test("walidator CLI sprawdza rzeczywiste obrazy, brak pliku i limit 15 MB", asyn
   } finally {
     fs.rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test("wersja angielska: wspólne dane z site.md i kontrola braków", () => {
+  const base = fixture();
+  const translation = translationSchema.parse({
+    seo: { title: "Title", description: "Description" },
+    hero: { heading: "Heading", text: "Text", cta_label: "Go", alt: "Alt" },
+    offer: base.offer.map((_, index) => ({ title: `Offer ${index}` })),
+    testimonials: base.testimonials.map((item) => ({
+      author: item.author,
+      text: "Quote",
+    })),
+  });
+  const merged = mergeTranslation(base, translation);
+  assert.equal(merged.contact.email, base.contact.email);
+  assert.equal(merged.hero.image, base.hero.image);
+  assert.equal(merged.hero.cta_link, base.hero.cta_link);
+  assert.equal(merged.site.language, "en");
+  assert.equal(merged.offer[0]?.title, "Offer 0");
+  assert.equal(siteSchema.safeParse(merged).success, true);
+  const sections = { "O mnie": "About", "Polityka prywatności": "Privacy" };
+  assert.deepEqual(checkTranslation(base, translation, sections).errors, []);
+  const short = { ...translation, offer: translation.offer.slice(1) };
+  assert.equal(checkTranslation(base, short, sections).errors.length, 1);
+  const noText = { ...translation, hero: { heading: "Heading" } };
+  assert.equal(checkTranslation(base, noText, sections).errors.length, 3);
+  assert.equal(checkTranslation(base, translation, {}).errors.length, 2);
+  const withContact = { ...translation, contact: { email: "x@example.com" } };
+  assert.equal(translationSchema.safeParse(withContact).success, false);
+  assert.equal(translationFilePath("site.md"), "site.en.md");
+  assert.equal(
+    translationFilePath("examples/demo/site.md"),
+    "examples/demo/site.en.md",
+  );
 });

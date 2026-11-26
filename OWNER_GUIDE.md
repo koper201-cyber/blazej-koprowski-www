@@ -75,6 +75,12 @@ Napisz: „Cofnij zmianę [opis lub numer wersji]”. Asystent przygotuje propoz
 
 ---
 
+## Wersja angielska
+
+Strona ma też wersję angielską pod adresem `/en/`, a w prawym górnym rogu są flagi do przełączania języka. Gdy prosisz o zmianę tekstu, asystent poprawia od razu obie wersje. Na podglądzie sprawdź też wersję angielską (flaga w rogu). Jeśli chcesz zmienić tylko tekst angielski, napisz np. „Popraw angielski opis oferty: …”.
+
+---
+
 ## Gotowe polecenia do skopiowania
 
 Możesz zacząć od poniższych zdań. Asystent dopisze user story na podstawie rozmowy, a jeśli nie zna celu lub innych potrzebnych informacji — zapyta. Potem zapisze issue.

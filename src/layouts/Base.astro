@@ -2,25 +2,61 @@
 import "../styles/theme.css";
 import "../styles/elevate.css";
 import { getImage } from "astro:assets";
-import { loadSite, todayInPoland } from "../lib/load-site";
+import { todayInPoland } from "../lib/load-site";
 import { buildViewModel } from "../lib/view-model";
 import { serializeJsonLd } from "../lib/safe-html";
 import { resolveImage } from "../lib/images";
 import { isPreview, previewBranch } from "../lib/env";
+import {
+  LOCALES,
+  PATHS,
+  UI,
+  englishAvailable,
+  loadLocalizedSite,
+  type Locale,
+  type PageKey,
+} from "../lib/i18n";
+import LangSwitch from "../components/LangSwitch.astro";
 
 interface Props {
   title?: string | undefined;
   description?: string | undefined;
   noindex?: boolean | undefined;
   jsonLd?: Record<string, unknown>[] | undefined;
+  locale?: Locale | undefined;
+  /** Strona, której odpowiedniki w innych językach pokazuje przełącznik. */
+  page?: PageKey | undefined;
 }
 
-const site = loadSite();
+const {
+  title,
+  description,
+  noindex = false,
+  jsonLd = [],
+  locale = "pl",
+  page,
+} = Astro.props;
+const site = loadLocalizedSite(locale);
 const { data } = site;
-const { title, description, noindex = false, jsonLd = [] } = Astro.props;
+const t = UI[locale];
+const home = PATHS.home[locale];
 const pageTitle = title ? `${title} · ${data.site.name}` : data.seo.title;
 const pageDescription = description ?? data.seo.description;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+
+const htmlLang = locale === "pl" ? data.site.language : locale;
+const locales: readonly Locale[] = englishAvailable() ? LOCALES : ["pl"];
+/** Ta sama strona w każdym języku (przełącznik flag i hreflang). */
+const languageLinks: { code: Locale; href: string }[] = [];
+if (page && locales.length > 1)
+  for (const code of locales)
+    languageLinks.push({ code, href: PATHS[page][code] });
+const alternates = languageLinks.map(({ code, href }) => ({
+  code,
+  url: new URL(href, Astro.site).href,
+}));
+const defaultUrl = alternates.find(({ code }) => code === "pl")?.url;
+const otherLocales = alternates.filter(({ code }) => code !== locale);
 
 const ogSource = resolveImage(
   site.imagesDir,
@@ -31,9 +67,18 @@ const ogImage = ogSource
   : undefined;
 const ogImageUrl = ogImage ? new URL(ogImage.src, Astro.site).href : undefined;
 
-const { nav, ctaLink } = buildViewModel(data, site.sections, todayInPoland());
+const viewOptions = { labels: t.nav, home };
+const { nav, ctaLink } = buildViewModel(
+  data,
+  site.sections,
+  todayInPoland(),
+  viewOptions,
+);
 const isElevate = data.site.theme === "elevate";
-const headerCtaLink = ctaLink?.startsWith("#") ? `/${ctaLink}` : ctaLink;
+const headerCtaLink = ctaLink?.startsWith("#") ? home + ctaLink : ctaLink;
+const previewNote = previewBranch
+  ? ` (${t.previewChange}: ${previewBranch})`
+  : "";
 const initials = data.site.name
   .split(/\s+/)
   .map((part) => part[0])
@@ -42,13 +87,19 @@ const initials = data.site.name
 ---
 
 <!doctype html>
-<html lang={data.site.language} data-theme={data.site.theme}>
+<html lang={htmlLang} data-theme={data.site.theme}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
     <link rel="canonical" href={canonical} />
+    {alternates.map(({ code, url }) => (
+      <link rel="alternate" hreflang={code} href={url} />
+    ))}
+    {defaultUrl && (
+      <link rel="alternate" hreflang="x-default" href={defaultUrl} />
+    )}
     {(noindex || isPreview) && (
       <meta name="robots" content="noindex, nofollow" />
     )}
@@ -57,7 +108,10 @@ const initials = data.site.name
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pl_PL" />
+    <meta property="og:locale" content={t.ogLocale} />
+    {otherLocales.map(({ code }) => (
+      <meta property="og:locale:alternate" content={UI[code].ogLocale} />
+    ))}
     <meta property="og:site_name" content={data.site.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
@@ -83,18 +137,16 @@ const initials = data.site.name
   <body>
     {isPreview && (
       <div class="preview-banner" role="status">
-        <strong>PODGLĄD</strong> — ta wersja nie jest jeszcze opublikowana
-        {previewBranch && (
-          <span class="preview-branch"> (zmiana: {previewBranch})</span>
-        )}
+        <strong>{t.previewLabel}</strong> — {t.previewText}
+        {previewNote && <span class="preview-branch">{previewNote}</span>}
       </div>
     )}
     <a class="skip" href="#tresc">
-      Przejdź do treści
+      {t.skip}
     </a>
     <header class="site-header">
       <div class="wrap header-inner">
-        <a class="brand" href="/">
+        <a class="brand" href={home}>
           {isElevate && (
             <span class="brand-mark" aria-hidden="true">
               {initials}
@@ -103,7 +155,7 @@ const initials = data.site.name
           {data.site.name}
         </a>
         {nav.length > 0 && (
-          <nav aria-label="Menu główne">
+          <nav aria-label={t.mainMenu}>
             <ul>
               {nav.map((n) => (
                 <li>
@@ -119,6 +171,7 @@ const initials = data.site.name
             <span aria-hidden="true"> ↗</span>
           </a>
         )}
+        <LangSwitch locale={locale} links={languageLinks} />
       </div>
     </header>
     <main id="tresc" tabindex="-1">
@@ -131,10 +184,10 @@ const initials = data.site.name
           {data.site.city && ` · ${data.site.city}`}
         </p>
         <p>
-          <a href="/polityka-prywatnosci/">Polityka prywatności</a>
+          <a href={PATHS.privacy[locale]}>{t.privacy}</a>
           {isElevate && (
             <span class="design-credit">
-              Projekt na bazie{" "}
+              {t.designCredit}{" "}
               <a
                 href="https://www.figma.com/community/file/1502180307181819798/elevate-agency-ai-landing-page"
                 rel="noopener"
@@ -142,7 +195,7 @@ const initials = data.site.name
               >
                 Elevate / flowcub
               </a>{" "}
-              · adaptacja
+              · {t.adaptation}
             </span>
           )}
         </p>

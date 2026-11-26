@@ -7,11 +7,32 @@ export interface ViewModel {
   workshops: Workshop[];
 }
 
+type SectionKey = keyof SiteData["features"];
+
+const DEFAULT_LABELS: Record<SectionKey, string> = {
+  about: "O mnie",
+  offer: "Oferta",
+  products: "Produkty",
+  workshops: "Warsztaty",
+  testimonials: "Opinie",
+  contact: "Kontakt",
+};
+
+export interface ViewOptions {
+  /** Etykiety menu w danym języku. */
+  labels?: Record<SectionKey, string>;
+  /** Strona główna danego języka: "/" albo "/en/". */
+  home?: string;
+}
+
 export function buildViewModel(
   data: SiteData,
   sections: Record<string, string>,
   today: string,
+  options: ViewOptions = {},
 ): ViewModel {
+  const labels = options.labels ?? DEFAULT_LABELS;
+  const home = options.home ?? "/";
   const visible = {
     about: data.features.about && Boolean(sections["O mnie"]),
     offer: data.features.offer && data.offer.length > 0,
@@ -20,25 +41,24 @@ export function buildViewModel(
     testimonials: data.features.testimonials && data.testimonials.length > 0,
     contact: data.features.contact,
   };
-  const links: [keyof typeof visible, string, string][] = [
-    ["about", "o-mnie", "O mnie"],
-    ["offer", "oferta", "Oferta"],
-    ["products", "produkty", "Produkty"],
-    ["workshops", "warsztaty", "Warsztaty"],
-    ["testimonials", "opinie", "Opinie"],
-    ["contact", "kontakt", "Kontakt"],
+  const links: [SectionKey, string][] = [
+    ["about", "o-mnie"],
+    ["offer", "oferta"],
+    ["products", "produkty"],
+    ["workshops", "warsztaty"],
+    ["testimonials", "opinie"],
+    ["contact", "kontakt"],
   ];
   const nav = links
     .filter(([key]) => visible[key])
-    .map(([, id, label]) => ({ href: `/#${id}`, label }));
+    .map(([key, id]) => ({ href: `${home}#${id}`, label: labels[key] }));
   const target = data.hero.cta_link;
   const id = target?.replace(/^\/?#/, "");
-  const ctaLink =
-    target?.startsWith("#") || target?.startsWith("/#")
-      ? nav.some((link) => link.href === `/#${id}`)
-        ? target
-        : undefined
-      : target;
+  const isAnchor = target?.startsWith("#") || target?.startsWith("/#");
+  const anchorVisible = nav.some((link) => link.href === `${home}#${id}`);
+  const anchorLink = home === "/" ? target : `#${id}`;
+  let ctaLink = target;
+  if (isAnchor) ctaLink = anchorVisible ? anchorLink : undefined;
   return {
     visible,
     nav,

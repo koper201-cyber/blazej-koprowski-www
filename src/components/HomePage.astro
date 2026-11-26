@@ -1,0 +1,348 @@
+---
+import { buildViewModel } from "../lib/view-model";
+import { eventStart } from "../lib/dates";
+import Base from "../layouts/Base.astro";
+import Photo from "./Photo.astro";
+import Contact from "./Contact.astro";
+import ElevateBackdrop from "./ElevateBackdrop.astro";
+import OfferIcon from "./OfferIcon.astro";
+import { todayInPoland } from "../lib/load-site";
+import { PATHS, UI, loadLocalizedSite, type Locale } from "../lib/i18n";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = UI[locale];
+const site = loadLocalizedSite(locale);
+const { data, sections } = site;
+const isElevate = data.site.theme === "elevate";
+const dir = site.imagesDir;
+const about = sections["O mnie"];
+const { workshops, visible, ctaLink } = buildViewModel(
+  data,
+  sections,
+  todayInPoland(),
+  { labels: t.nav, home: PATHS.home[locale] },
+);
+const pln = new Intl.NumberFormat(t.intl, {
+  style: "currency",
+  currency: "PLN",
+  maximumFractionDigits: 0,
+});
+const longDate = new Intl.DateTimeFormat(t.intl, {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+  timeZone: "UTC",
+});
+const dayNum = new Intl.DateTimeFormat(t.intl, {
+  day: "numeric",
+  timeZone: "UTC",
+});
+const monthShort = new Intl.DateTimeFormat(t.intl, {
+  month: "short",
+  timeZone: "UTC",
+});
+const d = (iso: string) => new Date(`${iso}T00:00:00Z`);
+/** Ikony dobieramy po polskim tytule tej samej pozycji oferty. */
+const iconTitle = (index: number, title: string) =>
+  site.base.offer[index]?.title ?? title;
+const statusClass: Record<string, string> = {
+  dostępna: "ok",
+  sprzedana: "sold",
+  "na zamówienie": "order",
+};
+
+const sameAs = [
+  data.contact.linkedin,
+  data.contact.instagram,
+  data.contact.facebook,
+  data.contact.github,
+  data.contact.website,
+].filter((x): x is string => Boolean(x) && /^https?:/.test(x ?? ""));
+const home = new URL(PATHS.home[locale], Astro.site).href;
+const jsonLd: Record<string, unknown>[] = [
+  {
+    "@context": "https://schema.org",
+    "@type": data.site.type,
+    name: data.site.name,
+    url: home,
+    description: data.seo.description,
+    email: data.contact.email,
+    ...(data.contact.phone ? { telephone: data.contact.phone } : {}),
+    ...(data.site.city
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: data.site.city,
+            addressCountry: "PL",
+          },
+        }
+      : {}),
+    ...(sameAs.length ? { sameAs } : {}),
+  },
+];
+if (visible.products) {
+  for (const p of data.products) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: p.name,
+      description: p.description,
+      offers: {
+        "@type": "Offer",
+        price: p.price,
+        priceCurrency: "PLN",
+        availability:
+          p.status === "sprzedana"
+            ? "https://schema.org/SoldOut"
+            : p.status === "na zamówienie"
+              ? "https://schema.org/PreOrder"
+              : "https://schema.org/InStock",
+      },
+    });
+  }
+}
+if (visible.workshops) {
+  for (const w of workshops) {
+    jsonLd.push({
+      "@context": "https://schema.org",
+      "@type": "Event",
+      name: w.title,
+      startDate: eventStart(w.date, w.time),
+      eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+      location: { "@type": "Place", name: w.place, address: w.place },
+      organizer: { "@type": data.site.type, name: data.site.name, url: home },
+      ...(w.description ? { description: w.description } : {}),
+      offers: {
+        "@type": "Offer",
+        url: w.signup,
+        priceCurrency: "PLN",
+        ...(w.price !== undefined ? { price: w.price } : {}),
+      },
+    });
+  }
+}
+---
+
+<Base jsonLd={jsonLd} locale={locale} page="home">
+  <section class="hero" aria-labelledby="hero-h">
+    {isElevate && <ElevateBackdrop />}
+    <div class="wrap hero-inner">
+      <div class="hero-text">
+        {isElevate && (
+          <p class="hero-eyebrow">
+            <span aria-hidden="true">✦</span> {data.site.name}{" "}
+            <span aria-hidden="true">/</span> {t.eyebrow}
+          </p>
+        )}
+        <h1 id="hero-h">{data.hero.heading}</h1>
+        {data.hero.text && <p class="lead">{data.hero.text}</p>}
+        <div class="hero-actions">
+          {data.hero.cta_label && ctaLink && (
+            <a class="btn" href={ctaLink}>
+              {data.hero.cta_label}
+              {isElevate && <span aria-hidden="true"> ↗</span>}
+            </a>
+          )}
+          {isElevate && visible.offer && (
+            <a class="hero-secondary" href="#oferta">
+              {t.seeOffer} <span aria-hidden="true">↓</span>
+            </a>
+          )}
+        </div>
+      </div>
+      {data.hero.image && (
+        <div class="hero-media">
+          <Photo
+            dir={dir}
+            name={data.hero.image}
+            alt={data.hero.alt}
+            eager
+            fallbackFormat="webp"
+            sizes="(max-width: 800px) 100vw, 50vw"
+            widths={[480, 800, 1200, 1600]}
+          />
+        </div>
+      )}
+    </div>
+  </section>
+
+  {visible.offer && data.offer.length > 0 && (
+    <section id="oferta" class="section section-alt" aria-labelledby="oferta-h">
+      <div class="wrap">
+        <h2 id="oferta-h">{t.nav.offer}</h2>
+        <ul class="cards">
+          {data.offer.map((o, index) => (
+            <li class="card">
+              {isElevate && (
+                <div class="offer-card-top">
+                  <span class="offer-index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <OfferIcon title={iconTitle(index, o.title)} />
+                </div>
+              )}
+              <h3>{o.title}</h3>
+              {o.text && <p>{o.text}</p>}
+              {o.price && <p class="price">{o.price}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {visible.about && about && (
+    <section id="o-mnie" class="section" aria-labelledby="o-mnie-h">
+      <div class:list={["wrap", isElevate ? "about-layout" : "narrow"]}>
+        <div class="about-intro">
+          <h2 id="o-mnie-h">{t.nav.about}</h2>
+          {data.about_photo && (
+            <figure class="about-photo">
+              <Photo
+                dir={dir}
+                name={data.about_photo.image}
+                alt={data.about_photo.alt}
+                widths={[400, 800, 1200]}
+                sizes="(max-width: 900px) 100vw, 480px"
+              />
+              {data.about_photo.caption && (
+                <figcaption>{data.about_photo.caption}</figcaption>
+              )}
+            </figure>
+          )}
+        </div>
+        <div class="prose" set:html={about} />
+      </div>
+    </section>
+  )}
+
+  {visible.products && data.products.length > 0 && (
+    <section id="produkty" class="section" aria-labelledby="produkty-h">
+      <div class="wrap">
+        <h2 id="produkty-h">{t.nav.products}</h2>
+        <ul class="grid">
+          {data.products.map((p) => (
+            <li class="product">
+              <Photo
+                dir={dir}
+                name={p.image}
+                alt={p.alt ?? p.name}
+                class="product-img"
+                sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 33vw"
+              />
+              <div class="product-body">
+                <h3>{p.name}</h3>
+                {p.description && <p>{p.description}</p>}
+                <p class="product-meta">
+                  <span class="price">{pln.format(p.price)}</span>
+                  <span class={`badge badge-${statusClass[p.status]}`}>
+                    {p.status}
+                  </span>
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        {visible.contact && (
+          <p class="after-grid">
+            {t.buyQuestion} <a href="#kontakt">{t.writeToMe}</a>.
+          </p>
+        )}
+      </div>
+    </section>
+  )}
+
+  {visible.workshops && (
+    <section
+      id="warsztaty"
+      class="section section-alt"
+      aria-labelledby="warsztaty-h"
+    >
+      <div class="wrap">
+        <h2 id="warsztaty-h">{t.nav.workshops}</h2>
+        <ul class="events" data-events>
+          {workshops.map((w) => (
+            <li class="event" data-date={w.date}>
+              <div class="event-date" aria-hidden="true">
+                <span class="event-day">{dayNum.format(d(w.date))}</span>
+                <span class="event-month">{monthShort.format(d(w.date))}</span>
+              </div>
+              <div class="event-body">
+                <h3>{w.title}</h3>
+                <p class="event-meta">
+                  <time datetime={eventStart(w.date, w.time)}>
+                    {longDate.format(d(w.date))}
+                    {w.time && `, ${t.timePrefix} ${w.time}`}
+                  </time>
+                  {" · "}
+                  {w.place}
+                  {w.price !== undefined && ` · ${pln.format(w.price)}`}
+                </p>
+                {w.description && <p>{w.description}</p>}
+                <a class="btn btn-small" href={w.signup}>
+                  {t.signUp}
+                </a>
+              </div>
+              {w.image && (
+                <Photo
+                  dir={dir}
+                  name={w.image}
+                  alt={w.alt ?? w.title}
+                  class="event-img"
+                  widths={[300, 600]}
+                  sizes="(max-width: 700px) 100vw, 240px"
+                />
+              )}
+            </li>
+          ))}
+        </ul>
+        <p class="empty" data-events-empty hidden={workshops.length > 0}>
+          {t.noEvents}
+          {visible.contact && <a href="#kontakt">{t.noEventsContact}</a>}
+        </p>
+      </div>
+    </section>
+  )}
+
+  {visible.testimonials && data.testimonials.length > 0 && (
+    <section id="opinie" class="section" aria-labelledby="opinie-h">
+      <div class="wrap">
+        <h2 id="opinie-h">{t.nav.testimonials}</h2>
+        <ul class="quotes">
+          {data.testimonials.map((t) => (
+            <li>
+              <blockquote>
+                <p>{t.text}</p>
+                <footer>— {t.author}</footer>
+              </blockquote>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {visible.contact && (
+    <Contact contact={data.contact} elevated={isElevate} locale={locale} />
+  )}
+</Base>
+
+<script>
+  // Strona jest statyczna, więc ukrywamy też warsztaty, które minęły od ostatniej publikacji.
+  const today = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: "Europe/Warsaw",
+  }).format(new Date());
+  const items = document.querySelectorAll<HTMLElement>(
+    "[data-events] [data-date]",
+  );
+  let visible = 0;
+  items.forEach((el) => {
+    if ((el.dataset.date ?? "") < today) el.hidden = true;
+    else visible++;
+  });
+  const empty = document.querySelector<HTMLElement>("[data-events-empty]");
+  if (empty && items.length > 0 && visible === 0) empty.hidden = false;
+</script>
