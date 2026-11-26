@@ -18,6 +18,13 @@ const siteUrl = domain
     ? `https://${project}.pages.dev`
     : "https://example.com";
 
+// Strony bez wartości dla wyszukiwarek (podziękowanie, błąd 404).
+const hiddenPages = [
+  /\/dziekuje(?:\/|$)/,
+  /\/thank-you(?:\/|$)/,
+  /\/404(?:\.html|\/|$)/,
+];
+
 export default defineConfig({
   site: siteUrl,
   output: "static",
@@ -26,10 +33,7 @@ export default defineConfig({
   build: { format: "directory" },
   integrations: [
     sitemap({
-      filter: (page) =>
-        ![/\/dziekuje(?:\/|$)/, /\/404(?:\.html|\/|$)/].some((pattern) =>
-          pattern.test(page),
-        ),
+      filter: (page) => !hiddenPages.some((pattern) => pattern.test(page)),
     }),
   ],
   vite: {

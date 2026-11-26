@@ -592,3 +592,57 @@ body {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
   }
 }
+
+/* Przełącznik języka (flagi) w prawym górnym rogu nagłówka */
+.lang-switch ul {
+  display: flex;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lang-flag {
+  display: inline-flex;
+  padding: 0.35rem;
+  border-radius: 6px;
+  line-height: 0;
+  opacity: 0.55;
+  transition: opacity 0.15s ease;
+}
+.lang-flag svg {
+  display: block;
+  width: 30px;
+  height: 20px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.18);
+}
+.lang-flag:hover,
+.lang-flag:focus-visible,
+.lang-flag.is-current {
+  opacity: 1;
+}
+.lang-flag.is-current svg {
+  box-shadow: 0 0 0 2px var(--primary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-flag {
+    transition: none;
+  }
+}
+@media (max-width: 640px) {
+  .site-header .header-inner:has(.lang-switch) {
+    flex-direction: row;
+    align-items: center;
+  }
+  .header-inner:has(.lang-switch) nav {
+    order: 3;
+    width: 100%;
+  }
+  .lang-switch {
+    order: 2;
+    margin-left: auto;
+  }
+  .lang-flag {
+    padding: 0.3rem;
+  }
+}

@@ -549,3 +549,21 @@
     margin: 0 0 0 auto;
   }
 }
+
+/* Przełącznik języka w ciemnym nagłówku Elevate */
+[data-theme="elevate"] .lang-flag svg {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.25);
+}
+[data-theme="elevate"] .lang-flag.is-current svg {
+  box-shadow: 0 0 0 2px #c4b3ff;
+}
+@media (max-width: 640px) {
+  [data-theme="elevate"] .header-inner:has(.lang-switch) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  [data-theme="elevate"] .header-inner:has(.lang-switch) nav {
+    order: 3;
+    width: 100%;
+  }
+}

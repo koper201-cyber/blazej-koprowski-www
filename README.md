@@ -90,7 +90,11 @@ Obowiązkowe przyjmowanie zgłoszeń opisuje [sekcja 10 AGENTS.md](AGENTS.md#10-
 
 Załóż darmowy klucz na web3forms.com na e-mail klienta i wpisz go w `contact.form_key`. Bez klucza strona pokazuje przycisk „Napisz e-mail”.
 
-### 7. Przekazanie
+### 7. Wersja angielska (opcjonalnie)
+
+Dodaj obok `site.md` plik `site.en.md` z samymi tekstami: `seo`, `hero` (heading, text, cta_label, alt), `about_photo` (alt, caption), `offer`, `testimonials` oraz sekcje `# About me` i `# Privacy policy`. Kontakt, zdjęcia i ustawienia są wspólne i pochodzą z `site.md`. Strona dostaje adresy `/en/`, `/en/privacy-policy/` i przełącznik flag w nagłówku. Walidator pilnuje, żeby oferta i opinie miały tyle samo pozycji co po polsku. Bez `site.en.md` strona jest tylko po polsku.
+
+### 8. Przekazanie
 
 1. Sprawdź stronę na telefonie i komputerze.
 2. Zrób z klientem na jego telefonie jedną zmianę od początku do końca (OWNER_GUIDE.md).
@@ -112,10 +116,12 @@ Cloudflare → projekt → _Deployments_ → poprzednie wdrożenie produkcyjne �
 
 ```
 site.md              treść i ustawienia (YAML + Markdown)
+site.en.md           opcjonalne teksty po angielsku (/en/)
 zdjecia/             zdjęcia klienta
 examples/demo/       pełny przykład z fikcyjnymi danymi
 src/lib/site-schema.ts   schemat site.md (jedyne źródło prawdy o polach)
 src/lib/load-site.ts     wczytywanie site.md
+src/lib/i18n.ts          wersje językowe, site.en.md, teksty interfejsu
 src/pages/, src/components/, src/layouts/, src/styles/theme.css
 scripts/validate-site.ts   walidator z błędami po polsku
 scripts/prepare-images.ts  HEIC → JPG

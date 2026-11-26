@@ -1,0 +1,21 @@
+---
+import Base from "../layouts/Base.astro";
+import { UI, loadLocalizedSite, type Locale } from "../lib/i18n";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const { sections } = loadLocalizedSite(locale);
+const html = sections["Polityka prywatności"] ?? "";
+const title = UI[locale].privacy;
+---
+
+<Base title={title} locale={locale} page="privacy">
+  <section class="section">
+    <div class="wrap narrow">
+      <h1>{title}</h1>
+      <div class="prose" set:html={html} />
+    </div>
+  </section>
+</Base>

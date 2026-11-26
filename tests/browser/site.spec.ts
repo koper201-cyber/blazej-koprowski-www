@@ -162,3 +162,33 @@ test("powiększony tekst, ograniczenie ruchu i podgląd wizualny", async ({
     fullPage: true,
   });
 });
+
+test("flagi przełączają język strony i wersja angielska jest dostępna", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const switcher = page.locator(".lang-switch");
+  if (!(await switcher.count())) return;
+  const polish = switcher.locator('a[hreflang="pl"]');
+  await expect(polish).toHaveAttribute("aria-current", "page");
+  await expect(switcher).toBeVisible();
+  await switcher.locator('a[hreflang="en"]').click();
+  await expect(page).toHaveURL(/\/en\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+  const english = page.locator('.lang-switch a[hreflang="en"]');
+  await expect(english).toHaveAttribute("aria-current", "page");
+  const result = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(result.violations).toEqual([]);
+  await page.setViewportSize({ width: 320, height: 800 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBe(true);
+  await page.locator('.lang-switch a[hreflang="pl"]').click();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "pl");
+});

@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+import { PATHS, UI, type Locale } from "../lib/i18n";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = UI[locale];
+---
+
+<Base title={t.thanksTitle} locale={locale} page="thanks" noindex>
+  <section class="section">
+    <div class="wrap narrow">
+      <h1>{t.thanksTitle}</h1>
+      <p>{t.thanksText}</p>
+      <p>
+        <a class="btn" href={PATHS.home[locale]}>
+          {t.backHome}
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>

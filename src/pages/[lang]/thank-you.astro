@@ -1,0 +1,10 @@
+---
+import ThanksPage from "../../components/ThanksPage.astro";
+import { englishAvailable } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return englishAvailable() ? [{ params: { lang: "en" } }] : [];
+}
+---
+
+<ThanksPage locale="en" />

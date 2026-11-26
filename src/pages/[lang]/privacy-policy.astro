@@ -1,0 +1,10 @@
+---
+import PrivacyPage from "../../components/PrivacyPage.astro";
+import { englishAvailable } from "../../lib/i18n";
+
+export function getStaticPaths() {
+  return englishAvailable() ? [{ params: { lang: "en" } }] : [];
+}
+---
+
+<PrivacyPage locale="en" />
