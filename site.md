@@ -36,7 +36,6 @@ hero:
 about_photo:
   image: "blazej-na-zaglowce.jpg"
   alt: "Błażej Koprowski w czerwonej kurtce i czapce przy sterze żaglówki"
-  caption: "Prowadzę projekt od pomysłu do wdrożenia. Ustalam cel, pilnuję kursu i reaguję na przeszkody, żeby doprowadzić pracę do działającego rozwiązania."
 
 features:
   about: true
