@@ -1,5 +1,7 @@
 # Ustalenia i wnioski
 
+- [Aktualny e-mail kontaktowy](lessons/2026-11-26-email-kontaktowy.md) — blazej.koprowski@gmail.com, zgodnie z najnowszym wskazaniem właściciela; kontakt i przyciski z contact.email.
+
 - [Szybki podgląd przed pełnymi testami](lessons/2026-10-29-podglad-przed-testami.md) — priorytet właściciela: push/PR i działający podgląd jak najszybciej; testy później, zielone kontrole i akceptacja nadal wymagane przed publikacją.
 
 - [Styl ikon oferty](lessons/2026-10-28-styl-ikon-oferty.md) — wzór mind.svg: turkus, szare gradienty i brak kafelków; korekta właściciela w #30.

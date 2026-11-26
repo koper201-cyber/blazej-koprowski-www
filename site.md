@@ -20,7 +20,7 @@ seo:
   description: "Data engineer z 18-letnim doświadczeniem: Snowflake, AWS, ETL, hurtownie danych i programowanie z AI. Poznań."
 
 contact:
-  email: "kontakt@example.com"   # UZUPEŁNIJ: adres, który ma być widoczny na stronie
+  email: "blazej.koprowski@gmail.com"
   phone: ""
   form_key: ""                   # klucz Web3Forms; puste = przycisk „Napisz e-mail”
   linkedin: "https://www.linkedin.com/in/blazej-koprowski-89287b17/"
